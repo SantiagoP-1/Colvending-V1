@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/*
+ * Tailwind v4 does not use tailwind.config.js for theming by default: design
+ * tokens are declared here with @theme and Tailwind auto-generates the
+ * matching utilities (--color-red-500 => bg-red-500 / text-red-500 / etc).
+ * This block IS the project's "tailwind.config" — the single source of
+ * truth for color, type, radius and spacing tokens.
+ */
+@theme {
+  /* ---- Brand red ---- */
+  --color-red-50: #fdecec;
+  --color-red-100: #fbd3d5;
+  --color-red-200: #f6a8ac;
+  --color-red-300: #ef7178;
+  --color-red-400: #e6444d;
+  --color-red-500: #d72638; /* brand base, matches the live site */
+  --color-red-600: #b51e2d;
+  --color-red-700: #8f1723;
+  --color-red-800: #6b111a;
+  --color-red-900: #470b11;
+  --color-red-950: #2b0609;
+
+  /* ---- Ink: neutral scale with more depth than the current flat grays ---- */
+  --color-ink-950: #0a0a0b;
+  --color-ink-900: #111113;
+  --color-ink-850: #16161a;
+  --color-ink-800: #1c1c21;
+  --color-ink-700: #232329;
+  --color-ink-600: #2f2f37;
+  --color-ink-500: #45454f;
+  --color-ink-400: #6d6d78;
+  --color-ink-300: #98989f;
+  --color-ink-200: #c3c3c9;
+  --color-ink-100: #e5e5e8;
+
+  --color-paper: #f5f5f4;
+
+  /* ---- Type ---- */
+  --font-display: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif, sans-serif;
+  --font-body: var(--font-inter), "Inter", ui-sans-serif, sans-serif;
+
+  /* ---- Radius ---- */
+  --radius-btn: 0.75rem;
+  --radius-card: 1.25rem;
+  --radius-chip: 999px;
+
+  /* ---- Containers ---- */
+  --container-page: 75rem; /* 1200px, matches the current site */
+  --container-wide: 87.5rem; /* 1400px */
+
+  /* ---- Semantic spacing ---- */
+  --spacing-gutter: clamp(1.25rem, 5vw, 5rem);
+  --spacing-section: clamp(5rem, 10vw, 9rem);
+
+  /* ---- Shadows ---- */
+  --shadow-red-glow: 0 20px 60px -12px rgba(215, 38, 56, 0.45);
+  --shadow-card: 0 24px 60px -24px rgba(0, 0, 0, 0.65);
+  --shadow-nav: 0 8px 30px -12px rgba(0, 0, 0, 0.5);
+
+  /* ---- Easing ---- */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-ink-950);
+    color: var(--color-paper);
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-red-500);
+    color: white;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-red-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer utilities {
+  .bg-grid-overlay {
+    background-image: linear-gradient(
+        to right,
+        rgba(245, 245, 244, 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(245, 245, 244, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}
