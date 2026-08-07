@@ -11,6 +11,5 @@ export const NAV_LINKS: NavLink[] = [
   { href: "#franquicias", label: "Franquicias" },
   { href: "#rentabilidad", label: "Rentabilidad" },
   { href: "#nosotros", label: "Nosotros" },
-  { href: "#calificar", label: "¿Calificás?" },
   { href: "#faq", label: "FAQ" },
 ];

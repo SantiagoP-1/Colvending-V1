@@ -49,6 +49,30 @@ export const CASO_REAL_CONTENT = {
   // Only the two channels tied to the Punto Ya store itself — the footer's
   // "Seguinos" list is the general one and still includes YouTube.
   socials: SOCIAL_LINKS.filter((social) => social.platform !== "YouTube"),
+  // Follower count drifts over time — keep it here instead of hardcoded in
+  // the component so it's a one-line update.
+  followers: {
+    count: "13,2 mil",
+    label: "Seguidores",
+    quote: "[PENDIENTE DE CONFIRMAR CON CLIENTE] — testimonio corto del dueño de Punto Ya.",
+  },
+} as const;
+
+// NEW section — the client has been mentioned in local media, but which
+// outlets/segments to name (and their real logos/links) still needs
+// confirmation. Logos are text placeholders until then.
+export const MEDIOS_CONTENT = {
+  tag: "Nos mencionaron",
+  heading: "Mención en los medios de comunicación",
+  pendingNote:
+    "[PENDIENTE DE CONFIRMAR CON CLIENTE] — nombres de los programas/medios y breve resumen de cada mención.",
+  logos: [
+    { id: "medio-1", label: "LOGO", href: "#" }, // TODO: reemplazar por el link real de la nota
+    { id: "medio-2", label: "LOGO", href: "#" }, // TODO: reemplazar por el link real de la nota
+    { id: "medio-3", label: "LOGO", href: "#" }, // TODO: reemplazar por el link real de la nota
+    { id: "medio-4", label: "LOGO", href: "#" }, // TODO: reemplazar por el link real de la nota
+    { id: "medio-5", label: "LOGO", href: "#" }, // TODO: reemplazar por el link real de la nota
+  ],
 } as const;
 
 export const HERO_CONTENT = {
@@ -111,48 +135,34 @@ export const BENEFICIOS_CONTENT = {
   ],
 } as const;
 
-export const MAQUINAS_CONTENT = {
+// The client only sells one real model in Argentina today — the "Máquina
+// Mixta". The rest of the catalog (coffee, etc.) exists but isn't sold
+// here yet, so this is a single featured-product section, not a picker.
+// Full catalog lives at /catalogo (placeholder page) until that changes.
+export const PRODUCTO_CONTENT = {
   tag: "Catálogo",
-  heading: "Nuestros modelos",
-  lead: "Cada modelo está diseñado para maximizar las ventas según el tipo de ubicación y el volumen de tráfico.",
-  items: [
-    {
-      id: "bebidas",
-      categoria: "Bebidas",
-      tagLabel: "Bebidas",
-      nombre: "Máquina de Bebidas",
-      desc: "Bebidas frías y calientes, jugos, aguas y energizantes. Refrigeración regulable. Ideal para espacios con alta demanda de hidratación.",
-      specs: [
-        "Hasta 300 unidades",
-        "Hasta 30 variedades",
-        "Pantalla táctil y refrigeración",
-      ],
-    },
-    {
-      id: "snacks",
-      categoria: "Snacks",
-      tagLabel: "Snacks",
-      nombre: "Máquina de Snacks",
-      desc: "Golosinas, galletitas, barras de cereal y snacks saludables. La mayor capacidad del catálogo, ideal para espacios de alto tráfico.",
-      specs: [
-        "Hasta 500 unidades",
-        "Hasta 60 variedades",
-        "Ruedas con traba y pantalla táctil",
-      ],
-    },
-    {
-      id: "mixta",
-      categoria: "Mixta",
-      tagLabel: "⭐ Más elegido",
-      nombre: "Máquina Mixta",
-      desc: "Combina snacks y bebidas en un solo equipo. La solución más completa y versátil para cualquier espacio. El modelo más elegido por nuestros clientes.",
-      specs: [
-        "Hasta 400 unidades",
-        "Hasta 40 variedades mixtas",
-        "Configuración totalmente personalizable",
-      ],
-    },
+  heading: "Nuestro modelo",
+  lead: "El equipo más completo y versátil de nuestro catálogo, listo para instalar en cualquier espacio.",
+  nombre: "Máquina Mixta ColVending",
+  desc: "Combina snacks, bebidas y comida en un solo equipo. La solución más completa y versátil para cualquier espacio.",
+  badge: "⭐ Más elegido",
+  specs: [
+    "Hasta 400 unidades de capacidad",
+    "Hasta 40 variedades mixtas",
+    "Pantalla táctil y sistema de pago (QR, tarjeta, efectivo)",
+    "Refrigeración regulable",
+    "Configuración totalmente personalizable",
+    "Garantía: 12 meses",
   ],
+  pendingSpecs:
+    "[PENDIENTE DE CONFIRMAR CON CLIENTE] — dimensiones, peso, consumo eléctrico, tiempo de entrega/instalación.",
+  price: {
+    display: "$15.000.000 ARS aprox.", // TODO: confirmar precio final con el cliente
+    note: "Precio estimado, sujeto a confirmación.",
+  },
+  ctaPrimary: "Hablar con un asesor",
+  ctaSecondary: "Ver catálogo completo",
+  catalogHref: "/catalogo",
 } as const;
 
 // NEW section — no client-approved figures or legal terms exist yet for
@@ -418,64 +428,4 @@ export const FAQ_CONTENT = {
       ],
     },
   ],
-} as const;
-
-// Original UI copy for the demo lead-qualification flow (not ported from
-// the live site — it doesn't exist there yet). No backend: state machine +
-// simulated submit only, per the prototype scope.
-export const LEAD_FORM_CONTENT = {
-  tag: "¿Es para vos?",
-  heading: "Descubrí si tu perfil califica",
-  lead: "Respondé 4 preguntas rápidas y te decimos si tu proyecto encaja con lo que buscamos en un nuevo operador ColVending.",
-  steps: [
-    {
-      id: "presupuesto",
-      question: "¿Con qué presupuesto contás hoy?",
-      options: [
-        { value: "sin-definir", label: "Todavía no lo definí" },
-        { value: "una-maquina", label: "Capital para 1 máquina" },
-        { value: "varias-maquinas", label: "Capital para 2 a 5 máquinas" },
-        { value: "franquicia", label: "Busco una inversión mayor (franquicia)" },
-      ],
-    },
-    {
-      id: "ubicacion",
-      question: "¿Ya tenés un lugar para instalarla?",
-      options: [
-        { value: "listo", label: "Sí, tengo el espacio listo" },
-        { value: "en-mente", label: "Tengo un lugar en mente, falta confirmar" },
-        { value: "necesito-ayuda", label: "Todavía no, necesito ayuda para encontrar uno" },
-      ],
-    },
-    {
-      id: "objetivo",
-      question: "¿Cuál es tu objetivo principal?",
-      options: [
-        { value: "ingreso-extra", label: "Generar un ingreso extra" },
-        { value: "negocio-principal", label: "Armar mi negocio principal" },
-        { value: "franquicia", label: "Evaluar una franquicia ColVending" },
-        { value: "diversificar", label: "Diversificar inversiones" },
-      ],
-    },
-    {
-      id: "plazo",
-      question: "¿En cuánto tiempo te gustaría arrancar?",
-      options: [
-        { value: "ya", label: "Lo antes posible" },
-        { value: "3-meses", label: "En los próximos 3 meses" },
-        { value: "sin-fecha", label: "Estoy evaluando, sin fecha definida" },
-      ],
-    },
-  ],
-  submitting: "Analizando tu perfil...",
-  qualified: {
-    heading: "¡Tu perfil califica!",
-    body: "Encontramos buen encaje entre tu proyecto y lo que buscamos en un nuevo operador. Un asesor de ColVending te va a contactar por WhatsApp para avanzar con los próximos pasos.",
-    cta: "Hablar con un asesor ahora",
-  },
-  notQualifiedYet: {
-    heading: "Todavía estás en etapa de exploración",
-    body: "Por ahora tu proyecto necesita definirse un poco más antes de avanzar. Te dejamos información para que sigas evaluando, y cuando estés listo hablamos con gusto.",
-    cta: "Consultar de todas formas",
-  },
 } as const;
