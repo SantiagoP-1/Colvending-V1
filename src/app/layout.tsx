@@ -8,9 +8,8 @@ import "./globals.css";
 
 // "latin" alone already covers every character Spanish needs (á é í ó ú ñ ü
 // ¿ ¡ all live in the Latin-1 Supplement block within the base "latin"
-// subset) — "latin-ext" only adds Central/Eastern-European letters this
-// site never uses, and was silently doubling the font payload (~195KB of
-// woff2 measured across both families before this fix).
+// subset) — don't add "latin-ext": it only adds Central/Eastern-European
+// letters this site never uses, and roughly doubles the font payload.
 const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-bricolage",

@@ -61,12 +61,12 @@ export function Instalaciones() {
   );
   const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  // react-simple-maps + d3-geo is one of the heaviest chunks on this page —
-  // dynamic(ssr:false) already keeps it off the server render, but the
-  // client-side import() still fired as soon as this section mounted,
-  // i.e. on every page load even for visitors who never scroll this far.
-  // Gating it behind the same "in view" check StatCounter.tsx already uses
-  // defers that fetch until the map is actually about to be seen.
+  // react-simple-maps + d3-geo is one of the heaviest chunks on this page.
+  // dynamic(ssr:false) keeps it off the server render, but without this
+  // "in view" gate the client-side import() fires as soon as this section
+  // mounts — i.e. on every page load, even for visitors who never scroll
+  // this far. Reusing the same useInView check StatCounter.tsx already
+  // uses defers that fetch until the map is actually about to be seen.
   const mapInView = useInView(mapContainerRef, { once: true, margin: "200px" });
 
   useEffect(() => {

@@ -1,36 +1,82 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ColVending
 
-## Getting Started
+Sitio web comercial de **ColVending**, empresa de Balcarce (Buenos Aires, Argentina) dedicada a la venta e instalación de máquinas expendedoras automáticas. La landing presenta el producto, el modelo de franquicia, casos reales de clientes y toda la información que un potencial inversor necesita antes de contactar por WhatsApp.
 
-First, run the development server:
+## 🔗 Preview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Producción: **[colvending-v1.vercel.app](https://colvending-v1.vercel.app)**
+
+## ✨ Características
+
+- Landing de una sola página con secciones para producto, beneficios, franquicias, rentabilidad, caso de éxito real, presencia nacional, historia de la empresa y preguntas frecuentes.
+- Mapa interactivo de Argentina (con zoom animado por ubicación) mostrando las máquinas instaladas, agrupadas por provincia.
+- Modal accesible con las especificaciones técnicas de la máquina (foco atrapado dentro del diálogo, cierre con `Escape`).
+- FAQ con categorías por tabs y acordeón.
+- Carrusel tipo coverflow para reels en mobile, grilla en desktop.
+- CTAs con deep links directos a WhatsApp.
+- Animaciones de scroll (GSAP) y de entrada (Framer Motion), respetando `prefers-reduced-motion` en todo el sitio.
+- SEO técnico completo: metadata por página, Open Graph con imagen generada dinámicamente, Twitter Card, datos estructurados JSON-LD (`LocalBusiness` + `FAQPage`), `sitemap.xml` y `robots.txt` generados por Next.js.
+- Totalmente responsive, de 360px a desktop.
+
+## 🛠️ Tech Stack
+
+- [Next.js 16](https://nextjs.org/) (App Router)
+- [React 19](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS v4](https://tailwindcss.com/)
+- [Framer Motion](https://motion.dev/) — animaciones de entrada, modal, acordeones
+- [GSAP](https://gsap.com/) (ScrollTrigger) — animaciones disparadas por scroll
+- [react-simple-maps](https://www.react-simple-maps.io/) + [d3-geo](https://github.com/d3/d3-geo) — mapa de Argentina
+- [Lucide React](https://lucide.dev/) — iconografía
+- [clsx](https://github.com/lukeed/clsx) + [tailwind-merge](https://github.com/dcastil/tailwind-merge) — composición de clases
+
+## 📁 Estructura del proyecto
+
+```
+src/
+├─ app/                  # Rutas (App Router), metadata, sitemap, robots, OG image
+├─ components/
+│  ├─ sections/          # Cada sección de la landing (Hero, Faq, Franquicias, ...)
+│  ├─ layout/            # Header y footer del sitio
+│  ├─ ui/                # Componentes reutilizables (Modal, Button, Reveal, ...)
+│  └─ providers/         # Providers globales (Framer Motion)
+├─ hooks/                # Hooks compartidos (scroll spy, scroll listener)
+├─ lib/                  # Contenido centralizado (content.ts, reels.ts), SEO, WhatsApp, utils
+└─ assets/               # Imágenes importadas por los componentes
+public/                  # Assets servidos como archivos estáticos
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Todo el copy real del sitio vive centralizado en `src/lib/content.ts` y `src/lib/reels.ts` — los componentes no tienen texto hardcodeado.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Instalación
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev
+```
 
-## Learn More
+Abrí [http://localhost:3000](http://localhost:3000).
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Variables de entorno
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```env
+NEXT_PUBLIC_SITE_URL=
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Opcional. Define el dominio usado en `canonical`, Open Graph, `sitemap.xml`, `robots.txt` y el JSON-LD. Si no se define, cae por defecto a la URL de producción actual en Vercel.
 
-## Deploy on Vercel
+## 📦 Build
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run build
+npm run start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ☁️ Deploy
+
+Proyecto listo para desplegar en [Vercel](https://vercel.com) sin configuración adicional — actualmente deployado ahí.
+
+## 👤 Autor
+
+**Santiago Pérez**
+Repositorio: [github.com/SantiagoP-1/Colvending-V1](https://github.com/SantiagoP-1/Colvending-V1)
