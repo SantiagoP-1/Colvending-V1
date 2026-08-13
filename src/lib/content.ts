@@ -246,7 +246,7 @@ export const FRANQUICIAS_CONTENT = {
   ],
   investmentNote:
     "La inversión inicial varía según la cantidad de máquinas y la zona elegida — conversemos y armamos una propuesta a medida para tu franquicia.",
-  ctaLabel: "Quiero ser franquiciado",
+  ctaLabel: "Me interesa la franquicia",
 } as const;
 
 export const RENTABILIDAD_CONTENT = {

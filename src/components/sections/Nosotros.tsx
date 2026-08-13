@@ -1,11 +1,16 @@
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionTag } from "@/components/ui/SectionTag";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
-import { Timeline } from "./Timeline";
 import { NOSOTROS_CONTENT } from "@/lib/content";
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/whatsapp";
+
+// Nosotros is the 10th of 11 sections — Timeline's GSAP scroll animation
+// has no reason to be in the bundle the browser parses for the Hero's
+// initial paint. SSR stays on, so the content still renders server-side.
+const Timeline = dynamic(() => import("./Timeline").then((mod) => mod.Timeline));
 
 export function Nosotros() {
   return (
