@@ -18,12 +18,15 @@
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-simple-maps": "^3.0.0",
-    "react-use-measure": "^2.1.7",
     "tailwind-merge": "^3.6.0",
     "world-atlas": "^2.0.2"
   },
   "overrides": {
-    "d3-color": "^3.1.0"
+    "d3-color": "^3.1.0",
+    "react-simple-maps": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -121,7 +121,7 @@ export function Maquinas() {
         <dl className="mt-5 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
           {PRODUCTO_CONTENT.techSpecs.map((spec) => (
             <div key={spec.label}>
-              <dt className="text-[11px] font-semibold tracking-wide text-ink-400 uppercase">
+              <dt className="text-[11px] font-semibold tracking-wide text-ink-300 uppercase">
                 {spec.label}
               </dt>
               <dd className="mt-0.5 text-sm leading-relaxed text-ink-200">{spec.value}</dd>

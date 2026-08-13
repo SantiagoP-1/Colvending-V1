@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useInView } from "framer-motion";
 import { ChevronDown, MapPin } from "lucide-react";
 import logoIcon from "@/assets/images/logo-icon.webp";
 import type { ArgentinaMapMarker } from "@/components/ui/ArgentinaMap";
@@ -60,6 +60,14 @@ export function Instalaciones() {
     () => new Set(PROVINCE_GROUPS.map((g) => g.province)),
   );
   const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+  // react-simple-maps + d3-geo is one of the heaviest chunks on this page —
+  // dynamic(ssr:false) already keeps it off the server render, but the
+  // client-side import() still fired as soon as this section mounted,
+  // i.e. on every page load even for visitors who never scroll this far.
+  // Gating it behind the same "in view" check StatCounter.tsx already uses
+  // defers that fetch until the map is actually about to be seen.
+  const mapInView = useInView(mapContainerRef, { once: true, margin: "200px" });
 
   useEffect(() => {
     return () => {
@@ -112,15 +120,22 @@ export function Instalaciones() {
           delay={0.1}
           className="mt-10 grid grid-cols-1 items-center gap-10 rounded-card border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 p-6 sm:p-10 lg:grid-cols-[1fr_0.85fr] lg:gap-12"
         >
-          <div className="relative mx-auto aspect-[3/4] w-full max-w-sm overflow-hidden rounded-2xl bg-ink-950/60">
-            <ArgentinaMap
-              markers={INSTALACIONES_CONTENT.markers}
-              center={center}
-              zoom={zoom}
-              activeId={activeId}
-              onMarkerClick={focusLocation}
-              className="h-full w-full"
-            />
+          <div
+            ref={mapContainerRef}
+            className="relative mx-auto aspect-[3/4] w-full max-w-sm overflow-hidden rounded-2xl bg-ink-950/60"
+          >
+            {mapInView ? (
+              <ArgentinaMap
+                markers={INSTALACIONES_CONTENT.markers}
+                center={center}
+                zoom={zoom}
+                activeId={activeId}
+                onMarkerClick={focusLocation}
+                className="h-full w-full"
+              />
+            ) : (
+              <div className="h-full w-full animate-pulse bg-white/[0.03]" />
+            )}
             <Image
               src={logoIcon}
               alt=""
@@ -151,7 +166,7 @@ export function Instalaciones() {
                     >
                       <span>
                         {group.province}{" "}
-                        <span className="font-normal text-ink-400">({group.markers.length})</span>
+                        <span className="font-normal text-ink-300">({group.markers.length})</span>
                       </span>
                       <ChevronDown
                         size={16}
