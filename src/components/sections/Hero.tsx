@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import {
   Clock,
   Smartphone,
@@ -225,22 +225,28 @@ export function Hero() {
         </div>
       </Container>
 
-      {/* Scroll cue */}
-      <motion.div
-        className="absolute inset-x-0 bottom-8 hidden justify-center sm:flex"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.6 }}
-        aria-hidden="true"
-      >
+      {/* Scroll cue. Wrapped in its own MotionConfig to opt out of the
+          sitewide reducedMotion="user" setting (MotionProvider.tsx) — this
+          bounce is purely decorative (aria-hidden) and subtle enough that
+          it's worth keeping for people with reduced-motion enabled, unlike
+          the larger transform animations elsewhere on the site. */}
+      <MotionConfig reducedMotion="never">
         <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          className="flex h-9 w-6 items-start justify-center rounded-full border border-white/20 p-1.5"
+          className="absolute inset-x-0 bottom-8 hidden justify-center sm:flex"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.1, duration: 0.6 }}
+          aria-hidden="true"
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+            className="flex h-9 w-6 items-start justify-center rounded-full border border-white/20 p-1.5"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+          </motion.div>
         </motion.div>
-      </motion.div>
+      </MotionConfig>
     </section>
   );
 }

@@ -7,7 +7,8 @@ export const BRAND = {
   name: "ColVending",
   tagline: "Automatizá ventas. Generá ingresos 24/7.",
   addressLines: ["Balcarce, Buenos Aires,", "Argentina"],
-  email: "info@colvending.com.ar",
+  addressHref: "https://maps.app.goo.gl/nXCnwQjhnH6tnq9G7",
+  email: "colvendingargentina@gmail.com",
   hoursLines: ["Lunes a Viernes", "8:00 a 20:00 hs"],
   copyright: "© 2024–2026 ColVending. Todos los derechos reservados.",
 } as const;
@@ -43,6 +44,7 @@ export const CASO_REAL_CONTENT = {
   storeTagline: "El primer local automático de todo el país",
   storeSlogan: "Lo que querés, YA!",
   location: "Balcarce, Kelly e/ 21 y 23 Nro 785",
+  locationHref: "https://maps.app.goo.gl/oHZHavP7UpCZfgtJ8",
   body: "Este local ya está armado y equipado con máquinas ColVending — y no para de crecer. Su dueño, que además importa las máquinas desde China, muestra el día a día en redes: cómo lo reestockea, lo modifica y lo va mejorando.",
   ctaQuestion: "Si querés resultados iguales, ¿qué esperás?",
   ctaLabel: "Quiero un local así",
@@ -54,24 +56,55 @@ export const CASO_REAL_CONTENT = {
   followers: {
     count: "13,2 mil",
     label: "Seguidores",
-    quote: "[PENDIENTE DE CONFIRMAR CON CLIENTE] — testimonio corto del dueño de Punto Ya.",
+    quote: "La verdad, muy orgulloso de haber creado el primer local automático de Argentina. ¡Siempre con ganas de más!",
   },
 } as const;
 
-// NEW section — the client has been mentioned in local media, but which
-// outlets/segments to name (and their real logos/links) still needs
-// confirmation. Logos are text placeholders until then.
+type MentionSegment = { text: string; href?: string };
+
+// The client was mentioned by these 3 outlets — real names, logos and
+// direct links to each mention, all confirmed.
 export const MEDIOS_CONTENT = {
   tag: "Nos mencionaron",
   heading: "Mención en los medios de comunicación",
-  pendingNote:
-    "[PENDIENTE DE CONFIRMAR CON CLIENTE] — nombres de los programas/medios y breve resumen de cada mención.",
+  // Rendered as one paragraph with 2 segments turned into inline anchor
+  // links (see Medios.tsx). scroll-behavior:smooth (globals.css) already
+  // makes these anchors scroll smoothly, no extra JS needed.
+  mentionText: [
+    { text: "Radio Gabal, Hablemos de Negocios y Emprendi2 TV contaron cómo arrancó ColVending. " },
+    { text: "Leé la historia del inicio de ColVending", href: "#nosotros" },
+    { text: " o " },
+    { text: "mirá el primer negocio automático de Argentina en acción", href: "#caso-real" },
+    { text: "." },
+  ] as MentionSegment[],
+  // width/height match each file's real pixel size — needed so
+  // object-contain scales them correctly instead of boxing a square logo
+  // into a wide frame (or vice versa).
   logos: [
-    { id: "medio-1", label: "LOGO", href: "#" }, // TODO: reemplazar por el link real de la nota
-    { id: "medio-2", label: "LOGO", href: "#" }, // TODO: reemplazar por el link real de la nota
-    { id: "medio-3", label: "LOGO", href: "#" }, // TODO: reemplazar por el link real de la nota
-    { id: "medio-4", label: "LOGO", href: "#" }, // TODO: reemplazar por el link real de la nota
-    { id: "medio-5", label: "LOGO", href: "#" }, // TODO: reemplazar por el link real de la nota
+    {
+      id: "radiogabal",
+      label: "Radio Gabal",
+      href: "https://www.instagram.com/p/DTnkRv4kXq3/",
+      logoSrc: "/medios/radiogabal.jpg",
+      width: 150,
+      height: 150,
+    },
+    {
+      id: "hablemos-de-negocios",
+      label: "Hablemos de Negocios",
+      href: "https://www.instagram.com/p/Dbn3PaXj-Z0/",
+      logoSrc: "/medios/hablemosdenegocios.jpg",
+      width: 150,
+      height: 150,
+    },
+    {
+      id: "emprendi2tv",
+      label: "Emprendi2 TV",
+      href: "https://www.instagram.com/p/DZ8JHqrqp2Q/",
+      logoSrc: "/medios/emprendi2tv.png",
+      width: 198,
+      height: 49,
+    },
   ],
 } as const;
 
@@ -91,7 +124,7 @@ export const HERO_CONTENT = {
     { icon: "zap", label: "Fácil instalación" },
   ],
   stats: [
-    { value: 500, display: "500", label: "Unidades" },
+    { value: null, display: "300–600", label: "Unidades" },
     { value: 60, display: "60", label: "Variedades" },
     { value: null, display: "24/7", label: "Operación" },
     { value: 12, display: "12", label: "Meses garantía" },
@@ -147,55 +180,72 @@ export const PRODUCTO_CONTENT = {
   desc: "Combina snacks, bebidas y comida en un solo equipo. La solución más completa y versátil para cualquier espacio.",
   badge: "⭐ Más elegido",
   specs: [
-    "Hasta 400 unidades de capacidad",
+    "Capacidad: 300 a 600 unidades (PCS)",
     "Hasta 40 variedades mixtas",
     "Pantalla táctil y sistema de pago (QR, tarjeta, efectivo)",
     "Refrigeración regulable",
     "Configuración totalmente personalizable",
     "Garantía: 12 meses",
   ],
-  pendingSpecs:
-    "[PENDIENTE DE CONFIRMAR CON CLIENTE] — dimensiones, peso, consumo eléctrico, tiempo de entrega/instalación.",
+  // Real spec sheet from the supplier. Keep this to physical/technical specs
+  // of the machine itself — delivery time, after-sales support and similar
+  // "process" questions live in the FAQ (and get asked directly over
+  // WhatsApp), not here.
+  techSpecs: [
+    { label: "Dimensiones", value: "850 mm (ancho) x 1350 mm (profundidad) x 2047 mm (alto)" },
+    { label: "Peso", value: "300 kg" },
+    { label: "Modelo", value: "YX-SHJHW-02 — estructura de acero" },
+    { label: "Interfaz de pago", value: "MDB / DEX" },
+    { label: "Certificaciones", value: "CE, RoHS, FCC, ISO 9001:2015, ISO 14001:2015" },
+    { label: "Origen", value: "Guangzhou, China" },
+  ],
+  techSpecsTitle: "Especificaciones técnicas",
+  techSpecsCta: "Ver especificaciones técnicas",
   price: {
-    display: "$15.000.000 ARS aprox.", // TODO: confirmar precio final con el cliente
-    note: "Precio estimado, sujeto a confirmación.",
+    display: "$15.000.000 ARS + IVA.", // TODO: confirmar precio final con el cliente
+    note: "Precio estimado.",
   },
   ctaPrimary: "Hablar con un asesor",
   ctaSecondary: "Ver catálogo completo",
   catalogHref: "/catalogo",
 } as const;
 
-// NEW section — no client-approved figures or legal terms exist yet for
-// this offer. Every concrete number/condition below is an explicit
-// placeholder; do not replace with invented figures.
+// No hard commercial/legal terms (territory exclusivity, franchise fee,
+// contract length) are confirmed with the client yet, so none are stated
+// here — the pillars below only describe things already true elsewhere on
+// this site (the FAQ's location-assistance answer, the delivery/support
+// FAQ, the real media mentions and socials). The investment note
+// deliberately gives no figure: franchise cost varies by package/territory
+// and isn't finalized, so the copy routes to a WhatsApp conversation
+// instead of a number — this is intentional, not a placeholder to fill in.
 export const FRANQUICIAS_CONTENT = {
   tag: "Franquicias ColVending",
   heading: "Llevá ColVending a tu ciudad",
-  lead: "Un modelo de franquicia pensado para quienes quieren construir una red de máquinas expendedoras con el respaldo, la marca y el know-how de ColVending — no una máquina suelta, sino un negocio replicable.",
+  lead: "Un modelo de franquicia pensado para quienes quieren construir una red de máquinas expendedoras con el respaldo y la marca de Colvending — no una máquina suelta, sino un negocio replicable.",
   pillars: [
     {
       icon: "mapPin",
-      titulo: "Territorio exclusivo",
-      desc: "[PENDIENTE DE CONFIRMAR CON CLIENTE] — alcance y exclusividad de zona por franquiciado.",
+      titulo: "Ubicación asistida",
+      desc: "Te ayudamos a evaluar y negociar cada ubicación — tráfico, tipo de local, condiciones de alquiler o comisión — para que la elijas con datos, no a ciegas.",
     },
     {
       icon: "packageCheck",
       titulo: "Paquete de arranque",
-      desc: "[PENDIENTE DE CONFIRMAR CON CLIENTE] — cantidad de máquinas, equipamiento y stock inicial incluidos.",
+      desc: "Arrancás con un pack de varias máquinas Mixtas ColVending listas para operar, stock inicial de producto y cartelería de marca — la cantidad exacta se ajusta según tu inversión y la zona elegida.",
     },
     {
       icon: "graduationCap",
       titulo: "Capacitación y soporte",
-      desc: "[PENDIENTE DE CONFIRMAR CON CLIENTE] — programa de formación y acompañamiento continuo para el franquiciado.",
+      desc: "Capacitación completa al recibir tus máquinas — carga de productos, precios y uso de la app de control — más acompañamiento continuo: soporte por WhatsApp, asistencia técnica remota y repuestos en todo el país.",
     },
     {
       icon: "megaphone",
       titulo: "Marca y marketing",
-      desc: "[PENDIENTE DE CONFIRMAR CON CLIENTE] — materiales de marca, presencia digital y campañas centralizadas.",
+      desc: "Acceso a la identidad de marca ColVending, material gráfico para tus máquinas y presencia en las campañas, redes y medios de comunicación de la marca a nivel nacional.",
     },
   ],
   investmentNote:
-    "[PENDIENTE DE CONFIRMAR CON CLIENTE] — inversión inicial, condiciones comerciales y plazos de la franquicia.",
+    "La inversión inicial varía según la cantidad de máquinas y la zona elegida — conversemos y armamos una propuesta a medida para tu franquicia.",
   ctaLabel: "Quiero ser franquiciado",
 } as const;
 
@@ -210,7 +260,7 @@ export const RENTABILIDAD_CONTENT = {
       desc: "Tiempo estimado para recuperar la inversión inicial",
     },
     {
-      val: "60–120%",
+      val: "60%–120%",
       label: "Margen promedio",
       desc: "Ganancia sobre el costo de cada producto vendido",
     },
@@ -283,6 +333,67 @@ export const NOSOTROS_CONTENT = {
     },
   ] as TimelineEntry[],
 };
+
+export const INSTALACIONES_CONTENT = {
+  tag: "Presencia nacional",
+  heading: "Ya estamos en todo el país",
+  lead: "Varios emprendedores confiaron en ColVending e instalaron su máquina en distintas provincias. Mirá dónde están funcionando algunas de ellas.",
+  // [longitude, latitude] — the order react-simple-maps / GeoJSON expect,
+  // not [lat, lon].
+  markers: [
+    {
+      id: "quilmes",
+      coordinates: [-58.2694, -34.7206] as [number, number],
+      label: "Quilmes, Buenos Aires",
+      province: "Buenos Aires",
+    },
+    {
+      id: "tucuman",
+      coordinates: [-65.2176, -26.8083] as [number, number],
+      label: "Campus UNSTA, Tucumán",
+      province: "Tucumán",
+    },
+    {
+      id: "lujan",
+      coordinates: [-59.1052, -34.5652] as [number, number],
+      label: "Luján, Buenos Aires",
+      province: "Buenos Aires",
+    },
+    {
+      id: "zarate",
+      coordinates: [-59.0243, -34.097] as [number, number],
+      label: "Zárate, Buenos Aires",
+      province: "Buenos Aires",
+    },
+    {
+      id: "benavidez",
+      coordinates: [-58.697, -34.438] as [number, number],
+      label: "Benavídez, Buenos Aires",
+      province: "Buenos Aires",
+    },
+    {
+      id: "cordoba",
+      coordinates: [-64.1888, -31.4201] as [number, number],
+      label: "Córdoba Capital",
+      province: "Córdoba",
+    },
+    {
+      id: "trenquelauquen",
+      coordinates: [-62.7422, -35.9706] as [number, number],
+      label: "Trenque Lauquen, Buenos Aires",
+      province: "Buenos Aires",
+    },
+    {
+      id: "balcarce",
+      // Rounded to 4 decimals (~11m precision, same as the other markers)
+      // — the original 15-decimal value was precise enough to trip a
+      // server/client floating-point mismatch in d3-geo's trig math.
+      coordinates: [-58.2588, -37.8492] as [number, number],
+      label: "Balcarce, Buenos Aires",
+      province: "Buenos Aires",
+    },
+  ],
+} as const;
 
 export const FAQ_CONTENT = {
   tag: "Preguntas frecuentes",
@@ -361,11 +472,11 @@ export const FAQ_CONTENT = {
       items: [
         {
           q: "¿Es segura la máquina contra robos o vandalismo?",
-          a: "Las máquinas cuentan con estructura de acero reforzado, cerradura de seguridad y sistema de alarma anti-vandálica. En caso de manipulación forzada, el sistema envía una alerta inmediata a tu celular.",
+          a: "Las máquinas cuentan con estructura de acero reforzado, cerradura de seguridad, vidrio doble blindado y trabas de seguridad en las ruedas.",
         },
         {
-          q: "¿Qué pasa con el dinero en efectivo dentro de la máquina?",
-          a: "El efectivo queda guardado en un casetero de acero con cerradura de seguridad. Te recomendamos retirarlo periódicamente y tenemos buenas prácticas para minimizar el riesgo.",
+          q: "¿Qué pasa con el dinero en efectivo que se guarda dentro de la máquina?",
+          a: "El efectivo queda guardado en un casetero de acero con cerradura de seguridad. Te recomendamos retirarlo semanalmente y tener una buena práctica de control, para evitar cualquier tipo de problema.",
         },
       ],
     },
@@ -383,7 +494,7 @@ export const FAQ_CONTENT = {
         },
         {
           q: "¿Cuántos metros cuadrados necesita la máquina?",
-          a: "La huella mínima es de aproximadamente 0,90m x 0,80m. Necesitás además un espacio de 0,80m frente para que los clientes puedan operar cómodamente.",
+          a: "La máquina ocupa un espacio de aproximadamente 0,90 m de ancho por 0,80 m de profundidad. Además, hay que dejar unos 0,80 m libres por delante para que los clientes puedan usarla cómodamente.",
         },
       ],
     },
@@ -403,10 +514,6 @@ export const FAQ_CONTENT = {
           q: "¿Cuántas máquinas necesito para vivir de esto?",
           a: "Depende de tus gastos y metas. Muchos operadores empiezan con 1 a 3 máquinas para complementar ingresos, y luego escalan hasta tener una red de 10, 20 o más unidades.",
         },
-        {
-          q: "¿Hay costos fijos mensuales?",
-          a: "Los únicos costos recurrentes son: el alquiler o comisión del espacio (si aplica), la reposición de productos y la energía eléctrica (consumo muy bajo, aprox. $5.000–$8.000/mes por máquina).",
-        },
       ],
     },
     {
@@ -419,7 +526,7 @@ export const FAQ_CONTENT = {
         },
         {
           q: "¿Qué soporte tienen disponible?",
-          a: "Soporte por WhatsApp de lunes a viernes de 9 a 18 hs, asistencia técnica remota, visitas técnicas presenciales programadas y repuestos originales disponibles en todo el país.",
+          a: "Soporte por WhatsApp de lunes a viernes de 8:00 a 20:00 hs, asistencia técnica remota, visitas técnicas presenciales programadas y repuestos originales disponibles en todo el país.",
         },
         {
           q: "¿Qué pasa si la máquina tiene un problema en fin de semana?",

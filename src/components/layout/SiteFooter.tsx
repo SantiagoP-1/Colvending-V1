@@ -64,11 +64,16 @@ export function SiteFooter() {
             <address className="mt-4 space-y-3.5 text-sm text-ink-300 not-italic">
               <div className="flex items-start gap-3">
                 <MapPin size={16} className="mt-0.5 shrink-0 text-red-500" aria-hidden="true" />
-                <span>
+                <a
+                  href={BRAND.addressHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-paper"
+                >
                   {BRAND.addressLines[0]}
                   <br />
                   {BRAND.addressLines[1]}
-                </span>
+                </a>
               </div>
               <div className="flex items-center gap-3">
                 <WhatsAppIcon className="shrink-0 text-red-500" />

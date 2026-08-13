@@ -8,6 +8,7 @@ import { Maquinas } from "@/components/sections/Maquinas";
 import { Franquicias } from "@/components/sections/Franquicias";
 import { Rentabilidad } from "@/components/sections/Rentabilidad";
 import { CasoReal } from "@/components/sections/CasoReal";
+import { Instalaciones } from "@/components/sections/Instalaciones";
 import { Nosotros } from "@/components/sections/Nosotros";
 import { Faq } from "@/components/sections/Faq";
 import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
@@ -27,6 +28,7 @@ export default function Home() {
         <Franquicias />
         <Rentabilidad />
         <CasoReal />
+        <Instalaciones />
         <Nosotros />
         <Faq />
       </main>

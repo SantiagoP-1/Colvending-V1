@@ -18,6 +18,9 @@ export function Reels() {
           <h2 className="font-display mt-6 text-4xl font-semibold text-paper sm:text-5xl">
             {REELS_CONTENT.heading}
           </h2>
+          <p className="mt-4 text-lg leading-relaxed text-ink-300">
+            {REELS_CONTENT.lead}
+          </p>
         </Reveal>
 
         <Reveal delay={0.1} className="mt-10">

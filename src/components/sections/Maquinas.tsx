@@ -1,8 +1,12 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import { Check } from "lucide-react";
+import { Check, Info } from "lucide-react";
 import machinePhoto from "@/assets/images/maquina.webp";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { Modal } from "@/components/ui/Modal";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionTag } from "@/components/ui/SectionTag";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
@@ -10,6 +14,8 @@ import { PRODUCTO_CONTENT } from "@/lib/content";
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/whatsapp";
 
 export function Maquinas() {
+  const [specsOpen, setSpecsOpen] = useState(false);
+
   return (
     <section
       id="maquinas"
@@ -31,20 +37,34 @@ export function Maquinas() {
           delay={0.1}
           className="relative mt-10 grid grid-cols-1 items-center gap-10 overflow-hidden rounded-card border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 p-6 sm:p-10 lg:grid-cols-2 lg:gap-16"
         >
-          <div className="relative mx-auto w-full max-w-xs">
-            <div
-              className="absolute inset-x-8 bottom-2 h-14 rounded-full bg-red-600/25 blur-[36px]"
-              aria-hidden="true"
-            />
-            <Image
-              src={machinePhoto}
-              alt="Máquina Mixta ColVending"
-              sizes="(min-width: 1024px) 320px, 70vw"
-              className="relative mx-auto h-auto w-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
-            />
-            <span className="absolute top-0 right-0 rounded-chip bg-red-500 px-3 py-1 text-xs font-semibold text-white shadow-red-glow">
-              {PRODUCTO_CONTENT.badge}
-            </span>
+          <div className="mx-auto w-full max-w-xs">
+            <button
+              type="button"
+              onClick={() => setSpecsOpen(true)}
+              aria-haspopup="dialog"
+              aria-label={`${PRODUCTO_CONTENT.techSpecsCta} de la ${PRODUCTO_CONTENT.nombre}`}
+              className="group relative block w-full cursor-pointer text-left"
+            >
+              <div className="relative">
+                <div
+                  className="absolute inset-x-8 bottom-2 h-14 rounded-full bg-red-600/25 blur-[36px]"
+                  aria-hidden="true"
+                />
+                <Image
+                  src={machinePhoto}
+                  alt="Máquina Mixta ColVending"
+                  sizes="(min-width: 1024px) 320px, 70vw"
+                  className="relative mx-auto h-auto w-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-transform duration-300 ease-out-soft group-hover:scale-[1.02]"
+                />
+                <span className="absolute top-0 right-0 rounded-chip bg-red-500 px-3 py-1 text-xs font-semibold text-white shadow-red-glow">
+                  {PRODUCTO_CONTENT.badge}
+                </span>
+              </div>
+              <span className="mt-3 flex items-center justify-center gap-1.5 text-xs font-medium text-ink-300 transition-colors duration-200 group-hover:text-red-400">
+                <Info size={14} aria-hidden="true" />
+                {PRODUCTO_CONTENT.techSpecsCta}
+              </span>
+            </button>
           </div>
 
           <div>
@@ -68,9 +88,6 @@ export function Maquinas() {
                 </li>
               ))}
             </ul>
-            <p className="mt-4 text-xs leading-relaxed text-ink-400 italic">
-              {PRODUCTO_CONTENT.pendingSpecs}
-            </p>
 
             <div className="mt-6 rounded-btn border border-white/10 bg-white/[0.03] p-4">
               <p className="font-display text-2xl font-semibold text-paper">
@@ -96,6 +113,22 @@ export function Maquinas() {
           </div>
         </Reveal>
       </Container>
+
+      <Modal open={specsOpen} onClose={() => setSpecsOpen(false)} title={PRODUCTO_CONTENT.techSpecsTitle}>
+        <h3 className="font-display pr-10 text-xl font-semibold text-paper sm:text-2xl">
+          {PRODUCTO_CONTENT.techSpecsTitle}
+        </h3>
+        <dl className="mt-5 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+          {PRODUCTO_CONTENT.techSpecs.map((spec) => (
+            <div key={spec.label}>
+              <dt className="text-[11px] font-semibold tracking-wide text-ink-400 uppercase">
+                {spec.label}
+              </dt>
+              <dd className="mt-0.5 text-sm leading-relaxed text-ink-200">{spec.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </Modal>
     </section>
   );
 }

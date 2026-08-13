@@ -24,7 +24,7 @@ export function Rentabilidad() {
         <div className="mt-16 grid grid-cols-1 gap-y-10 sm:grid-cols-2 sm:divide-x sm:divide-white/10 lg:grid-cols-4">
           {RENTABILIDAD_CONTENT.stats.map((stat, index) => (
             <Reveal key={stat.label} delay={index * 0.08} className="px-0 sm:px-8 lg:px-6">
-              <div className="font-display text-[clamp(2.75rem,5vw,4rem)] leading-none font-semibold text-red-500">
+              <div className="font-display text-[clamp(1.75rem,2.7vw,2.375rem)] font-semibold text-red-500 leading-none">
                 {stat.val}
               </div>
               <div className="mt-3 text-base font-semibold text-paper">

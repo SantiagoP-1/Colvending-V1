@@ -88,7 +88,7 @@ export function Faq() {
           tabIndex={0}
           className="mt-6 divide-y divide-white/10 border-t border-white/10"
         >
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="popLayout">
             <motion.div
               key={category.cat}
               initial={{ opacity: 0, y: 8 }}

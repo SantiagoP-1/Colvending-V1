@@ -59,7 +59,7 @@ export function Franquicias() {
                   <h3 className="mt-4 text-base font-semibold text-paper">
                     {pillar.titulo}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-300 italic">
+                  <p className="mt-2 text-sm leading-relaxed text-ink-300">
                     {pillar.desc}
                   </p>
                 </div>
@@ -70,7 +70,7 @@ export function Franquicias() {
 
         <Reveal delay={0.2} className="mt-10">
           <div className="flex flex-col items-start gap-6 rounded-card border border-dashed border-white/15 bg-white/[0.02] p-6 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-sm leading-relaxed text-ink-300 italic">
+            <p className="text-sm leading-relaxed text-ink-300">
               {FRANQUICIAS_CONTENT.investmentNote}
             </p>
             <Button

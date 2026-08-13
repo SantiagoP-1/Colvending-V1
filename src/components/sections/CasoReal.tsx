@@ -37,10 +37,15 @@ export function CasoReal() {
                 <h3 className="font-display text-2xl font-semibold text-paper">
                   {CASO_REAL_CONTENT.storeName}
                 </h3>
-                <span className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-300">
+                <a
+                  href={CASO_REAL_CONTENT.locationHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-ink-300 underline decoration-transparent underline-offset-2 transition-colors duration-200 hover:text-red-400 hover:decoration-red-400/50"
+                >
                   <MapPin size={14} className="text-red-500" aria-hidden="true" />
                   {CASO_REAL_CONTENT.location}
-                </span>
+                </a>
               </div>
 
               <p className="mt-3 border-l-2 border-red-500/40 pl-4 text-[15px] leading-relaxed text-ink-200 italic">
