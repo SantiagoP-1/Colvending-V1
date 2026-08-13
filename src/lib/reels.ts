@@ -1,6 +1,6 @@
 // Config editable de reels. `thumbnail` apunta a la miniatura real de cada
 // reel (extraída del og:image de su post de Instagram), guardada en
-// /public/placeholders/reel-N.jpg.
+// /public/placeholders/reel-N.webp.
 export type Reel = {
   id: string;
   title: string;
@@ -16,19 +16,19 @@ export const REELS_CONTENT = {
     {
       id: "instalacion",
       title: "Cómo comprar en una máquina expendedora inteligente",
-      thumbnail: "/placeholders/reel-1.jpg",
+      thumbnail: "/placeholders/reel-1.webp",
       videoUrl: "https://www.instagram.com/p/DUziQxMjavG/",
     },
     {
       id: "funcionamiento",
       title: "No te preocupes por el pago con billete falso",
-      thumbnail: "/placeholders/reel-2.jpg",
+      thumbnail: "/placeholders/reel-2.webp",
       videoUrl: "https://www.instagram.com/colvending_/reel/DU2BELCkSAb/",
     },
     {
       id: "entrega",
       title: "Cómo apagar y prender una máquina expendedora",
-      thumbnail: "/placeholders/reel-3.jpg",
+      thumbnail: "/placeholders/reel-3.webp",
       videoUrl: "https://www.instagram.com/p/DTzIDV4DQRo/",
     },
   ] satisfies Reel[],
@@ -39,19 +39,19 @@ export const CASO_REAL_REELS = [
   {
     id: "reestock",
     title: "Cómo controlamos el stock",
-    thumbnail: "/placeholders/reel-4.jpg",
+    thumbnail: "/placeholders/reel-4.webp",
     videoUrl: "https://www.instagram.com/p/Da4Ii23snES/",
   },
   {
     id: "uso-local",
     title: "Facilidad de compra",
-    thumbnail: "/placeholders/reel-5.jpg",
+    thumbnail: "/placeholders/reel-5.webp",
     videoUrl: "https://www.instagram.com/p/DZlLm1pqthZ/",
   },
   {
     id: "dia-a-dia",
     title: "Cómo actuamos contra el vandalismo",
-    thumbnail: "/placeholders/reel-6.jpg",
+    thumbnail: "/placeholders/reel-6.webp",
     videoUrl: "https://www.instagram.com/p/DZDJEDLx-CQ/",
   },
 ] satisfies Reel[];
