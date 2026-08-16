@@ -37,7 +37,7 @@ export function Maquinas() {
           delay={0.1}
           className="relative mt-10 grid grid-cols-1 items-center gap-10 overflow-hidden rounded-card border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 p-6 sm:p-10 lg:grid-cols-2 lg:gap-16"
         >
-          <div className="mx-auto w-full max-w-xs">
+          <div className="mx-auto w-full max-w-3xs">
             <button
               type="button"
               onClick={() => setSpecsOpen(true)}

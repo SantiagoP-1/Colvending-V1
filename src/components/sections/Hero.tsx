@@ -200,7 +200,7 @@ export function Hero() {
                   alt="Máquina expendedora automática ColVending"
                   priority
                   sizes="(min-width: 1024px) 340px, 90vw"
-                  className="relative mx-auto h-auto w-full max-w-[330px] object-contain drop-shadow-[0_20px_40px_rgba(215,38,56,0.25)] transition-transform duration-700 ease-out-soft hover:scale-[1.02]"
+                  className="relative mx-auto h-auto w-full max-w-67.5 object-contain drop-shadow-[0_20px_40px_rgba(215,38,56,0.25)] transition-transform duration-700 ease-out-soft hover:scale-[1.02]"
                 />
               </div>
 
