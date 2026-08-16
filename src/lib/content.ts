@@ -116,6 +116,7 @@ export const HERO_CONTENT = {
     "Un negocio automatizado, escalable y fácil de administrar desde tu celular. Sin empleados, sin horarios. Tu inversión trabajando sola.",
   ctaPrimary: "Hablar con un asesor",
   ctaSecondary: "Descargar propuesta",
+  proposalHref: "/propuesta-colvending.pdf",
   badges: [
     { icon: "clock", label: "Operación 24/7" },
     { icon: "smartphone", label: "Monitoreo remoto" },

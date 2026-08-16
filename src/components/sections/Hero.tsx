@@ -142,7 +142,7 @@ export function Hero() {
               <WhatsAppIcon />
               {HERO_CONTENT.ctaPrimary}
             </Button>
-            <Button href={whatsappHref(WHATSAPP_MESSAGES.propuesta)} target="_blank" rel="noopener noreferrer" variant="ghost">
+            <Button href={HERO_CONTENT.proposalHref} download="Propuesta-ColVending.pdf" variant="ghost">
               {HERO_CONTENT.ctaSecondary}
             </Button>
           </motion.div>

@@ -7,6 +7,4 @@ export function whatsappHref(message: string): string {
 export const WHATSAPP_MESSAGES = {
   general:
     "Hola, me interesa conocer más sobre las máquinas expendedoras de ColVending.",
-  propuesta:
-    "Hola, quiero recibir la propuesta comercial de ColVending.",
 } as const;
