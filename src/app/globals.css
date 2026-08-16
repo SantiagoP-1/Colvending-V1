@@ -97,6 +97,25 @@
     outline-offset: 3px;
     border-radius: 4px;
   }
+
+  /* Added only by CustomCursor.tsx, and only after it confirms
+     (hover: hover) and (pointer: fine) — never a bare global rule, so
+     touch devices never lose their native cursor. */
+  html.custom-cursor-active,
+  html.custom-cursor-active * {
+    cursor: none;
+  }
+}
+
+@keyframes tap-ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0;
+  }
 }
 
 @layer utilities {
