@@ -172,7 +172,9 @@ export const BENEFICIOS_CONTENT = {
 // The client only sells one real model in Argentina today — the "Máquina
 // Mixta". The rest of the catalog (coffee, etc.) exists but isn't sold
 // here yet, so this is a single featured-product section, not a picker.
-// Full catalog lives at /catalogo (placeholder page) until that changes.
+// "Ver catálogo completo" opens the real PDF catalog (public/); the
+// placeholder /catalogo page (src/app/catalogo) is no longer linked from
+// here and is now only reachable by direct URL / the sitemap.
 export const PRODUCTO_CONTENT = {
   tag: "Catálogo",
   heading: "Nuestro modelo",
@@ -203,12 +205,15 @@ export const PRODUCTO_CONTENT = {
   techSpecsTitle: "Especificaciones técnicas",
   techSpecsCta: "Ver especificaciones técnicas",
   price: {
-    display: "$15.000.000 ARS + IVA.", // TODO: confirmar precio final con el cliente
-    note: "Precio estimado.",
+    display: "Valor: $10.000.000",
+    note: [
+      "Forma de pago: $5.000.000 anticipo y 4 cuotas fijas sin interés de $1.250.000",
+      "Transferencia, depósito, USD, pesos, efectivo",
+    ],
   },
   ctaPrimary: "Hablar con un asesor",
   ctaSecondary: "Ver catálogo completo",
-  catalogHref: "/catalogo",
+  catalogHref: "/catalogo-colvending-2026.pdf",
 } as const;
 
 // No hard commercial/legal terms (territory exclusivity, franchise fee,

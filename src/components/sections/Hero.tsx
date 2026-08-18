@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import { motion, MotionConfig } from "framer-motion";
 import {
   Clock,
@@ -11,7 +10,6 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
-import machinePhoto from "@/assets/images/maquina.webp";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { StatCounter } from "@/components/ui/StatCounter";
@@ -195,13 +193,18 @@ export function Hero() {
                   className="absolute inset-x-8 bottom-4 h-16 rounded-full bg-red-600/30 blur-[40px]"
                   aria-hidden="true"
                 />
-                <Image
-                  src={machinePhoto}
-                  alt="Máquina expendedora automática ColVending"
-                  priority
-                  sizes="(min-width: 1024px) 340px, 90vw"
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                  poster="/maquinagif-poster.webp"
+                  aria-label="Máquina expendedora automática ColVending"
                   className="relative mx-auto h-auto w-full max-w-67.5 object-contain drop-shadow-[0_20px_40px_rgba(215,38,56,0.25)] transition-transform duration-700 ease-out-soft hover:scale-[1.02]"
-                />
+                >
+                  <source src="/maquinagif.mp4" type="video/mp4" />
+                </video>
               </div>
 
               <div className="relative mt-5 grid grid-cols-4 gap-2 rounded-xl border border-white/10 bg-ink-950/60 p-3 backdrop-blur-sm">

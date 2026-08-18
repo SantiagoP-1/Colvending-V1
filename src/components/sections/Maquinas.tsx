@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Check, Info } from "lucide-react";
-import machinePhoto from "@/assets/images/maquina.webp";
+import machinePhoto from "@/assets/images/maquinanew.webp";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Modal } from "@/components/ui/Modal";
@@ -37,7 +37,7 @@ export function Maquinas() {
           delay={0.1}
           className="relative mt-10 grid grid-cols-1 items-center gap-10 overflow-hidden rounded-card border border-white/10 bg-gradient-to-br from-ink-800 to-ink-900 p-6 sm:p-10 lg:grid-cols-2 lg:gap-16"
         >
-          <div className="mx-auto w-full max-w-3xs">
+          <div className="mx-auto w-full max-w-xs">
             <button
               type="button"
               onClick={() => setSpecsOpen(true)}
@@ -93,7 +93,11 @@ export function Maquinas() {
               <p className="font-display text-2xl font-semibold text-paper">
                 {PRODUCTO_CONTENT.price.display}
               </p>
-              <p className="mt-1 text-xs text-ink-300">{PRODUCTO_CONTENT.price.note}</p>
+              {PRODUCTO_CONTENT.price.note.map((line) => (
+                <p key={line} className="mt-1 text-xs text-ink-300">
+                  {line}
+                </p>
+              ))}
             </div>
 
             <div className="mt-6 flex flex-wrap gap-4">
@@ -106,7 +110,12 @@ export function Maquinas() {
                 <WhatsAppIcon />
                 {PRODUCTO_CONTENT.ctaPrimary}
               </Button>
-              <Button href={PRODUCTO_CONTENT.catalogHref} variant="ghost">
+              <Button
+                href={PRODUCTO_CONTENT.catalogHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="ghost"
+              >
                 {PRODUCTO_CONTENT.ctaSecondary}
               </Button>
             </div>
