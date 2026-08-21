@@ -1,5 +1,12 @@
 import Image, { type StaticImageData } from "next/image";
-import { Camera, MapPin, Music2, ArrowUpRight, Play, type LucideIcon } from "lucide-react";
+import {
+  Camera,
+  MapPin,
+  Music2,
+  ArrowUpRight,
+  Play,
+  type LucideIcon,
+} from "lucide-react";
 import { AudioPlayer } from "@/components/ui/AudioPlayer";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -111,7 +118,9 @@ export function CasoRealCase({
             {heading}
           </h2>
           {subtitle && (
-            <p className="mt-2 text-base font-medium text-ink-300">{subtitle}</p>
+            <p className="mt-2 text-base font-medium text-ink-300">
+              {subtitle}
+            </p>
           )}
         </Reveal>
 
@@ -130,12 +139,20 @@ export function CasoRealCase({
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-ink-300 underline decoration-transparent underline-offset-2 transition-colors duration-200 hover:text-red-400 hover:decoration-red-400/50"
                     >
-                      <MapPin size={14} className="text-red-500" aria-hidden="true" />
+                      <MapPin
+                        size={14}
+                        className="text-red-500"
+                        aria-hidden="true"
+                      />
                       {location}
                     </a>
                   ) : (
                     <span className="inline-flex items-center gap-1.5 text-xs font-medium text-ink-300">
-                      <MapPin size={14} className="text-red-500" aria-hidden="true" />
+                      <MapPin
+                        size={14}
+                        className="text-red-500"
+                        aria-hidden="true"
+                      />
                       {location}
                     </span>
                   ))}
@@ -147,7 +164,9 @@ export function CasoRealCase({
                 </p>
               )}
 
-              <p className="mt-5 text-[15px] leading-relaxed text-ink-300">{body}</p>
+              <p className="mt-5 text-[15px] leading-relaxed text-ink-300">
+                {body}
+              </p>
 
               <p className="mt-5 text-center text-base font-semibold text-paper sm:text-left">
                 {ctaQuestion}
@@ -180,7 +199,12 @@ export function CasoRealCase({
                       aria-label={`${audioPlaceholder.label} — próximamente`}
                       className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-500/15 text-red-500 disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      <Play size={16} className="ml-0.5" fill="currentColor" aria-hidden="true" />
+                      <Play
+                        size={16}
+                        className="ml-0.5"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      />
                     </button>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-xs font-semibold text-paper">
@@ -206,7 +230,7 @@ export function CasoRealCase({
               // Photo stands alone — no caption or stat, just the shot
               // itself, stretched to match the left card's height (audio
               // player included) so both columns read as the same size.
-              <div className="relative h-full w-full overflow-hidden rounded-card border border-white/10">
+              <div className="relative aspect-4/5 w-full overflow-hidden rounded-card border border-white/10 lg:aspect-auto lg:h-full">
                 <Image
                   src={photo.src}
                   alt={photo.alt}
@@ -216,80 +240,84 @@ export function CasoRealCase({
                 />
               </div>
             ) : (
-            <div
-              className={
-                hasSocials
-                  ? "flex h-full flex-col justify-between rounded-card border border-white/10 bg-white/[0.03] p-6 sm:p-8"
-                  : "flex h-full flex-col items-center justify-center rounded-card border border-white/10 bg-white/[0.03] p-6 text-center sm:p-8"
-              }
-            >
-              {hasSocials && (
-                <div>
-                  <p className="text-xs font-semibold tracking-wide text-ink-300 uppercase">
-                    Seguí el día a día
-                  </p>
-                  <div className="mt-4 space-y-3">
-                    {socials.map((social) => {
-                      const Icon = SOCIAL_ICONS[social.icon];
-                      return (
-                        <a
-                          key={social.platform}
-                          href={social.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group flex items-center gap-4 rounded-btn border border-white/10 bg-white/[0.02] p-4 transition-colors duration-200 hover:border-red-500/30 hover:bg-red-500/5"
-                        >
-                          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-500/15 text-red-500">
-                            {Icon ? <Icon size={20} aria-hidden="true" /> : null}
-                          </span>
-                          <span className="min-w-0 flex-1">
-                            <span className="block text-sm font-semibold text-paper">
-                              {social.platform}
+              <div
+                className={
+                  hasSocials
+                    ? "flex h-full flex-col justify-between rounded-card border border-white/10 bg-white/[0.03] p-6 sm:p-8"
+                    : "flex h-full flex-col items-center justify-center rounded-card border border-white/10 bg-white/[0.03] p-6 text-center sm:p-8"
+                }
+              >
+                {hasSocials && (
+                  <div>
+                    <p className="text-xs font-semibold tracking-wide text-ink-300 uppercase">
+                      Seguí el día a día
+                    </p>
+                    <div className="mt-4 space-y-3">
+                      {socials.map((social) => {
+                        const Icon = SOCIAL_ICONS[social.icon];
+                        return (
+                          <a
+                            key={social.platform}
+                            href={social.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-4 rounded-btn border border-white/10 bg-white/[0.02] p-4 transition-colors duration-200 hover:border-red-500/30 hover:bg-red-500/5"
+                          >
+                            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-500/15 text-red-500">
+                              {Icon ? (
+                                <Icon size={20} aria-hidden="true" />
+                              ) : null}
                             </span>
-                            <span className="block truncate text-sm text-ink-300">
-                              {social.handle}
+                            <span className="min-w-0 flex-1">
+                              <span className="block text-sm font-semibold text-paper">
+                                {social.platform}
+                              </span>
+                              <span className="block truncate text-sm text-ink-300">
+                                {social.handle}
+                              </span>
                             </span>
-                          </span>
-                          <ArrowUpRight
-                            size={16}
-                            className="shrink-0 text-ink-300 transition-colors group-hover:text-red-500"
-                            aria-hidden="true"
-                          />
-                        </a>
-                      );
-                    })}
+                            <ArrowUpRight
+                              size={16}
+                              className="shrink-0 text-ink-300 transition-colors group-hover:text-red-500"
+                              aria-hidden="true"
+                            />
+                          </a>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {stat && (
-                <div
-                  className={
-                    hasSocials
-                      ? "mt-6 flex items-center gap-4 border-t border-white/10 pt-6"
-                      : "flex flex-col items-center gap-3"
-                  }
-                >
-                  <div className="shrink-0 text-center">
-                    <p className="font-display text-2xl font-bold text-paper">{stat.count}</p>
-                    <p className="mt-0.5 text-[10px] font-semibold tracking-wide text-red-400 uppercase">
-                      {stat.label}
-                    </p>
+                {stat && (
+                  <div
+                    className={
+                      hasSocials
+                        ? "mt-6 flex items-center gap-4 border-t border-white/10 pt-6"
+                        : "flex flex-col items-center gap-3"
+                    }
+                  >
+                    <div className="shrink-0 text-center">
+                      <p className="font-display text-2xl font-bold text-paper">
+                        {stat.count}
+                      </p>
+                      <p className="mt-0.5 text-[10px] font-semibold tracking-wide text-red-400 uppercase">
+                        {stat.label}
+                      </p>
+                    </div>
+                    {stat.quote && (
+                      <p
+                        className={
+                          hasSocials
+                            ? "text-xs leading-relaxed text-ink-300 italic"
+                            : "max-w-[32ch] text-sm leading-relaxed text-ink-300 italic"
+                        }
+                      >
+                        “{stat.quote}”
+                      </p>
+                    )}
                   </div>
-                  {stat.quote && (
-                    <p
-                      className={
-                        hasSocials
-                          ? "text-xs leading-relaxed text-ink-300 italic"
-                          : "max-w-[32ch] text-sm leading-relaxed text-ink-300 italic"
-                      }
-                    >
-                      “{stat.quote}”
-                    </p>
-                  )}
-                </div>
-              )}
-            </div>
+                )}
+              </div>
             )}
           </Reveal>
         </div>

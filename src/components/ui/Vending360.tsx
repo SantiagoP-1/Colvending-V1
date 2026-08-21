@@ -14,6 +14,8 @@ const MOMENTUM_STOP_THRESHOLD = 0.03;
 const RETURN_TO_FRONT_DELAY_MS = 5000;
 const RETURN_TO_FRONT_DURATION_MS = 700;
 
+const POSTER_SRC = "/vending-360/frame-00-hd.webp";
+
 function frameSrc(index: number) {
   return `/vending-360/frame-${String(index).padStart(2, "0")}.webp`;
 }
@@ -34,6 +36,13 @@ interface Vending360Props {
 // renders as a real <Image priority> so there's always something for LCP
 // to grab even before any JS runs; the canvas silently takes over once
 // frames are loaded, with no visible swap (same pixels).
+//
+// frame-00.webp is deliberately degraded (blurred/recompressed) to match
+// the softness of frames 1–73 — those are lower-quality renders and only
+// have this one angle, so frame 0 has to match them or spinning past it
+// shows an obvious quality "cut". The crisp source lives separately as
+// frame-00-hd.webp, shown only at rest (POSTER_SRC below) — hidden the
+// instant a drag starts, faded back in once it settles back at the front.
 export function Vending360({ className, label }: Vending360Props) {
   const stageRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -52,6 +61,7 @@ export function Vending360({ className, label }: Vending360Props) {
   const [ready, setReady] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [interacted, setInteracted] = useState(false);
+  const [atFront, setAtFront] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
@@ -109,6 +119,7 @@ export function Vending360({ className, label }: Vending360Props) {
         } else {
           currentIndexRef.current = 0;
           draw();
+          setAtFront(true);
         }
       }
       requestAnimationFrame(step);
@@ -157,6 +168,7 @@ export function Vending360({ className, label }: Vending360Props) {
       draggingRef.current = true;
       setDragging(true);
       setInteracted(true);
+      setAtFront(false);
       cancelReturn();
       lastXRef.current = x;
       lastTRef.current = performance.now();
@@ -185,6 +197,9 @@ export function Vending360({ className, label }: Vending360Props) {
       if (draggingRef.current) return;
       if (Math.abs(velocityRef.current) < MOMENTUM_STOP_THRESHOLD) {
         velocityRef.current = 0;
+        if (mod(Math.round(currentIndexRef.current), FRAME_COUNT) === 0) {
+          setAtFront(true);
+        }
         scheduleReturn();
         return;
       }
@@ -222,6 +237,7 @@ export function Vending360({ className, label }: Vending360Props) {
       if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
       e.preventDefault();
       setInteracted(true);
+      setAtFront(false);
       cancelReturn();
       const step =
         e.key === "ArrowRight" ? KEYBOARD_STEP_FRAMES : -KEYBOARD_STEP_FRAMES;
@@ -294,6 +310,21 @@ export function Vending360({ className, label }: Vending360Props) {
         className={cn(
           "pointer-events-none absolute inset-0 mx-auto drop-shadow-[0_20px_40px_rgba(215,38,56,0.25)] transition-opacity duration-300",
           ready ? "opacity-100" : "opacity-0",
+        )}
+      />
+      {/* The crisp version, layered on top — only while at rest at the
+          front. Hides instantly on interaction (no transition-delay lag
+          against the visitor's own finger) so the matching-quality canvas
+          frame underneath is what actually spins. */}
+      <Image
+        src={POSTER_SRC}
+        alt=""
+        aria-hidden="true"
+        fill
+        sizes="(min-width: 1024px) 270px, 60vw"
+        className={cn(
+          "pointer-events-none object-contain drop-shadow-[0_20px_40px_rgba(215,38,56,0.25)] transition-opacity duration-150",
+          ready && atFront ? "opacity-100" : "opacity-0",
         )}
       />
       {!interacted && (
