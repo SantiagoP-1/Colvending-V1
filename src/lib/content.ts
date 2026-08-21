@@ -37,9 +37,20 @@ export const SOCIAL_LINKS = [
 // Real case study, not a placeholder — content and links provided directly
 // by the client. "Punto Ya" is a working store built with ColVending
 // machines, run by the same person who imports them from China.
+//
+// This is the "local automático" niche (a dedicated, fully-automated store
+// with several machines) — see UBICACION_PARTICULAR_CONTENT below for the
+// other niche (a single machine placed inside a third party's business).
+// Both render through the same <CasoRealCase> component (CasoReal.tsx).
 export const CASO_REAL_CONTENT = {
+  sectionId: "caso-real",
+  ariaLabel: "Caso real: local Punto Ya",
   tag: "Caso real",
-  heading: "Un local que no para de crecer",
+  nicheLabel: "Local automático",
+  heading: "Creando un local con los equipos",
+  // Kept as a subtitle instead of dropped outright — it's the stronger,
+  // more concrete marketing hook of the two headings.
+  subtitle: "Un local que no para de crecer",
   storeName: "Punto Ya",
   storeTagline: "El primer local automático de todo el país",
   storeSlogan: "Lo que querés, YA!",
@@ -56,13 +67,40 @@ export const CASO_REAL_CONTENT = {
   followers: {
     count: "13,2 mil",
     label: "Seguidores",
-    quote: "La verdad, muy orgulloso de haber creado el primer local automático de Argentina. ¡Siempre con ganas de más!",
+    quote:
+      "La verdad, muy orgulloso de haber creado el primer local automático de Argentina. ¡Siempre con ganas de más!",
+  },
+} as const;
+
+// Es el nicho "ubicación particular" (una sola máquina instalada en un
+// punto estratégico dentro de un negocio de un tercero) — contraparte de
+// CASO_REAL_CONTENT ("local automático"). Nombre, ubicación, foto y audio
+// ya confirmados por el cliente. Sin quote ni stat a propósito — la card
+// se mantiene corta.
+export const UBICACION_PARTICULAR_CONTENT = {
+  sectionId: "caso-real-particular",
+  ariaLabel: "Caso real: ubicación particular",
+  tag: "Caso real",
+  nicheLabel: "Ubicación particular",
+  heading: "Una máquina, un punto estratégico",
+  storeName: "Mati",
+  location: "Clínica en Quilmes, Buenos Aires",
+  body: "Uno de nuestros clientes instaló una sola máquina ColVending en una clínica de Quilmes y recuperó su inversión inicial en apenas 1 mes. La prueba de que no hace falta un local entero para generar ingresos automáticos.",
+  ctaQuestion: "Si querés resultados iguales, ¿qué esperás?",
+  ctaLabel: "Quiero mi máquina",
+  // src lives in CasoReal.tsx (static import), matching how every other
+  // image on the site is imported at the component level, not here.
+  photoAlt:
+    "Mati junto a su máquina ColVending instalada en una clínica de Quilmes, Buenos Aires",
+  audioPlaceholder: {
+    label: "Audio: la experiencia de Mati",
+    audioSrc: "/audio/mati-testimonio.mp3",
   },
 } as const;
 
 type MentionSegment = { text: string; href?: string };
 
-// The client was mentioned by these 3 outlets — real names, logos and
+// The client was mentioned by these 4 outlets — real names, logos and
 // direct links to each mention, all confirmed.
 export const MEDIOS_CONTENT = {
   tag: "Nos mencionaron",
@@ -71,10 +109,15 @@ export const MEDIOS_CONTENT = {
   // links (see Medios.tsx). scroll-behavior:smooth (globals.css) already
   // makes these anchors scroll smoothly, no extra JS needed.
   mentionText: [
-    { text: "Radio Gabal, Hablemos de Negocios y Emprendi2 TV contaron cómo arrancó ColVending. " },
+    {
+      text: "Radio Gabal, Hablemos de Negocios, Emprendi2 TV y La Nación contaron cómo arrancó ColVending. ",
+    },
     { text: "Leé la historia del inicio de ColVending", href: "#nosotros" },
     { text: " o " },
-    { text: "mirá el primer negocio automático de Argentina en acción", href: "#caso-real" },
+    {
+      text: "mirá el primer negocio automático de Argentina en acción",
+      href: "#caso-real",
+    },
     { text: "." },
   ] as MentionSegment[],
   // width/height match each file's real pixel size — needed so
@@ -104,6 +147,19 @@ export const MEDIOS_CONTENT = {
       logoSrc: "/medios/emprendi2tv.png",
       width: 198,
       height: 49,
+    },
+    {
+      id: "lanacion",
+      label: "La Nación",
+      // The article covers several unrelated entrepreneurs before getting
+      // to ColVending's mention — the "#:~:text=" text fragment (native
+      // browser feature, no cooperation needed from lanacion.com.ar) jumps
+      // straight to the "100% automatizado" subheading where it starts.
+      // Verified working in Chrome.
+      href: "https://www.lanacion.com.ar/tecnologia/abierto-las-24-horas-como-la-experiencia-online-esta-cambiando-el-funcionamiento-de-los-locales-a-la-nid19062026/#:~:text=100%25%20automatizado",
+      logoSrc: "/medios/lanacion.jpg",
+      width: 1024,
+      height: 1024,
     },
   ],
 } as const;
@@ -179,12 +235,13 @@ export const PRODUCTO_CONTENT = {
   tag: "Catálogo",
   heading: "Nuestro modelo",
   lead: "El equipo más completo y versátil de nuestro catálogo, listo para instalar en cualquier espacio.",
-  nombre: "Máquina Mixta ColVending",
+  // Client-requested rename dropped "Máquina Mixta" and the "ColVending"
+  // brand from the product name — applied literally per their instruction.
+  nombre: "MODELO INTELIGENTE YX-SHJHW-02",
   desc: "Combina snacks, bebidas y comida en un solo equipo. La solución más completa y versátil para cualquier espacio.",
-  badge: "⭐ Más elegido",
   specs: [
     "Capacidad: 300 a 600 unidades (PCS)",
-    "Hasta 40 variedades mixtas",
+    "Hasta 60 variedades",
     "Pantalla táctil y sistema de pago (QR, tarjeta, efectivo)",
     "Refrigeración regulable",
     "Configuración totalmente personalizable",
@@ -195,11 +252,17 @@ export const PRODUCTO_CONTENT = {
   // "process" questions live in the FAQ (and get asked directly over
   // WhatsApp), not here.
   techSpecs: [
-    { label: "Dimensiones", value: "850 mm (ancho) x 1350 mm (profundidad) x 2047 mm (alto)" },
+    {
+      label: "Dimensiones",
+      value: "850 mm (ancho) x 1350 mm (profundidad) x 2047 mm (alto)",
+    },
     { label: "Peso", value: "300 kg" },
     { label: "Modelo", value: "YX-SHJHW-02 — estructura de acero" },
     { label: "Interfaz de pago", value: "MDB / DEX" },
-    { label: "Certificaciones", value: "CE, RoHS, FCC, ISO 9001:2015, ISO 14001:2015" },
+    {
+      label: "Certificaciones",
+      value: "CE, RoHS, FCC, ISO 9001:2015, ISO 14001:2015",
+    },
     { label: "Origen", value: "Guangzhou, China" },
   ],
   techSpecsTitle: "Especificaciones técnicas",
@@ -226,8 +289,12 @@ export const PRODUCTO_CONTENT = {
 // instead of a number — this is intentional, not a placeholder to fill in.
 export const FRANQUICIAS_CONTENT = {
   tag: "Franquicias ColVending",
-  heading: "Llevá ColVending a tu ciudad",
-  lead: "Un modelo de franquicia pensado para quienes quieren construir una red de máquinas expendedoras con el respaldo y la marca de Colvending — no una máquina suelta, sino un negocio replicable.",
+  // Rebrand to PuntoYa (the client's first automated store, already
+  // featured in CASO_REAL_CONTENT). Kept the voseo tilde ("Llevá") for
+  // consistency with every other heading on the site ("Generá", "Vendé",
+  // "Administrá") — the client wrote "Lleva" without it.
+  heading: "Llevá PuntoYa a tu ciudad",
+  lead: "Convertite en dueño de un negocio automático, abierto 24/7 y respaldado por Colvending. Un modelo probado, escalable y listo para replicar en tu ciudad.",
   pillars: [
     {
       icon: "mapPin",
@@ -301,22 +368,30 @@ export const NOSOTROS_CONTENT = {
   heading: "Más de 10 años importando maquinaria",
   paragraphs: [
     [
-      { text: "Somos una empresa con más de 10 años de experiencia en importaciones de maquinaria. Nuestra trayectoria comenzó importando maquinaria industrial desde China para poner en marcha " },
+      {
+        text: "Somos una empresa con más de 10 años de experiencia en importaciones de maquinaria. Nuestra trayectoria comenzó importando maquinaria industrial desde China para poner en marcha ",
+      },
       { text: "Agroindustrial Cosanic", emphasis: "strong" },
       { text: ", nuestro primer proyecto de escala industrial." },
     ],
     [
       { text: "Posteriormente desarrollamos " },
       { text: "Colbuilding S.A.", emphasis: "strong" },
-      { text: ", enfocada en maquinaria vial y equipamiento para construcción e infraestructura en todo el país." },
+      {
+        text: ", enfocada en maquinaria vial y equipamiento para construcción e infraestructura en todo el país.",
+      },
     ],
     [
-      { text: "Luego de años de experiencia en importación y comercialización de maquinaria, decidimos incorporar una nueva unidad de negocio: " },
+      {
+        text: "Luego de años de experiencia en importación y comercialización de maquinaria, decidimos incorporar una nueva unidad de negocio: ",
+      },
       { text: "máquinas expendedoras automáticas", emphasis: "accent" },
       { text: "." },
     ],
     [
-      { text: "Nuestro objetivo es brindar oportunidades reales para emprendedores argentinos mediante soluciones automatizadas, accesibles y escalables. Somos una empresa de Balcarce, Buenos Aires, y operamos en todo el territorio nacional." },
+      {
+        text: "Nuestro objetivo es brindar oportunidades reales para emprendedores argentinos mediante soluciones automatizadas, accesibles y escalables. Somos una empresa de Balcarce, Buenos Aires, y operamos en todo el territorio nacional.",
+      },
     ],
   ] as TextSegment[][],
   ctaLabel: "Hablar con el equipo",
@@ -344,6 +419,8 @@ export const INSTALACIONES_CONTENT = {
   tag: "Presencia nacional",
   heading: "Ya estamos en todo el país",
   lead: "Varios emprendedores confiaron en ColVending e instalaron su máquina en distintas provincias. Mirá dónde están funcionando algunas de ellas.",
+  // Teaser CTA linking to the full /ubicaciones page (src/app/ubicaciones).
+  viewAllCta: "Ver todas las ubicaciones",
   // [longitude, latitude] — the order react-simple-maps / GeoJSON expect,
   // not [lat, lon].
   markers: [
@@ -399,6 +476,149 @@ export const INSTALACIONES_CONTENT = {
       province: "Buenos Aires",
     },
   ],
+} as const;
+
+// From the client's location form (2026-08-20), geocoded via Nominatim/
+// OpenStreetMap and rounded to 4 decimals. Kept out of
+// INSTALACIONES_CONTENT.markers on purpose — the homepage teaser only shows
+// the original locations above so it doesn't turn into a long scroll; these
+// only appear on the full /ubicaciones page (UbicacionesExplorer.tsx), which
+// combines both arrays. `machines` is the client-reported machine count at
+// that spot; INSTALACIONES_CONTENT's markers omit it since it isn't known
+// for them, not assumed to be 1.
+export const UBICACIONES_EXTRA_MARKERS = [
+  {
+    id: "san-nicolas",
+    coordinates: [-60.2166, -33.3277] as [number, number],
+    label: "San Nicolás, Buenos Aires",
+    province: "Buenos Aires",
+    machines: 2,
+  },
+  {
+    id: "santa-rosa",
+    coordinates: [-64.2906, -36.6204] as [number, number],
+    label: "Santa Rosa, La Pampa",
+    province: "La Pampa",
+    machines: 1,
+  },
+  {
+    id: "rio-segundo",
+    coordinates: [-63.0385, -31.3949] as [number, number],
+    label: "Río Segundo, Córdoba",
+    province: "Córdoba",
+    machines: 1,
+  },
+  {
+    id: "nueve-de-julio",
+    coordinates: [-60.8842, -35.4445] as [number, number],
+    label: "Nueve de Julio, Buenos Aires",
+    province: "Buenos Aires",
+    machines: 4,
+  },
+  {
+    id: "neuquen-capital",
+    coordinates: [-68.0592, -38.952] as [number, number],
+    label: "Neuquén Capital, Neuquén",
+    province: "Neuquén",
+    machines: 2,
+  },
+  {
+    id: "tucuman-capital",
+    // Venues: Sanatorio Parque y Universidad Nacional de Tucumán.
+    coordinates: [-65.2038, -26.8304] as [number, number],
+    label: "San Miguel de Tucumán, Tucumán",
+    province: "Tucumán",
+    machines: 3,
+  },
+  {
+    id: "lanus",
+    coordinates: [-58.3906, -34.7074] as [number, number],
+    label: "Lanús, Buenos Aires",
+    province: "Buenos Aires",
+    machines: 2,
+  },
+  {
+    id: "tigre",
+    // Venues: Bancalari y El Talar de Pacheco.
+    coordinates: [-58.5818, -34.4235] as [number, number],
+    label: "Tigre, Buenos Aires",
+    province: "Buenos Aires",
+    machines: 2,
+  },
+  {
+    id: "pilar",
+    // Venues: tres clubes distintos en la zona.
+    coordinates: [-58.9142, -34.4571] as [number, number],
+    label: "Pilar, Buenos Aires",
+    province: "Buenos Aires",
+    machines: 3,
+  },
+  {
+    id: "los-polvorines",
+    coordinates: [-58.6991, -34.5106] as [number, number],
+    label: "Los Polvorines, Buenos Aires",
+    province: "Buenos Aires",
+    machines: 1,
+  },
+  {
+    id: "jose-c-paz",
+    coordinates: [-58.7777, -34.5119] as [number, number],
+    label: "José C. Paz, Buenos Aires",
+    province: "Buenos Aires",
+    machines: 1,
+  },
+  {
+    id: "caba-julian-alvarez",
+    coordinates: [-58.4339, -34.5994] as [number, number],
+    label: "CABA (Julián Álvarez)",
+    province: "CABA",
+    machines: 1,
+  },
+  {
+    id: "miramar",
+    // provincia asumida, confirmar con cliente
+    coordinates: [-57.8388, -38.2704] as [number, number],
+    label: "Miramar, Buenos Aires",
+    province: "Buenos Aires",
+    machines: 1,
+  },
+  {
+    id: "caba-favaloro",
+    // provincia asumida, confirmar con cliente
+    coordinates: [-58.3912, -34.6144] as [number, number],
+    label: "CABA (Hospital Favaloro)",
+    province: "CABA",
+    machines: 1,
+  },
+  {
+    id: "caba-serrano",
+    // provincia asumida, confirmar con cliente
+    coordinates: [-58.4214, -34.5824] as [number, number],
+    label: "CABA (Serrano 630)",
+    province: "CABA",
+    machines: 1,
+  },
+] as const;
+
+// Dedicated /ubicaciones page (src/app/ubicaciones) — the full, searchable
+// version combining INSTALACIONES_CONTENT.markers and
+// UBICACIONES_EXTRA_MARKERS above. This only holds the copy specific to
+// that page.
+export const UBICACIONES_PAGE_CONTENT = {
+  tag: "Dónde estamos",
+  heading: "Todas nuestras ubicaciones en Argentina",
+  lead: "Cada punto en el mapa es una máquina ColVending real, instalada y en funcionamiento. Buscá por ciudad o filtrá por provincia para ver el detalle completo.",
+  installedLabel: "ubicaciones instaladas",
+  provincesLabel: "provincias",
+  searchPlaceholder: "Buscar por ciudad o provincia...",
+  searchAriaLabel: "Buscar ubicación por ciudad o provincia",
+  allProvincesLabel: "Todas",
+  emptyStateTitle: "No encontramos ubicaciones para esa búsqueda",
+  emptyStateBody:
+    "Probá con otra ciudad o provincia, o mirá la lista completa.",
+  clearFiltersLabel: "Limpiar filtros",
+  ctaQuestion: "¿Querés que la próxima máquina esté en tu ciudad?",
+  ctaLabel: "Quiero instalar una máquina",
 } as const;
 
 export const FAQ_CONTENT = {
@@ -532,7 +752,7 @@ export const FAQ_CONTENT = {
         },
         {
           q: "¿Qué soporte tienen disponible?",
-          a: "Soporte por WhatsApp de lunes a viernes de 8:00 a 20:00 hs, asistencia técnica remota, visitas técnicas presenciales programadas y repuestos originales disponibles en todo el país.",
+          a: "Soporte por WhatsApp de lunes a viernes de 9:00 a 20:00 hs, asistencia técnica remota, visitas técnicas presenciales programadas y repuestos originales disponibles en todo el país.",
         },
         {
           q: "¿Qué pasa si la máquina tiene un problema en fin de semana?",

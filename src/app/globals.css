@@ -39,6 +39,12 @@
   /* ---- Type ---- */
   --font-display: var(--font-bricolage), "Bricolage Grotesque", ui-sans-serif, sans-serif;
   --font-body: var(--font-inter), "Inter", ui-sans-serif, sans-serif;
+  /* Client-requested Poppins match (from orbitaglobalmarketing.com's H1),
+     scoped to the hero H1 plus the specific section headings the client
+     listed by exact copy — not every font-display element. Everything
+     else (wordmark, item sub-headings, stat numbers) stays on
+     --font-display / Bricolage Grotesque. */
+  --font-heading: var(--font-poppins), "Space Grotesk", sans-serif;
 
   /* ---- Radius ---- */
   --radius-btn: 0.75rem;

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Inter } from "next/font/google";
+import { Bricolage_Grotesque, Inter, Poppins } from "next/font/google";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { TapRipple } from "@/components/ui/TapRipple";
@@ -21,6 +21,19 @@ const bricolage = Bricolage_Grotesque({
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Client-requested match for the hero H1 (same family/weight as
+// orbitaglobalmarketing.com's H1) plus a specific list of section headings
+// — see --font-heading in globals.css for the full scope and which
+// elements deliberately stay on --font-display (Bricolage) instead.
+// TODO: actualizar font-family del body text (Inter) según imagen de
+// referencia del cliente (pendiente).
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-poppins",
   display: "swap",
 });
 
@@ -100,7 +113,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es-AR"
-      className={`${bricolage.variable} ${inter.variable}`}
+      data-scroll-behavior="smooth"
+      className={`${bricolage.variable} ${inter.variable} ${poppins.variable}`}
     >
       <body className="font-body antialiased">
         <script

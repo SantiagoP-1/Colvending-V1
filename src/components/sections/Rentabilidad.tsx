@@ -16,7 +16,7 @@ export function Rentabilidad() {
       <Container>
         <Reveal className="max-w-2xl">
           <SectionTag>{RENTABILIDAD_CONTENT.tag}</SectionTag>
-          <h2 className="font-display mt-6 text-4xl font-semibold text-paper sm:text-5xl">
+          <h2 className="font-heading mt-6 text-4xl font-semibold text-paper sm:text-5xl">
             {RENTABILIDAD_CONTENT.heading}
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-ink-300">
@@ -50,7 +50,7 @@ export function Rentabilidad() {
         </Reveal>
 
         <Reveal delay={0.42} className="mt-16">
-          <h3 className="font-display text-2xl font-semibold text-paper sm:text-3xl">
+          <h3 className="font-heading text-2xl font-semibold text-paper sm:text-3xl">
             {RESULTADOS_CONTENT.heading}
           </h3>
           <p className="mt-2 text-sm text-ink-300">{RESULTADOS_CONTENT.lead}</p>

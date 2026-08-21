@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import logoIcon from "@/assets/images/logo-icon.webp";
@@ -14,7 +15,7 @@ import { NAV_LINKS } from "@/lib/nav";
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
 
-const SECTION_IDS = NAV_LINKS.map((link) => link.href.replace("#", ""));
+const SECTION_IDS = NAV_LINKS.map((link) => link.href.split("#")[1]);
 
 export function SiteHeader() {
   const scrolled = useScrolled();
@@ -31,8 +32,8 @@ export function SiteHeader() {
       )}
     >
       <Container className="flex h-[72px] items-center justify-between">
-        <a
-          href="#hero"
+        <Link
+          href="/#hero"
           className="flex items-center gap-2.5"
           aria-label="ColVending — Inicio"
         >
@@ -47,17 +48,17 @@ export function SiteHeader() {
           <span className="font-display text-xl font-semibold tracking-tight text-paper">
             COLVENDING
           </span>
-        </a>
+        </Link>
 
         <nav
           aria-label="Navegación principal"
           className="hidden items-center gap-8 lg:flex"
         >
           {NAV_LINKS.map((link) => {
-            const id = link.href.replace("#", "");
+            const id = link.href.split("#")[1];
             const isActive = activeId === id;
             return (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
@@ -73,7 +74,7 @@ export function SiteHeader() {
                   )}
                   aria-hidden="true"
                 />
-              </a>
+              </Link>
             );
           })}
         </nav>
@@ -116,14 +117,14 @@ export function SiteHeader() {
           >
             <Container className="flex flex-col gap-1 py-6">
               {NAV_LINKS.map((link) => (
-                <a
+                <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
                   className="border-b border-white/5 py-3.5 text-base font-medium text-ink-200 transition-colors hover:text-paper"
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
               <Button
                 href={whatsappHref(WHATSAPP_MESSAGES.general)}

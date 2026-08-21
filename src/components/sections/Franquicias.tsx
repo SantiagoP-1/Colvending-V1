@@ -39,7 +39,7 @@ export function Franquicias() {
       <Container>
         <Reveal className="mx-auto max-w-2xl text-center">
           <SectionTag>{FRANQUICIAS_CONTENT.tag}</SectionTag>
-          <h2 className="font-display mt-6 text-4xl font-semibold text-paper sm:text-5xl">
+          <h2 className="font-heading mt-6 text-4xl font-semibold text-paper sm:text-5xl">
             {FRANQUICIAS_CONTENT.heading}
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-ink-300">

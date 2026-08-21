@@ -32,7 +32,7 @@ export function Beneficios() {
         <div className="lg:sticky lg:top-32 lg:self-start">
           <Reveal>
             <SectionTag>{BENEFICIOS_CONTENT.tag}</SectionTag>
-            <h2 className="font-display mt-6 text-4xl font-semibold text-paper sm:text-5xl">
+            <h2 className="font-heading mt-6 text-4xl font-semibold text-paper sm:text-5xl">
               {BENEFICIOS_CONTENT.heading}
             </h2>
           </Reveal>

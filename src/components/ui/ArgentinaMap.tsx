@@ -1,15 +1,20 @@
 "use client";
 
-import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from "react-simple-maps";
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+  Marker,
+  ZoomableGroup,
+} from "react-simple-maps";
 import { geoCentroid } from "d3-geo";
 import provinciasTopo from "@/data/argentina-provincias.json";
-
-// Tall viewBox (not square) — Argentina is much taller than it is wide, so
-// this fills the frame far better than a square one would.
-const MAP_WIDTH = 800;
-const MAP_HEIGHT = 1067;
-const PROJECTION_CENTER: [number, number] = [-64, -38];
-const PROJECTION_SCALE = 1000;
+import {
+  MAP_HEIGHT,
+  MAP_WIDTH,
+  PROJECTION_CENTER,
+  PROJECTION_SCALE,
+} from "./mapProjection";
 
 // A province's projected bounding box below this size (in the map's own
 // 800x1067 coordinate units, either axis) can't fit a readable name without
@@ -70,7 +75,22 @@ export interface ArgentinaMapMarker {
   /** [longitude, latitude] */
   coordinates: [number, number];
   label: string;
+  /** When there's more than one machine at this exact spot, render that many dots fanned out around the point instead of one. */
+  machines?: number;
 }
+
+// A cluster (>1 machine at the same spot) fans its dots out in a small
+// circle around the point instead of one straight row — reads as "a few
+// separate spots near here" rather than a bar chart. The radius alternates
+// slightly per dot (PETAL_RADIUS_JITTER) so it isn't a perfectly rigid
+// polygon, which read as too computed/mechanical for a location this small.
+// Single-dot markers keep the original, slightly larger radius (4 / 6
+// active); cluster dots are smaller so several fanned out don't balloon.
+const PETAL_BASE_RADIUS = 7;
+const PETAL_RADIUS_STEP = 0.7;
+const PETAL_RADIUS_JITTER = 1.2;
+const SINGLE_DOT_RADIUS = { default: 4, active: 6 };
+const CLUSTER_DOT_RADIUS = { default: 3, active: 4.5 };
 
 interface ArgentinaMapProps {
   markers: readonly ArgentinaMapMarker[];
@@ -82,9 +102,24 @@ interface ArgentinaMapProps {
 }
 
 const geographyStyle = {
-  default: { fill: "#3a3a44", stroke: "rgba(245,245,244,0.2)", strokeWidth: 0.6, outline: "none" },
-  hover: { fill: "#3a3a44", stroke: "rgba(245,245,244,0.2)", strokeWidth: 0.6, outline: "none" },
-  pressed: { fill: "#3a3a44", stroke: "rgba(245,245,244,0.2)", strokeWidth: 0.6, outline: "none" },
+  default: {
+    fill: "#3a3a44",
+    stroke: "rgba(245,245,244,0.2)",
+    strokeWidth: 0.6,
+    outline: "none",
+  },
+  hover: {
+    fill: "#3a3a44",
+    stroke: "rgba(245,245,244,0.2)",
+    strokeWidth: 0.6,
+    outline: "none",
+  },
+  pressed: {
+    fill: "#3a3a44",
+    stroke: "rgba(245,245,244,0.2)",
+    strokeWidth: 0.6,
+    outline: "none",
+  },
 };
 
 export function ArgentinaMap({
@@ -116,9 +151,11 @@ export function ArgentinaMap({
           {({ geographies, path }) =>
             geographies.map((geo) => {
               const [[x0, y0], [x1, y1]] = path.bounds(geo);
-              const canFitLabel = x1 - x0 >= MIN_LABEL_SIZE && y1 - y0 >= MIN_LABEL_SIZE;
+              const canFitLabel =
+                x1 - x0 >= MIN_LABEL_SIZE && y1 - y0 >= MIN_LABEL_SIZE;
               const override = LABEL_OVERRIDES[geo.properties.nombre];
-              const labelCoordinates = override?.coordinates ?? (geoCentroid(geo) as [number, number]);
+              const labelCoordinates =
+                override?.coordinates ?? (geoCentroid(geo) as [number, number]);
               return (
                 <g key={geo.rsmKey}>
                   <Geography geography={geo} style={geographyStyle} />
@@ -130,17 +167,22 @@ export function ArgentinaMap({
                         textAnchor="middle"
                         fontSize={override?.fontSize ?? 9}
                         fill="rgba(245,245,244,0.42)"
-                        style={{ fontFamily: "var(--font-body)", pointerEvents: "none" }}
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          pointerEvents: "none",
+                        }}
                       >
-                        {override?.lines ? (
-                          override.lines.map((line, i) => (
-                            <tspan key={line} x={0} dy={i === 0 ? undefined : "1.1em"}>
-                              {line}
-                            </tspan>
-                          ))
-                        ) : (
-                          override?.name ?? geo.properties.nombre
-                        )}
+                        {override?.lines
+                          ? override.lines.map((line, i) => (
+                              <tspan
+                                key={line}
+                                x={0}
+                                dy={i === 0 ? undefined : "1.1em"}
+                              >
+                                {line}
+                              </tspan>
+                            ))
+                          : (override?.name ?? geo.properties.nombre)}
                       </text>
                     </Marker>
                   )}
@@ -152,6 +194,32 @@ export function ArgentinaMap({
 
         {markers.map((marker) => {
           const isActive = marker.id === activeId;
+          const machineCount =
+            marker.machines && marker.machines > 1 ? marker.machines : 1;
+          const isCluster = machineCount > 1;
+          const dotRadius = isCluster ? CLUSTER_DOT_RADIUS : SINGLE_DOT_RADIUS;
+          const petalRadius =
+            PETAL_BASE_RADIUS +
+            Math.max(0, machineCount - 2) * PETAL_RADIUS_STEP;
+          // Evenly spaced around a circle (starting straight up), each dot's
+          // own radius nudged slightly in/out in alternation — the fan-out
+          // stays legible at a glance but doesn't read as a stamped-out
+          // regular polygon.
+          const dotOffsets = isCluster
+            ? Array.from({ length: machineCount }, (_, i) => {
+                const angle = -Math.PI / 2 + (i * 2 * Math.PI) / machineCount;
+                const r =
+                  petalRadius +
+                  (i % 2 === 0 ? PETAL_RADIUS_JITTER : -PETAL_RADIUS_JITTER);
+                return { dx: Math.cos(angle) * r, dy: Math.sin(angle) * r };
+              })
+            : [{ dx: 0, dy: 0 }];
+          const maxDotDistance = isCluster
+            ? Math.max(...dotOffsets.map(({ dx, dy }) => Math.hypot(dx, dy)))
+            : 0;
+          const ringRadius = isCluster
+            ? maxDotDistance + dotRadius.active + 3
+            : 9;
           return (
             <Marker
               key={marker.id}
@@ -163,17 +231,31 @@ export function ArgentinaMap({
                 pressed: { cursor: onMarkerClick ? "pointer" : "default" },
               }}
             >
-              <title>{marker.label}</title>
+              <title>
+                {marker.label}
+                {machineCount > 1 ? ` — ${machineCount} máquinas` : ""}
+              </title>
               {isActive && (
-                <circle r={9} fill="none" stroke="#d72638" strokeWidth={1.5} className="animate-ping" />
+                <circle
+                  r={ringRadius}
+                  fill="none"
+                  stroke="#d72638"
+                  strokeWidth={1.5}
+                  className="animate-ping"
+                />
               )}
-              <circle
-                r={isActive ? 6 : 4}
-                fill="#d72638"
-                stroke="#0a0a0b"
-                strokeWidth={1}
-                style={{ transition: "r 0.3s ease-out" }}
-              />
+              {dotOffsets.map(({ dx, dy }, i) => (
+                <circle
+                  key={i}
+                  cx={dx}
+                  cy={dy}
+                  r={isActive ? dotRadius.active : dotRadius.default}
+                  fill="#d72638"
+                  stroke="#0a0a0b"
+                  strokeWidth={1}
+                  style={{ transition: "r 0.3s ease-out" }}
+                />
+              ))}
             </Marker>
           );
         })}

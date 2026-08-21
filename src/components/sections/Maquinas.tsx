@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Check, Info } from "lucide-react";
-import machinePhoto from "@/assets/images/maquinanew.webp";
+import machinePhoto from "@/assets/images/nuestromodelo.png";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { Modal } from "@/components/ui/Modal";
@@ -25,7 +25,7 @@ export function Maquinas() {
       <Container>
         <Reveal className="max-w-2xl">
           <SectionTag>{PRODUCTO_CONTENT.tag}</SectionTag>
-          <h2 className="font-display mt-6 text-4xl font-semibold text-paper sm:text-5xl">
+          <h2 className="font-heading mt-6 text-4xl font-semibold text-paper sm:text-5xl">
             {PRODUCTO_CONTENT.heading}
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-ink-300">
@@ -56,9 +56,6 @@ export function Maquinas() {
                   sizes="(min-width: 1024px) 320px, 70vw"
                   className="relative mx-auto h-auto w-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-transform duration-300 ease-out-soft group-hover:scale-[1.02]"
                 />
-                <span className="absolute top-0 right-0 rounded-chip bg-red-500 px-3 py-1 text-xs font-semibold text-white shadow-red-glow">
-                  {PRODUCTO_CONTENT.badge}
-                </span>
               </div>
               <span className="mt-3 flex items-center justify-center gap-1.5 text-xs font-medium text-ink-300 transition-colors duration-200 group-hover:text-red-400">
                 <Info size={14} aria-hidden="true" />

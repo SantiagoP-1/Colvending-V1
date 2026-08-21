@@ -45,7 +45,7 @@ export function Faq() {
       <Container className="max-w-3xl">
         <Reveal className="text-center">
           <SectionTag>{FAQ_CONTENT.tag}</SectionTag>
-          <h2 className="font-display mt-6 text-4xl font-semibold text-paper sm:text-5xl">
+          <h2 className="font-heading mt-6 text-4xl font-semibold text-paper sm:text-5xl">
             {FAQ_CONTENT.heading}
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-ink-300">

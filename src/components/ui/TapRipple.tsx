@@ -13,8 +13,7 @@ export function TapRipple() {
 
   useEffect(() => {
     const isCoarsePointer = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!isCoarsePointer || reducedMotion) return;
+    if (!isCoarsePointer) return;
 
     const onTouchStart = (e: TouchEvent) => {
       const target = e.target as Element;

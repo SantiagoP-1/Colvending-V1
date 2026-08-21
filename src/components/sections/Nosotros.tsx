@@ -18,7 +18,7 @@ export function Nosotros() {
       <Container className="grid grid-cols-1 gap-16 lg:grid-cols-2">
         <Reveal>
           <SectionTag>{NOSOTROS_CONTENT.tag}</SectionTag>
-          <h2 className="font-display mt-6 text-4xl font-semibold text-paper sm:text-5xl">
+          <h2 className="font-heading mt-6 text-4xl font-semibold text-paper sm:text-5xl">
             {NOSOTROS_CONTENT.heading}
           </h2>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion, MotionConfig } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Clock,
   Smartphone,
@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { StatCounter } from "@/components/ui/StatCounter";
+import { Vending360 } from "@/components/ui/Vending360";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { HERO_CONTENT } from "@/lib/content";
@@ -106,7 +107,7 @@ export function Hero() {
             {HERO_CONTENT.kicker}
           </p>
 
-          <h1 className="font-display mb-6 text-[clamp(2.75rem,5.4vw,5rem)] font-semibold text-paper">
+          <h1 className="font-heading mb-6 text-[clamp(2.75rem,5.4vw,5rem)] font-extrabold leading-[1.04] tracking-[-0.03em] text-paper">
             {HERO_CONTENT.titleLines.map((line) => (
               <span
                 key={line}
@@ -193,18 +194,10 @@ export function Hero() {
                   className="absolute inset-x-8 bottom-4 h-16 rounded-full bg-red-600/30 blur-[40px]"
                   aria-hidden="true"
                 />
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="auto"
-                  poster="/maquinagif-poster.webp"
-                  aria-label="Máquina expendedora automática ColVending"
-                  className="relative mx-auto h-auto w-full max-w-67.5 object-contain drop-shadow-[0_20px_40px_rgba(215,38,56,0.25)] transition-transform duration-700 ease-out-soft hover:scale-[1.02]"
-                >
-                  <source src="/maquinagif.mp4" type="video/mp4" />
-                </video>
+                <Vending360
+                  label="Máquina Mixta ColVending — vista 360° interactiva. Arrastrá o usá las flechas del teclado para girarla."
+                  className="relative"
+                />
               </div>
 
               <div className="relative mt-5 grid grid-cols-4 gap-2 rounded-xl border border-white/10 bg-ink-950/60 p-3 backdrop-blur-sm">
@@ -228,28 +221,22 @@ export function Hero() {
         </div>
       </Container>
 
-      {/* Scroll cue. Wrapped in its own MotionConfig to opt out of the
-          sitewide reducedMotion="user" setting (MotionProvider.tsx) — this
-          bounce is purely decorative (aria-hidden) and subtle enough that
-          it's worth keeping for people with reduced-motion enabled, unlike
-          the larger transform animations elsewhere on the site. */}
-      <MotionConfig reducedMotion="never">
+      {/* Scroll cue. */}
+      <motion.div
+        className="absolute inset-x-0 bottom-8 hidden justify-center sm:flex"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.1, duration: 0.6 }}
+        aria-hidden="true"
+      >
         <motion.div
-          className="absolute inset-x-0 bottom-8 hidden justify-center sm:flex"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.1, duration: 0.6 }}
-          aria-hidden="true"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="flex h-9 w-6 items-start justify-center rounded-full border border-white/20 p-1.5"
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-            className="flex h-9 w-6 items-start justify-center rounded-full border border-white/20 p-1.5"
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
-          </motion.div>
+          <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
         </motion.div>
-      </MotionConfig>
+      </motion.div>
     </section>
   );
 }

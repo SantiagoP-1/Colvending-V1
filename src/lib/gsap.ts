@@ -5,14 +5,12 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// GSAP has no site-wide "respect OS motion preference" switch (unlike
-// Framer Motion's MotionConfig) — every ScrollTrigger/parallax call needs
-// to check this itself before animating.
+// Client-requested: animations always play at full effect, regardless of
+// the visitor's OS-level prefers-reduced-motion setting — hardcoded false
+// instead of the actual matchMedia check. See MotionProvider.tsx for the
+// Framer Motion-side counterpart (reducedMotion="never").
 export function prefersReducedMotion(): boolean {
-  return (
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-  );
+  return false;
 }
 
 export { gsap, ScrollTrigger };

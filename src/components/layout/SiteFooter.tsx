@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Mail, MapPin, Clock, Camera, PlayCircle, Music2, type LucideIcon } from "lucide-react";
 import logoIcon from "@/assets/images/logo-icon.webp";
 import { Button } from "@/components/ui/Button";
@@ -20,12 +21,12 @@ export function SiteFooter() {
       <Container>
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <a href="#hero" className="flex items-center gap-2.5" aria-label="ColVending inicio">
+            <Link href="/#hero" className="flex items-center gap-2.5" aria-label="ColVending inicio">
               <Image src={logoIcon} alt="" width={26} height={32} className="h-8 w-auto" />
               <span className="font-display text-lg font-semibold tracking-tight text-paper">
                 COLVENDING
               </span>
-            </a>
+            </Link>
             <p className="mt-4 text-sm leading-relaxed text-ink-300">
               {BRAND.tagline}
               <br />
@@ -48,12 +49,12 @@ export function SiteFooter() {
             <ul role="list" className="mt-4 space-y-2.5">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-sm text-ink-300 transition-colors hover:text-paper"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

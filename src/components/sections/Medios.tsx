@@ -14,12 +14,12 @@ export function Medios() {
       <Container>
         <Reveal className="text-center">
           <SectionTag>{MEDIOS_CONTENT.tag}</SectionTag>
-          <h2 className="font-display mt-6 text-3xl font-semibold text-paper sm:text-4xl">
+          <h2 className="font-heading mt-6 text-3xl font-semibold text-paper sm:text-4xl">
             {MEDIOS_CONTENT.heading}
           </h2>
         </Reveal>
 
-        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-3 sm:gap-5">
+        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-5">
           {MEDIOS_CONTENT.logos.map((logo, index) => {
             return (
               <Reveal key={logo.id} delay={0.1 + index * 0.08}>

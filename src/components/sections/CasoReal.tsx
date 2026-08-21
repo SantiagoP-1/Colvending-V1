@@ -1,149 +1,46 @@
-import { Camera, MapPin, Music2, ArrowUpRight, type LucideIcon } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Container } from "@/components/ui/Container";
-import { ReelCard } from "@/components/ui/ReelCard";
-import { ReelCarousel } from "@/components/ui/ReelCarousel";
-import { Reveal } from "@/components/ui/Reveal";
-import { SectionTag } from "@/components/ui/SectionTag";
-import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
-import { CASO_REAL_CONTENT } from "@/lib/content";
+import { CasoRealCase } from "@/components/sections/CasoRealCase";
+import matiasPhoto from "@/assets/images/matias-quilmes.jpg";
+import { CASO_REAL_CONTENT, UBICACION_PARTICULAR_CONTENT } from "@/lib/content";
 import { CASO_REAL_REELS } from "@/lib/reels";
-import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/whatsapp";
 
-const SOCIAL_ICONS: Record<string, LucideIcon> = {
-  instagram: Camera,
-  tiktok: Music2,
-};
-
+// Two consecutive case studies, one per business niche — see the TODO on
+// UBICACION_PARTICULAR_CONTENT in content.ts for what's still pending from
+// the client on the first one.
 export function CasoReal() {
   return (
-    <section
-      id="caso-real"
-      aria-label="Caso real: local Punto Ya"
-      className="border-y border-white/5 bg-ink-850 py-section"
-    >
-      <Container>
-        <Reveal className="max-w-2xl">
-          <SectionTag>{CASO_REAL_CONTENT.tag}</SectionTag>
-          <h2 className="font-display mt-6 text-4xl font-semibold text-paper sm:text-5xl">
-            {CASO_REAL_CONTENT.heading}
-          </h2>
-        </Reveal>
-
-        <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch lg:gap-10">
-          <Reveal>
-            <div className="flex h-full flex-col rounded-card border border-white/10 bg-white/[0.03] p-6 sm:p-8">
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <h3 className="font-display text-2xl font-semibold text-paper">
-                  {CASO_REAL_CONTENT.storeName}
-                </h3>
-                <a
-                  href={CASO_REAL_CONTENT.locationHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-sm text-xs font-medium text-ink-300 underline decoration-transparent underline-offset-2 transition-colors duration-200 hover:text-red-400 hover:decoration-red-400/50"
-                >
-                  <MapPin size={14} className="text-red-500" aria-hidden="true" />
-                  {CASO_REAL_CONTENT.location}
-                </a>
-              </div>
-
-              <p className="mt-3 border-l-2 border-red-500/40 pl-4 text-[15px] leading-relaxed text-ink-200 italic">
-                “{CASO_REAL_CONTENT.storeTagline}. {CASO_REAL_CONTENT.storeSlogan}”
-              </p>
-
-              <p className="mt-5 text-[15px] leading-relaxed text-ink-300">
-                {CASO_REAL_CONTENT.body}
-              </p>
-
-              <p className="mt-5 text-center text-base font-semibold text-paper sm:text-left">
-                {CASO_REAL_CONTENT.ctaQuestion}
-              </p>
-
-              <div className="mt-5 flex justify-center sm:justify-start">
-                <Button
-                  href={whatsappHref(WHATSAPP_MESSAGES.general)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  variant="primary"
-                >
-                  <WhatsAppIcon />
-                  {CASO_REAL_CONTENT.ctaLabel}
-                </Button>
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.12}>
-            <div className="flex h-full flex-col justify-between rounded-card border border-white/10 bg-white/[0.03] p-6 sm:p-8">
-              <div>
-                <p className="text-xs font-semibold tracking-wide text-ink-300 uppercase">
-                  Seguí el día a día
-                </p>
-                <div className="mt-4 space-y-3">
-                  {CASO_REAL_CONTENT.socials.map((social) => {
-                    const Icon = SOCIAL_ICONS[social.icon];
-                    return (
-                      <a
-                        key={social.platform}
-                        href={social.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group flex items-center gap-4 rounded-btn border border-white/10 bg-white/[0.02] p-4 transition-colors duration-200 hover:border-red-500/30 hover:bg-red-500/5"
-                      >
-                        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-red-500/15 text-red-500">
-                          {Icon ? <Icon size={20} aria-hidden="true" /> : null}
-                        </span>
-                        <span className="min-w-0 flex-1">
-                          <span className="block text-sm font-semibold text-paper">
-                            {social.platform}
-                          </span>
-                          <span className="block truncate text-sm text-ink-300">
-                            {social.handle}
-                          </span>
-                        </span>
-                        <ArrowUpRight
-                          size={16}
-                          className="shrink-0 text-ink-300 transition-colors group-hover:text-red-500"
-                          aria-hidden="true"
-                        />
-                      </a>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="mt-6 flex items-center gap-4 border-t border-white/10 pt-6">
-                <div className="shrink-0 text-center">
-                  <p className="font-display text-2xl font-bold text-paper">
-                    {CASO_REAL_CONTENT.followers.count}
-                  </p>
-                  <p className="mt-0.5 text-[10px] font-semibold tracking-wide text-red-400 uppercase">
-                    {CASO_REAL_CONTENT.followers.label}
-                  </p>
-                </div>
-                <p className="text-xs leading-relaxed text-ink-300 italic">
-                  “{CASO_REAL_CONTENT.followers.quote}”
-                </p>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.16} className="mt-6">
-          <ReelCarousel reels={CASO_REAL_REELS} className="sm:hidden" />
-          <div className="hidden gap-6 sm:grid sm:grid-cols-3">
-            {CASO_REAL_REELS.map((reel) => (
-              <ReelCard
-                key={reel.id}
-                title={reel.title}
-                thumbnail={reel.thumbnail}
-                videoUrl={reel.videoUrl}
-              />
-            ))}
-          </div>
-        </Reveal>
-      </Container>
-    </section>
+    <>
+      <CasoRealCase
+        sectionId={UBICACION_PARTICULAR_CONTENT.sectionId}
+        ariaLabel={UBICACION_PARTICULAR_CONTENT.ariaLabel}
+        tag={UBICACION_PARTICULAR_CONTENT.tag}
+        nicheLabel={UBICACION_PARTICULAR_CONTENT.nicheLabel}
+        heading={UBICACION_PARTICULAR_CONTENT.heading}
+        storeName={UBICACION_PARTICULAR_CONTENT.storeName}
+        location={UBICACION_PARTICULAR_CONTENT.location}
+        body={UBICACION_PARTICULAR_CONTENT.body}
+        ctaQuestion={UBICACION_PARTICULAR_CONTENT.ctaQuestion}
+        ctaLabel={UBICACION_PARTICULAR_CONTENT.ctaLabel}
+        photo={{ src: matiasPhoto, alt: UBICACION_PARTICULAR_CONTENT.photoAlt }}
+        audioPlaceholder={UBICACION_PARTICULAR_CONTENT.audioPlaceholder}
+      />
+      <CasoRealCase
+        sectionId={CASO_REAL_CONTENT.sectionId}
+        ariaLabel={CASO_REAL_CONTENT.ariaLabel}
+        tag={CASO_REAL_CONTENT.tag}
+        nicheLabel={CASO_REAL_CONTENT.nicheLabel}
+        heading={CASO_REAL_CONTENT.heading}
+        subtitle={CASO_REAL_CONTENT.subtitle}
+        storeName={CASO_REAL_CONTENT.storeName}
+        location={CASO_REAL_CONTENT.location}
+        locationHref={CASO_REAL_CONTENT.locationHref}
+        quote={`${CASO_REAL_CONTENT.storeTagline}. ${CASO_REAL_CONTENT.storeSlogan}`}
+        body={CASO_REAL_CONTENT.body}
+        ctaQuestion={CASO_REAL_CONTENT.ctaQuestion}
+        ctaLabel={CASO_REAL_CONTENT.ctaLabel}
+        socials={CASO_REAL_CONTENT.socials}
+        stat={CASO_REAL_CONTENT.followers}
+        reels={CASO_REAL_REELS}
+      />
+    </>
   );
 }
