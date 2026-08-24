@@ -9,7 +9,7 @@ export const BRAND = {
   addressLines: ["Balcarce, Buenos Aires,", "Argentina"],
   addressHref: "https://maps.app.goo.gl/nXCnwQjhnH6tnq9G7",
   email: "colvendingargentina@gmail.com",
-  hoursLines: ["Lunes a Viernes", "8:00 a 20:00 hs"],
+  hoursLines: ["Lunes a Sábados", "09:00 a 20:00 hs"],
   copyright: "© 2024–2026 ColVending. Todos los derechos reservados.",
 } as const;
 
@@ -110,7 +110,7 @@ export const MEDIOS_CONTENT = {
   // makes these anchors scroll smoothly, no extra JS needed.
   mentionText: [
     {
-      text: "Radio Gabal, Hablemos de Negocios, Emprendi2 TV y La Nación contaron cómo arrancó ColVending. ",
+      text: "La Nación, Emprendi2 TV, Hablemos de Negocios y Radio Gabal contaron cómo arrancó ColVending. ",
     },
     { text: "Leé la historia del inicio de ColVending", href: "#nosotros" },
     { text: " o " },
@@ -125,30 +125,6 @@ export const MEDIOS_CONTENT = {
   // into a wide frame (or vice versa).
   logos: [
     {
-      id: "radiogabal",
-      label: "Radio Gabal",
-      href: "https://www.instagram.com/p/DTnkRv4kXq3/",
-      logoSrc: "/medios/radiogabal.jpg",
-      width: 150,
-      height: 150,
-    },
-    {
-      id: "hablemos-de-negocios",
-      label: "Hablemos de Negocios",
-      href: "https://www.instagram.com/p/Dbn3PaXj-Z0/",
-      logoSrc: "/medios/hablemosdenegocios.jpg",
-      width: 150,
-      height: 150,
-    },
-    {
-      id: "emprendi2tv",
-      label: "Emprendi2 TV",
-      href: "https://www.instagram.com/p/DZ8JHqrqp2Q/",
-      logoSrc: "/medios/emprendi2tv.png",
-      width: 198,
-      height: 49,
-    },
-    {
       id: "lanacion",
       label: "La Nación",
       // The article covers several unrelated entrepreneurs before getting
@@ -160,6 +136,30 @@ export const MEDIOS_CONTENT = {
       logoSrc: "/medios/lanacion.jpg",
       width: 1024,
       height: 1024,
+    },
+    {
+      id: "emprendi2tv",
+      label: "Emprendi2 TV",
+      href: "https://www.instagram.com/p/DZ8JHqrqp2Q/",
+      logoSrc: "/medios/emprendi2tv.png",
+      width: 198,
+      height: 49,
+    },
+    {
+      id: "hablemos-de-negocios",
+      label: "Hablemos de Negocios",
+      href: "https://www.instagram.com/p/Dbn3PaXj-Z0/",
+      logoSrc: "/medios/hablemosdenegocios.jpg",
+      width: 150,
+      height: 150,
+    },
+    {
+      id: "radiogabal",
+      label: "Radio Gabal",
+      href: "https://www.instagram.com/p/DTnkRv4kXq3/",
+      logoSrc: "/medios/radiogabal.jpg",
+      width: 150,
+      height: 150,
     },
   ],
 } as const;
