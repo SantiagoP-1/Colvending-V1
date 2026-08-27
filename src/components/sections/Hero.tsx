@@ -13,7 +13,6 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { StatCounter } from "@/components/ui/StatCounter";
-import { Vending360 } from "@/components/ui/Vending360";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { HERO_CONTENT } from "@/lib/content";
@@ -173,7 +172,7 @@ export function Hero() {
             `transform`, and sharing one node lets GSAP's scroll-driven
             update clobber Framer's entrance mid-animation, leaving the
             card visibly offset once GSAP takes over. */}
-        <div ref={visualRef} className="relative mx-auto w-full max-w-lg">
+        <div ref={visualRef} className="relative mx-auto w-full max-w-md">
           {/* opacity stays at 1 the whole time — only a small horizontal
               settle — so the product photo (a real LCP candidate) is
               painted immediately instead of waiting on Framer Motion to
@@ -183,39 +182,59 @@ export function Hero() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
           >
-            <div className="relative overflow-hidden rounded-card border border-white/10 bg-gradient-to-b from-ink-800 to-ink-900 p-5 shadow-card sm:p-6">
+            <div className="relative overflow-hidden rounded-card border border-white/10 shadow-card">
               <div
-                className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-red-500 via-red-500/40 to-transparent"
+                className="absolute inset-x-6 top-0 z-10 h-px bg-gradient-to-r from-red-500 via-red-500/40 to-transparent"
                 aria-hidden="true"
               />
 
-              <div className="relative">
-                <div
-                  className="absolute inset-x-8 bottom-4 h-16 rounded-full bg-red-600/30 blur-[40px]"
-                  aria-hidden="true"
-                />
-                <Vending360
-                  label="Máquina Mixta ColVending — vista 360° interactiva. Arrastrá o usá las flechas del teclado para girarla."
-                  className="relative"
-                />
-              </div>
+              {/* Studio-lit product video (light background, by design —
+                  see the "abarque toda la card" decision: rather than
+                  trying to key out the background from an already-rendered
+                  opaque file, the video fills the card edge to edge so its
+                  own background reads as the card's background instead of
+                  clashing with the dark theme. Replaced the drag-to-rotate
+                  WebP viewer (Vending360.tsx, removed) — the client found
+                  its per-frame quality noticeably worse than this video.
+                  It's a fixed-camera 360° turntable shot (confirmed by
+                  sampling frames across the full loop), so cropping the
+                  top — object-bottom on a shorter-than-native aspect ratio
+                  — is safe at every point in the rotation, not just the
+                  frames we happened to check. The source frame has ~20%
+                  of empty studio backdrop above the machine; aspect-7/8
+                  trims most of that down to a natural amount of headroom. */}
+              <video
+                className="aspect-7/8 w-full object-cover object-bottom"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/maquinagif-poster.webp"
+                aria-hidden="true"
+              >
+                <source src="/maquinagif.mp4" type="video/mp4" />
+              </video>
+            </div>
 
-              <div className="relative mt-5 grid grid-cols-4 gap-2 rounded-xl border border-white/10 bg-ink-950/60 p-3 backdrop-blur-sm">
-                {HERO_CONTENT.stats.map((stat) => (
-                  <div key={stat.label} className="min-w-0 text-center">
-                    <div className="font-display text-lg font-semibold text-paper sm:text-xl">
-                      {stat.value === null ? (
-                        stat.display
-                      ) : (
-                        <StatCounter value={stat.value} />
-                      )}
-                    </div>
-                    <div className="mt-0.5 text-[9px] leading-tight font-medium tracking-wide text-ink-300 uppercase">
-                      {stat.label}
-                    </div>
+            {/* Stats live below the card, not overlaid on it — an overlay
+                here would sit right over the machine's base/door in the
+                video, covering the one thing the video exists to show off. */}
+            <div className="mt-4 grid grid-cols-4 gap-2 rounded-xl border border-white/10 bg-ink-950/60 p-3 backdrop-blur-sm">
+              {HERO_CONTENT.stats.map((stat) => (
+                <div key={stat.label} className="min-w-0 text-center">
+                  <div className="font-display text-lg font-semibold text-paper sm:text-xl">
+                    {stat.value === null ? (
+                      stat.display
+                    ) : (
+                      <StatCounter value={stat.value} />
+                    )}
                   </div>
-                ))}
-              </div>
+                  <div className="mt-0.5 text-[9px] leading-tight font-medium tracking-wide text-ink-300 uppercase">
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
             </div>
           </motion.div>
         </div>

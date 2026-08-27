@@ -27,6 +27,9 @@ const Instalaciones = dynamic(() =>
   import("@/components/sections/Instalaciones").then((mod) => mod.Instalaciones),
 );
 const Faq = dynamic(() => import("@/components/sections/Faq").then((mod) => mod.Faq));
+const Fabrica = dynamic(() =>
+  import("@/components/sections/Fabrica").then((mod) => mod.Fabrica),
+);
 
 export default function Home() {
   return (
@@ -39,6 +42,7 @@ export default function Home() {
         <Medios />
         <Beneficios />
         <Maquinas />
+        <Fabrica />
         <Franquicias />
         <Rentabilidad />
         <CasoReal />

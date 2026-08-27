@@ -47,7 +47,7 @@ export const CASO_REAL_CONTENT = {
   ariaLabel: "Caso real: local Punto Ya",
   tag: "Caso real",
   nicheLabel: "Local automático",
-  heading: "Creando un local con los equipos",
+  heading: "Creando un local automático con máquinas inteligentes",
   // Kept as a subtitle instead of dropped outright — it's the stronger,
   // more concrete marketing hook of the two headings.
   subtitle: "Un local que no para de crecer",
@@ -56,7 +56,7 @@ export const CASO_REAL_CONTENT = {
   storeSlogan: "Lo que querés, YA!",
   location: "Balcarce, Kelly e/ 21 y 23 Nro 785",
   locationHref: "https://maps.app.goo.gl/oHZHavP7UpCZfgtJ8",
-  body: "Este local ya está armado y equipado con máquinas ColVending — y no para de crecer. Su dueño, que además importa las máquinas desde China, muestra el día a día en redes: cómo lo reestockea, lo modifica y lo va mejorando.",
+  body: "Este local está equipado con máquinas expendedoras inteligentes, y los resultados no dejan de sorprender. Su dueño, que además importa las máquinas desde China, muestra el día a día en redes: cómo lo gestiona, cómo lo distribuye, cómo funciona y hasta su rentabilidad.",
   ctaQuestion: "Si querés resultados iguales, ¿qué esperás?",
   ctaLabel: "Quiero un local así",
   // Only the two channels tied to the Punto Ya store itself — the footer's
@@ -65,10 +65,10 @@ export const CASO_REAL_CONTENT = {
   // Follower count drifts over time — keep it here instead of hardcoded in
   // the component so it's a one-line update.
   followers: {
-    count: "13,2 mil",
+    count: "16,4 mil",
     label: "Seguidores",
     quote:
-      "La verdad, muy orgulloso de haber creado el primer local automático de Argentina. ¡Siempre con ganas de más!",
+      "Estos locales pasarán a ser los nuevos kioscos tradicionales de Argentina. Más barato, más rápido, mejor experiencia.",
   },
 } as const;
 
@@ -83,17 +83,17 @@ export const UBICACION_PARTICULAR_CONTENT = {
   tag: "Caso real",
   nicheLabel: "Ubicación particular",
   heading: "Una máquina, un punto estratégico",
-  storeName: "Mati",
+  storeName: "Matías Rujlin",
   location: "Clínica en Quilmes, Buenos Aires",
-  body: "Uno de nuestros clientes instaló una sola máquina ColVending en una clínica de Quilmes y recuperó su inversión inicial en apenas 1 mes. La prueba de que no hace falta un local entero para generar ingresos automáticos.",
+  body: "Uno de nuestros clientes instaló una sola máquina inteligente en una clínica de Quilmes y recuperó su inversión inicial en 3.2 meses. La prueba de que no hace falta un local entero para generar ingresos automáticos.",
   ctaQuestion: "Si querés resultados iguales, ¿qué esperás?",
   ctaLabel: "Quiero mi máquina",
   // src lives in CasoReal.tsx (static import), matching how every other
   // image on the site is imported at the component level, not here.
   photoAlt:
-    "Mati junto a su máquina ColVending instalada en una clínica de Quilmes, Buenos Aires",
+    "Matías Rujlin junto a su máquina inteligente instalada en una clínica de Quilmes, Buenos Aires",
   audioPlaceholder: {
-    label: "Audio: la experiencia de Mati",
+    label: "Audio: la experiencia de Matías",
     audioSrc: "/audio/mati-testimonio.mp3",
   },
 } as const;
@@ -205,17 +205,17 @@ export const BENEFICIOS_CONTENT = {
     {
       icon: "smartphone",
       titulo: "Control remoto",
-      desc: "Administrá stock, precios y reportes desde tu celular.",
+      desc: "Administrá stock, precios y reportes desde tu celular, PC o tablet.",
     },
     {
       icon: "trendingUp",
       titulo: "Escalable",
-      desc: "Empezá con una máquina y expandí tu red cuando quieras.",
+      desc: "Empezá con una máquina y expandí tu red en menos de 12 meses.",
     },
     {
       icon: "wrench",
       titulo: "Bajo mantenimiento",
-      desc: "Reposición rápida y simple. Sin conocimientos técnicos.",
+      desc: "Manejo rápido e intuitivo.",
     },
     {
       icon: "dollar",
@@ -240,12 +240,13 @@ export const PRODUCTO_CONTENT = {
   nombre: "MODELO INTELIGENTE YX-SHJHW-02",
   desc: "Combina snacks, bebidas y comida en un solo equipo. La solución más completa y versátil para cualquier espacio.",
   specs: [
-    "Capacidad: 300 a 600 unidades (PCS)",
+    "Capacidad: 300 a 600 unidades",
     "Hasta 60 variedades",
     "Pantalla táctil y sistema de pago (QR, tarjeta, efectivo)",
-    "Refrigeración regulable",
+    "Refrigeración regulable de 4°C a 25°C",
     "Configuración totalmente personalizable",
     "Garantía: 12 meses",
+    "Repuestos originales, servicio técnico online y presencial",
   ],
   // Real spec sheet from the supplier. Keep this to physical/technical specs
   // of the machine itself — delivery time, after-sales support and similar
@@ -254,7 +255,7 @@ export const PRODUCTO_CONTENT = {
   techSpecs: [
     {
       label: "Dimensiones",
-      value: "850 mm (ancho) x 1350 mm (profundidad) x 2047 mm (alto)",
+      value: "1276 mm (ancho) x 790 mm (profundidad) x 1942 mm (alto)",
     },
     { label: "Peso", value: "300 kg" },
     { label: "Modelo", value: "YX-SHJHW-02 — estructura de acero" },
@@ -288,7 +289,7 @@ export const PRODUCTO_CONTENT = {
 // and isn't finalized, so the copy routes to a WhatsApp conversation
 // instead of a number — this is intentional, not a placeholder to fill in.
 export const FRANQUICIAS_CONTENT = {
-  tag: "Franquicias ColVending",
+  tag: "Próximamente franquicias",
   // Rebrand to PuntoYa (the client's first automated store, already
   // featured in CASO_REAL_CONTENT). Kept the voseo tilde ("Llevá") for
   // consistency with every other heading on the site ("Generá", "Vendé",
@@ -299,12 +300,12 @@ export const FRANQUICIAS_CONTENT = {
     {
       icon: "mapPin",
       titulo: "Ubicación asistida",
-      desc: "Te ayudamos a evaluar y negociar cada ubicación — tráfico, tipo de local, condiciones de alquiler o comisión — para que la elijas con datos, no a ciegas.",
+      desc: "Te acompañamos en la selección de tu ubicación, mostrándote referencias de retorno de inversión según la zona elegida.",
     },
     {
       icon: "packageCheck",
       titulo: "Paquete de arranque",
-      desc: "Arrancás con un pack de varias máquinas Mixtas ColVending listas para operar, stock inicial de producto y cartelería de marca — la cantidad exacta se ajusta según tu inversión y la zona elegida.",
+      desc: "Arrancás con un pack de varias máquinas inteligentes listas para operar, stock inicial de producto y cartelería de marca. La cantidad de máquinas ideales para tu proyecto se define según la zona elegida y la cantidad de productos a comercializar.",
     },
     {
       icon: "graduationCap",
@@ -314,7 +315,7 @@ export const FRANQUICIAS_CONTENT = {
     {
       icon: "megaphone",
       titulo: "Marca y marketing",
-      desc: "Acceso a la identidad de marca ColVending, material gráfico para tus máquinas y presencia en las campañas, redes y medios de comunicación de la marca a nivel nacional.",
+      desc: "Acceso a la identidad de marca ColVending y a la marca registrada Punto Ya, material gráfico para tus máquinas y presencia en las campañas, redes y medios de comunicación de la marca a nivel nacional.",
     },
   ],
   investmentNote:
@@ -328,28 +329,51 @@ export const RENTABILIDAD_CONTENT = {
   lead: "Números reales de un negocio probado. Estos valores son estimaciones basadas en operaciones reales de nuestros clientes actuales.",
   stats: [
     {
-      val: "12–18",
+      val: "3.2–14.8",
       label: "Meses de retorno",
       desc: "Tiempo estimado para recuperar la inversión inicial",
+      detail: undefined,
     },
     {
-      val: "60%–120%",
-      label: "Margen promedio",
-      desc: "Ganancia sobre el costo de cada producto vendido",
+      val: "17.1%",
+      label: "ROI promedio por zona",
+      desc: "Retorno mensual promedio sobre la inversión, según zona",
+      // Marks this card as the one with a "Ver detalle por zona" button
+      // (Rentabilidad.tsx) that opens the 6-caso table below (roiPorZona).
+      detail: "roiPorZona",
     },
     {
       val: "10–15",
       label: "Años de vida útil",
       desc: "Durabilidad comprobada con mínimo mantenimiento",
+      detail: undefined,
     },
     {
       val: "24/7",
       label: "Operación continua",
       desc: "365 días al año, sin días festivos ni vacaciones",
+      detail: undefined,
     },
   ],
   disclaimer:
     "Disclaimer: Los valores de retorno y márgenes son estimaciones basadas en condiciones promedio de mercado y resultados de clientes actuales. Los resultados reales pueden variar según la ubicación, el volumen de ventas, el tipo de productos y la gestión del operador. ColVending no garantiza rendimientos específicos.",
+  // 6 casos reales documentados por el cliente — base del "17.1% ROI
+  // promedio" y el rango "3.2–14.8 meses" de arriba. Se muestran en un
+  // modal de detalle (Rentabilidad.tsx) disparado desde la card de ROI.
+  roiPorZona: {
+    detailLabel: "Ver detalle por zona",
+    modalTitle: "ROI por zona — 6 casos documentados",
+    columns: ["Cliente", "Ubicación", "ROI mensual", "Recupero"],
+    casos: [
+      { cliente: "Matías", ubicacion: "Clínica Santa Clara — Quilmes", roiMensual: "31.5%", recupero: "3.2 meses" },
+      { cliente: "Coni", ubicacion: "Colegio Luján", roiMensual: "25.8%", recupero: "3.9 meses" },
+      { cliente: "Nico", ubicacion: "UTN — Trenque Lauquen", roiMensual: "16.1%", recupero: "6.2 meses" },
+      { cliente: "Lara", ubicacion: "Universidad — Buenos Aires", roiMensual: "12.2%", recupero: "8.2 meses" },
+      { cliente: "Simón", ubicacion: "Secundaria — Buenos Aires", roiMensual: "10.2%", recupero: "9.8 meses" },
+      { cliente: "Agus", ubicacion: "Complemento a kiosco existente", roiMensual: "6.8%", recupero: "14.8 meses" },
+    ],
+    promedio: { label: "Promedio de las 6 zonas", roiMensual: "17.1%", recupero: "7.7 meses" },
+  },
 } as const;
 
 type TextSegment = { text: string; emphasis?: "strong" | "accent" };
@@ -621,6 +645,40 @@ export const UBICACIONES_PAGE_CONTENT = {
   ctaLabel: "Quiero instalar una máquina",
 } as const;
 
+// Requested by the client (PDF de correcciones, sección 08): "Así se
+// fabrica el proyecto en China antes de llegar a Argentina". Originally
+// built as a full homepage section; the client then asked to shrink it to
+// a teaser card (Fabrica.tsx) linking out to a dedicated page
+// (src/app/fabricacion) with the full photo galleries — same
+// teaser-card-on-home + full-content-on-its-own-page pattern as
+// INSTALACIONES_CONTENT/UBICACIONES_PAGE_CONTENT.
+// PLACEHOLDER: photos in assets/images/fabrica-china/ are extracted from
+// the client's reference PDF (screen captures), not production-quality
+// files — swap for the real photos/video once the client sends them.
+export const FABRICA_CONTENT = {
+  sectionId: "fabrica",
+  ariaLabel: "Cómo se fabrican las máquinas en China",
+  tag: "Fabricación a medida",
+  heading: "Así se fabrica el proyecto en China antes de llegar a Argentina",
+  lead: "Cada máquina se fabrica de forma personalizada, totalmente a medida del cliente: tanto en su estética (color, diseño, marca) como en su distribución interna de estantes, motores y espirales, adaptada al tipo de producto que se va a comercializar.",
+  ctaLabel: "Ver fabricación",
+  pageHref: "/fabricacion",
+  // Distinct copy for the /fabricacion page itself — repeating the
+  // homepage teaser's heading/lead verbatim after the visitor just clicked
+  // through from that exact text read as redundant, so the page picks up
+  // the story where the teaser leaves off (the journey) instead of
+  // re-pitching the same personalization hook.
+  pageHeading: "De la planta en China a tu negocio en Argentina",
+  pageLead: "Mirá, paso a paso, el proceso real detrás de cada equipo: desde la planta de producción en China hasta el contenedor que lo trae a Argentina.",
+  plantaCaption:
+    "Planta de producción — equipos terminados listos para despacho",
+  logisticaLead:
+    "Proceso de personalización de cada equipo (estantes, motores y espirales a medida), empaquetado y carga en contenedor para el envío a Argentina.",
+  logisticaCaption: "Empaquetado, carga y despacho internacional",
+  pageCtaQuestion: "¿Querés una máquina así de personalizada para tu negocio?",
+  pageCtaLabel: "Quiero mi máquina",
+} as const;
+
 export const FAQ_CONTENT = {
   tag: "Preguntas frecuentes",
   heading: "Todo lo que necesitás saber",
@@ -636,7 +694,7 @@ export const FAQ_CONTENT = {
         },
         {
           q: "¿Necesito conocimientos técnicos para operarla?",
-          a: "No. La máquina está pensada para que cualquier persona pueda operarla. Desde cargar productos hasta revisar reportes, todo se hace de forma simple desde una app en tu celular.",
+          a: "No. La máquina está pensada para que cualquier persona pueda operarla. Desde cargar productos hasta revisar reportes, todo se hace de forma simple desde una web en tu celular, PC o tablet.",
         },
         {
           q: "¿Qué pasa si hay un corte de luz?",
@@ -644,7 +702,7 @@ export const FAQ_CONTENT = {
         },
         {
           q: "¿Cuánto tiempo lleva instalarla?",
-          a: "La instalación básica es de 1 a 2 horas. Solo necesitás una toma de corriente estándar (220V) y el espacio adecuado. Nuestro equipo técnico te asesora en cada paso.",
+          a: "La instalación consta de 30 minutos. Se necesita conexión 220V y conexión a Internet o 4G. Nuestro equipo técnico te asesora en cada paso.",
         },
       ],
     },
@@ -654,7 +712,7 @@ export const FAQ_CONTENT = {
       items: [
         {
           q: "¿Con qué frecuencia hay que reponer los productos?",
-          a: "Depende del nivel de uso. En promedio, una vez cada 3 a 7 días. El sistema te avisa automáticamente cuando el stock de algún producto está por agotarse.",
+          a: "Depende del nivel de uso. En promedio, 1 o 2 veces al día según la demanda de la ubicación. El sistema te avisa automáticamente cuando el stock de algún producto está por agotarse.",
         },
         {
           q: "¿Quién se encarga del mantenimiento técnico?",
@@ -666,7 +724,7 @@ export const FAQ_CONTENT = {
         },
         {
           q: "¿Con qué frecuencia hay que limpiar la máquina?",
-          a: "Una limpieza superficial semanal y una limpieza profunda mensual es suficiente. Te proveemos el manual de mantenimiento y limpieza con cada máquina.",
+          a: "Una limpieza superficial semanal y una limpieza profunda mensual es suficiente.",
         },
       ],
     },
@@ -676,7 +734,7 @@ export const FAQ_CONTENT = {
       items: [
         {
           q: "¿Qué tipo de productos puedo vender?",
-          a: "Snacks, golosinas, bebidas frías y calientes, agua mineral, jugos, energizantes, productos saludables, artículos de librería, accesorios, y más. La selección es totalmente personalizable según tu ubicación.",
+          a: "Snacks, golosinas, bebidas frías, agua mineral, jugos, energizantes, productos saludables, accesorios, comida rápida como hamburguesas, pizzas, sándwiches, etc., y cualquier producto que se adapte a las dimensiones de almacenamiento del equipo (ejemplo: un cliente de Tigre almacena envases de pelotas de pádel). La selección es totalmente personalizable.",
         },
         {
           q: "¿Dónde consigo los productos para reponer?",
@@ -702,7 +760,7 @@ export const FAQ_CONTENT = {
         },
         {
           q: "¿Qué pasa con el dinero en efectivo que se guarda dentro de la máquina?",
-          a: "El efectivo queda guardado en un casetero de acero con cerradura de seguridad. Te recomendamos retirarlo semanalmente y tener una buena práctica de control, para evitar cualquier tipo de problema.",
+          a: "El efectivo queda guardado en un casetero de acero con cerradura de seguridad. Te recomendamos retirarlo diariamente y tener una buena práctica de control, para evitar cualquier tipo de problema.",
         },
       ],
     },
@@ -720,7 +778,7 @@ export const FAQ_CONTENT = {
         },
         {
           q: "¿Cuántos metros cuadrados necesita la máquina?",
-          a: "La máquina ocupa un espacio de aproximadamente 0,90 m de ancho por 0,80 m de profundidad. Además, hay que dejar unos 0,80 m libres por delante para que los clientes puedan usarla cómodamente.",
+          a: "La máquina ocupa un espacio de aproximadamente 1,28 m de ancho por 0,79 m de profundidad. Además, hay que dejar unos 0,80 m libres por delante para que los clientes puedan usarla cómodamente.",
         },
       ],
     },
@@ -730,11 +788,11 @@ export const FAQ_CONTENT = {
       items: [
         {
           q: "¿En cuánto tiempo recupero la inversión?",
-          a: "En condiciones promedio de uso, el retorno de la inversión inicial se estima entre 12 y 18 meses. El plazo varía según la ubicación, el volumen de ventas y el tipo de productos.",
+          a: "En condiciones promedio de uso, el retorno de la inversión inicial se estima entre 3 y 15 meses, con un promedio de 7 meses. El plazo varía según la ubicación, el volumen de ventas y el tipo de productos.",
         },
         {
           q: "¿Cuál es el margen de ganancia por producto?",
-          a: "El margen promedio sobre el costo del producto es del 60% al 120%, dependiendo del tipo de artículo. Los snacks y bebidas tienen márgenes especialmente atractivos.",
+          a: "Recomendamos un margen del 40% sobre el costo del producto. Es un margen saludable que, combinado con el bajo costo operativo del negocio (sin empleados y con costo de alquiler bajo), lo vuelve muy rentable para el operador y atractivo en precio para el consumidor final.",
         },
         {
           q: "¿Cuántas máquinas necesito para vivir de esto?",
@@ -748,7 +806,7 @@ export const FAQ_CONTENT = {
       items: [
         {
           q: "¿Cómo es la capacitación inicial?",
-          a: "Brindamos capacitación completa al momento de la entrega: cómo cargar productos, configurar precios, usar la app de control, resolver problemas comunes y limpiar la máquina. También te entregamos un manual completo.",
+          a: "Brindamos capacitación completa al momento de la entrega: cómo cargar productos, configurar precios, usar la web de control y resolver problemas comunes. Incluye videos tutoriales y, en caso de dudas, una videollamada con nuestro equipo técnico para resolverlas de forma online.",
         },
         {
           q: "¿Qué soporte tienen disponible?",
@@ -756,7 +814,7 @@ export const FAQ_CONTENT = {
         },
         {
           q: "¿Qué pasa si la máquina tiene un problema en fin de semana?",
-          a: "Contamos con guardia de emergencias para fallas críticas. Para el resto de los casos, podés reportarlos y se atienden el primer día hábil con prioridad máxima.",
+          a: "Tenemos soporte y respuesta todos los días de la semana, independientemente de si es feriado o domingo.",
         },
       ],
     },

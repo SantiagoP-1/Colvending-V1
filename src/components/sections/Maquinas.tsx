@@ -52,7 +52,7 @@ export function Maquinas() {
                 />
                 <Image
                   src={machinePhoto}
-                  alt="Máquina Mixta ColVending"
+                  alt="Máquina inteligente ColVending"
                   sizes="(min-width: 1024px) 320px, 70vw"
                   className="relative mx-auto h-auto w-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-transform duration-300 ease-out-soft group-hover:scale-[1.02]"
                 />

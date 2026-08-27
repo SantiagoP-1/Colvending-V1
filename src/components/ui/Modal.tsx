@@ -10,13 +10,22 @@ interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  /** "md" (default) fits text/table content. "lg" gives image lightboxes
+   *  (FabricacionGaleria.tsx) more room so the photo isn't cropped down to
+   *  a small box. */
+  size?: "md" | "lg";
 }
+
+const PANEL_SIZE_CLASSES = {
+  md: "max-w-lg",
+  lg: "max-w-3xl",
+} as const;
 
 // Rendered via a portal into document.body — a fixed-position overlay
 // nested inside an ancestor that GSAP (Reveal) has transformed would
 // otherwise be clipped/mispositioned, since a CSS transform on an ancestor
 // creates a new containing block for `position: fixed` descendants.
-export function Modal({ open, onClose, title, children }: ModalProps) {
+export function Modal({ open, onClose, title, children, size = "md" }: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -94,7 +103,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 12 }}
             transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="relative z-10 max-h-[85vh] w-full max-w-lg overflow-y-auto rounded-card border border-white/10 bg-ink-900 p-6 shadow-card outline-none sm:p-8"
+            className={`relative z-10 max-h-[85vh] w-full ${PANEL_SIZE_CLASSES[size]} overflow-y-auto rounded-card border border-white/10 bg-ink-900 p-6 shadow-card outline-none sm:p-8`}
           >
             <button
               type="button"

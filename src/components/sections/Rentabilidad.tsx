@@ -1,5 +1,9 @@
-import { ArrowDown, ArrowUp } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { ArrowDown, ArrowUp, Info } from "lucide-react";
 import { Container } from "@/components/ui/Container";
+import { Modal } from "@/components/ui/Modal";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionTag } from "@/components/ui/SectionTag";
 import { RENTABILIDAD_CONTENT } from "@/lib/content";
@@ -7,6 +11,9 @@ import { RESULTADOS_CONTENT } from "@/lib/resultados";
 import { cn } from "@/lib/utils";
 
 export function Rentabilidad() {
+  const [roiDetailOpen, setRoiDetailOpen] = useState(false);
+  const { roiPorZona } = RENTABILIDAD_CONTENT;
+
   return (
     <section
       id="rentabilidad"
@@ -36,6 +43,16 @@ export function Rentabilidad() {
               <p className="mt-1.5 max-w-[26ch] text-sm leading-relaxed text-ink-300">
                 {stat.desc}
               </p>
+              {stat.detail === "roiPorZona" && (
+                <button
+                  type="button"
+                  onClick={() => setRoiDetailOpen(true)}
+                  className="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-ink-300 transition-colors duration-200 hover:text-red-400"
+                >
+                  <Info size={13} aria-hidden="true" />
+                  {roiPorZona.detailLabel}
+                </button>
+              )}
             </Reveal>
           ))}
         </div>
@@ -89,6 +106,52 @@ export function Rentabilidad() {
           <p className="text-xs text-ink-400">{RESULTADOS_CONTENT.updatedLabel}</p>
         </Reveal>
       </Container>
+
+      <Modal
+        open={roiDetailOpen}
+        onClose={() => setRoiDetailOpen(false)}
+        title={roiPorZona.modalTitle}
+      >
+        <h3 className="font-display pr-10 text-xl font-semibold text-paper sm:text-2xl">
+          {roiPorZona.modalTitle}
+        </h3>
+        <div className="mt-5 overflow-x-auto">
+          <table className="w-full min-w-105 text-left text-sm">
+            <thead>
+              <tr className="border-b border-white/10 text-xs font-semibold tracking-wide text-ink-300 uppercase">
+                {roiPorZona.columns.map((col) => (
+                  <th key={col} scope="col" className="pb-3 pr-4 font-semibold">
+                    {col}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10">
+              {roiPorZona.casos.map((caso) => (
+                <tr key={caso.cliente}>
+                  <td className="py-3 pr-4 font-medium text-paper">{caso.cliente}</td>
+                  <td className="py-3 pr-4 text-ink-300">{caso.ubicacion}</td>
+                  <td className="py-3 pr-4 text-ink-200">{caso.roiMensual}</td>
+                  <td className="py-3 pr-4 text-ink-200">{caso.recupero}</td>
+                </tr>
+              ))}
+            </tbody>
+            <tfoot>
+              <tr className="border-t border-red-500/30">
+                <td colSpan={2} className="py-3 pr-4 font-semibold text-paper">
+                  {roiPorZona.promedio.label}
+                </td>
+                <td className="py-3 pr-4 font-semibold text-red-400">
+                  {roiPorZona.promedio.roiMensual}
+                </td>
+                <td className="py-3 pr-4 font-semibold text-red-400">
+                  {roiPorZona.promedio.recupero}
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </Modal>
     </section>
   );
 }
