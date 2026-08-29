@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Inter, Poppins } from "next/font/google";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { CustomCursor } from "@/components/ui/CustomCursor";
@@ -73,40 +73,70 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#0a0a0b",
+  colorScheme: "dark",
+};
+
 // LocalBusiness subsumes Organization in schema.org's hierarchy, so one
 // node carries both the brand identity (name, logo, sameAs) and the
 // local-business specifics (address, phone, hours) instead of two
-// competing entities describing the same company.
-const localBusinessJsonLd = {
+// competing entities describing the same company. A WebSite node sits
+// alongside it (linked via publisher) purely to reinforce the site's own
+// name/URL as an entity — both share one <script> tag as a @graph so
+// Google reads them as related nodes instead of two disconnected ones.
+const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "@id": `${SITE_URL}/#business`,
-  name: BRAND.name,
-  description: DESCRIPTION,
-  url: SITE_URL,
-  logo: `${SITE_URL}/icon-512.png`,
-  image: `${SITE_URL}/icon-512.png`,
-  telephone: `+${WHATSAPP_NUMBER}`,
-  email: BRAND.email,
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Balcarce",
-    addressRegion: "Buenos Aires",
-    addressCountry: "AR",
-  },
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-    ],
-    opens: "08:00",
-    closes: "20:00",
-  },
-  sameAs: SOCIAL_LINKS.map((social) => social.url),
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": `${SITE_URL}/#business`,
+      name: BRAND.name,
+      description: DESCRIPTION,
+      url: SITE_URL,
+      logo: `${SITE_URL}/icon-512.png`,
+      image: `${SITE_URL}/icon-512.png`,
+      telephone: `+${WHATSAPP_NUMBER}`,
+      email: BRAND.email,
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Balcarce",
+        addressRegion: "Buenos Aires",
+        addressCountry: "AR",
+      },
+      // "operamos en todo el territorio nacional" — real claim already made
+      // in the Nosotros section copy (content.ts), not a new assertion.
+      areaServed: {
+        "@type": "Country",
+        name: "Argentina",
+      },
+      // Matches BRAND.hoursLines ("Lunes a Sábados, 09:00 a 20:00 hs"),
+      // the same hours shown in the footer — kept in sync rather than
+      // duplicated as separate literals so the two can't drift apart.
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ],
+        opens: "09:00",
+        closes: "20:00",
+      },
+      sameAs: SOCIAL_LINKS.map((social) => social.url),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: BRAND.name,
+      inLanguage: "es-AR",
+      publisher: { "@id": `${SITE_URL}/#business` },
+    },
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -119,7 +149,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="font-body antialiased">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <CustomCursor />
         <TapRipple />

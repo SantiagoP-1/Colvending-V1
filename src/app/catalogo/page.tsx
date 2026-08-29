@@ -1,15 +1,23 @@
-import type { Metadata } from "next";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Catálogo completo — ColVending",
-  description:
-    "Próximamente vas a poder ver acá todos los modelos disponibles de ColVending.",
-  alternates: { canonical: "/catalogo" },
+export const metadata = {
+  ...pageMetadata({
+    title: "Catálogo completo — ColVending",
+    description:
+      "Próximamente vas a poder ver acá todos los modelos disponibles de ColVending.",
+    path: "/catalogo",
+  }),
+  // Placeholder page ("Próximamente..."), no longer linked from anywhere on
+  // the site (see content.ts) — keeping it indexable would put thin/"coming
+  // soon" content in front of someone searching for ColVending's catalog.
+  // follow: true so any link equity still flows through to the rest of the
+  // site instead of being trapped on a dead end.
+  robots: { index: false, follow: true },
 };
 
 export default function CatalogoPage() {

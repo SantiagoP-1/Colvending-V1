@@ -4,7 +4,7 @@ Sitio web comercial de **ColVending**, empresa de Balcarce (Buenos Aires, Argent
 
 ## 🔗 Preview
 
-Producción: **[colvending-v1.vercel.app](https://colvending-v1.vercel.app)**
+Producción: **[colvending.com](https://colvending.com)**
 
 ## ✨ Características
 
@@ -63,7 +63,7 @@ Abrí [http://localhost:3000](http://localhost:3000).
 NEXT_PUBLIC_SITE_URL=
 ```
 
-Opcional. Define el dominio usado en `canonical`, Open Graph, `sitemap.xml`, `robots.txt` y el JSON-LD. Si no se define, cae por defecto a la URL de producción actual en Vercel.
+Opcional. Define el dominio usado en `canonical`, Open Graph, `sitemap.xml`, `robots.txt` y el JSON-LD. Si no se define, cae por defecto a `https://colvending.com`.
 
 ## 📦 Build
 
