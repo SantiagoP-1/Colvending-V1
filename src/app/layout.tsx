@@ -3,7 +3,7 @@ import { Bricolage_Grotesque, Inter, Poppins } from "next/font/google";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { TapRipple } from "@/components/ui/TapRipple";
-import { BRAND, SOCIAL_LINKS } from "@/lib/content";
+import { BRAND, INSTALACIONES_CONTENT, SOCIAL_LINKS } from "@/lib/content";
 import { SITE_URL } from "@/lib/seo";
 import { WHATSAPP_NUMBER } from "@/lib/whatsapp";
 import "./globals.css";
@@ -37,10 +37,12 @@ const poppins = Poppins({
   display: "swap",
 });
 
+// Trimmed to 60/157 chars respectively so Google doesn't truncate them in
+// the SERP (was 71/164) — same brand + service + location, same claims.
 const TITLE =
-  "ColVending — Máquinas Expendedoras Automáticas | Balcarce, Buenos Aires";
+  "ColVending — Máquinas Expendedoras en Balcarce, Buenos Aires";
 const DESCRIPTION =
-  "Invertí en máquinas expendedoras automáticas. Generá ingresos las 24 horas sin empleados, con monitoreo remoto desde tu celular. ColVending, Balcarce, Buenos Aires.";
+  "Invertí en máquinas expendedoras automáticas. Generá ingresos 24/7 sin empleados, con monitoreo remoto desde tu celular. ColVending — Balcarce, Buenos Aires.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -84,6 +86,16 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
+// Same coordinates already plotted on the Instalaciones/Ubicaciones map
+// (content.ts) — read from there instead of re-typing the literal so the
+// two can never drift apart. Stored as [longitude, latitude] to match
+// react-simple-maps/GeoJSON convention; schema.org's GeoCoordinates wants
+// the fields named the other way around.
+const balcarceMarker = INSTALACIONES_CONTENT.markers.find(
+  (marker) => marker.id === "balcarce",
+)!;
+const [BALCARCE_LONGITUDE, BALCARCE_LATITUDE] = balcarceMarker.coordinates;
+
 // LocalBusiness subsumes Organization in schema.org's hierarchy, so one
 // node carries both the brand identity (name, logo, sameAs) and the
 // local-business specifics (address, phone, hours) instead of two
@@ -110,6 +122,14 @@ const jsonLd = {
         addressRegion: "Buenos Aires",
         addressCountry: "AR",
       },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: BALCARCE_LATITUDE,
+        longitude: BALCARCE_LONGITUDE,
+      },
+      // Real Google Maps link, already used by the footer's address link
+      // (BRAND.addressHref in SiteFooter.tsx) — not a new/separate URL.
+      hasMap: BRAND.addressHref,
       // "operamos en todo el territorio nacional" — real claim already made
       // in the Nosotros section copy (content.ts), not a new assertion.
       areaServed: {

@@ -5,7 +5,9 @@ import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Ubicaciones — Dónde están las máquinas ColVending | ColVending",
+  // Trimmed to 59 chars (was 62) and dropped the repeated "ColVending" at
+  // the end — the brand only needs to appear once in the title.
+  title: "Ubicaciones ColVending en Argentina — Máquinas expendedoras",
   description:
     "Mapa completo de todas las ubicaciones donde ColVending tiene máquinas expendedoras instaladas en Argentina. Buscá por ciudad o filtrá por provincia.",
   path: "/ubicaciones",
