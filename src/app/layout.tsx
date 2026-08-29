@@ -47,6 +47,12 @@ export const metadata: Metadata = {
   title: TITLE,
   description: DESCRIPTION,
   alternates: {
+    // Next's metadata resolver always normalizes the root path down to a
+    // bare origin — "https://colvending.com", no trailing slash — whether
+    // this is written as "/" or as an absolute "https://colvending.com/".
+    // That's the one canonical form of the homepage; colvending.com/ isn't
+    // a distinct URL from Google's (or anyone else's) perspective, just a
+    // different way of writing the same one.
     canonical: "/",
   },
   robots: {
