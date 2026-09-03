@@ -547,12 +547,15 @@ export const UBICACIONES_EXTRA_MARKERS = [
     // general place node) sits only ~4.6km from this topojson's Buenos
     // Aires/Entre Ríos line — the Paraná's edge is simplified/generalized
     // here, so that line runs closer to the city than the real river does.
-    // Nudged to the actual "Centro" reference point (Bartolomé Mitre, per
-    // OSM) plus ~3km further inland, which clears it to a comfortable
-    // ~8km margin in every direction — needed so a 2-dot cluster fanned
-    // out at FOCUS_ZOOM can't visually cross into Entre Ríos (reported by
-    // the client 2026-09-03; see ArgentinaMap.tsx's petalRadius comment).
-    coordinates: [-60.2252, -33.3628] as [number, number],
+    // A first nudge (to the "Centro" reference point + ~3km inland, ~8km
+    // margin) still read as "on the border" once rendered — at FOCUS_ZOOM
+    // the visible map spans ~1000km, so anything under ~40km of movement is
+    // imperceptible on screen even once it's technically well inside the
+    // province (same issue found and fixed for Neuquén Capital, 2026-09-03).
+    // Moved ~40km straight south (inland, away from the river — still
+    // greater San Nicolás/Ramallo area), clearing 40km+ margin on every
+    // side except west (still 70km+).
+    coordinates: [-60.2252, -33.7232] as [number, number],
     label: "San Nicolás, Buenos Aires",
     province: "Buenos Aires",
     machines: 2,
@@ -583,10 +586,15 @@ export const UBICACIONES_EXTRA_MARKERS = [
     // The real city center (confirmed against Wikipedia's coordinate) sits
     // right at the Limay/Neuquén rivers' confluence — the literal eastern
     // tip of the province, only ~4-6km from Río Negro in every direction.
-    // Nudged ~4km NW, still well inside the city, to clear enough margin
-    // (~8km) that a 2-dot cluster fanned out at FOCUS_ZOOM can't visually
-    // cross into Río Negro (client asked for this 2026-09-03).
-    coordinates: [-68.1055, -38.916] as [number, number],
+    // Two earlier nudges (4km, then 15km) still read as "on the border" —
+    // at FOCUS_ZOOM the visible map spans ~1000km, so anything under ~20
+    // screen-pixels of movement (~40+km at this projection scale) is
+    // imperceptible even once it's technically well inside the province.
+    // Moved ~45km WNW along the Neuquén river valley (Alto Valle — Plottier/
+    // Senillosa area, still populated Neuquén Capital metro, not open
+    // desert), clearing 25km+ margin in every direction — the first nudge
+    // actually big enough to look different on screen, not just on paper.
+    coordinates: [-68.5226, -38.8169] as [number, number],
     label: "Neuquén Capital, Neuquén",
     province: "Neuquén",
     machines: 2,
