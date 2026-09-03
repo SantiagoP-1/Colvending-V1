@@ -86,9 +86,20 @@ export interface ArgentinaMapMarker {
 // polygon, which read as too computed/mechanical for a location this small.
 // Single-dot markers keep the original, slightly larger radius (4 / 6
 // active); cluster dots are smaller so several fanned out don't balloon.
-const PETAL_BASE_RADIUS = 7;
-const PETAL_RADIUS_STEP = 0.7;
-const PETAL_RADIUS_JITTER = 1.2;
+// Checked against every current cluster marker's real distance to its own
+// province border (CABA especially — being tiny, Serrano 630 only clears
+// ~4km in any direction; a few Buenos Aires spots aren't much better:
+// Lanús ~5km, Quilmes ~4km). A radius that's mathematically safe for those
+// (~2.4) is too tight to look different from before, so this leans on the
+// dot's own rendered size (which is bigger than the offset at FOCUS_ZOOM)
+// to visually cover the sliver that technically crosses for those 4 tight
+// spots — checked screenshot-by-screenshot, not just algebraically, for
+// every cluster on the site; none showed a dot visibly sitting outside its
+// own province. Re-check any newly added cluster marker the same way
+// before raising these further.
+const PETAL_BASE_RADIUS = 5;
+const PETAL_RADIUS_STEP = 0.5;
+const PETAL_RADIUS_JITTER = 0.75;
 const SINGLE_DOT_RADIUS = { default: 4, active: 6 };
 const CLUSTER_DOT_RADIUS = { default: 3, active: 4.5 };
 
@@ -98,26 +109,55 @@ interface ArgentinaMapProps {
   zoom: number;
   activeId: string | null;
   onMarkerClick?: (marker: ArgentinaMapMarker) => void;
+  /** `marker.province` of the currently focused location — see PROVINCE_NAME_TO_GEO_NAME. */
+  highlightProvince?: string | null;
   className?: string;
 }
 
+// Every province geography's `properties.nombre` comes straight from the
+// topojson, which spells CABA out in full ("Ciudad Autónoma de Buenos
+// Aires") — content.ts markers use the short "CABA" everywhere else on the
+// site, so that's the one name that needs translating before comparing.
+const PROVINCE_NAME_TO_GEO_NAME: Record<string, string> = {
+  CABA: "Ciudad Autónoma de Buenos Aires",
+};
+
+const BASE_FILL = "#3a3a44";
+const BASE_STROKE = "rgba(245,245,244,0.2)";
+// Buenos Aires is a huge, elongated province — its name label sits at its
+// overall centroid, which for northern river-corridor cities (Zárate, San
+// Nicolás...) is far enough away that the nearest visible province label at
+// FOCUS_ZOOM can end up being a neighboring province's (e.g. Entre Ríos)
+// instead, even though the marker's dot is correctly inside Buenos Aires —
+// reported by the client as "the point shows in Entre Ríos" for exactly
+// those two cities. Every province shares one flat fill color, so there was
+// no way to tell which shape actually contains the dot short of finding the
+// (possibly distant, possibly off-screen) matching label. Tinting the
+// focused marker's own province red removes that ambiguity regardless of
+// which labels happen to be nearby.
 const geographyStyle = {
+  default: { fill: BASE_FILL, stroke: BASE_STROKE, strokeWidth: 0.6, outline: "none" },
+  hover: { fill: BASE_FILL, stroke: BASE_STROKE, strokeWidth: 0.6, outline: "none" },
+  pressed: { fill: BASE_FILL, stroke: BASE_STROKE, strokeWidth: 0.6, outline: "none" },
+};
+const highlightedGeographyStyle = {
   default: {
-    fill: "#3a3a44",
-    stroke: "rgba(245,245,244,0.2)",
-    strokeWidth: 0.6,
+    fill: "rgba(215,38,56,0.22)",
+    stroke: "rgba(215,38,56,0.65)",
+    strokeWidth: 0.9,
     outline: "none",
+    transition: "fill 0.4s ease-out, stroke 0.4s ease-out",
   },
   hover: {
-    fill: "#3a3a44",
-    stroke: "rgba(245,245,244,0.2)",
-    strokeWidth: 0.6,
+    fill: "rgba(215,38,56,0.22)",
+    stroke: "rgba(215,38,56,0.65)",
+    strokeWidth: 0.9,
     outline: "none",
   },
   pressed: {
-    fill: "#3a3a44",
-    stroke: "rgba(245,245,244,0.2)",
-    strokeWidth: 0.6,
+    fill: "rgba(215,38,56,0.22)",
+    stroke: "rgba(215,38,56,0.65)",
+    strokeWidth: 0.9,
     outline: "none",
   },
 };
@@ -128,8 +168,13 @@ export function ArgentinaMap({
   zoom,
   activeId,
   onMarkerClick,
+  highlightProvince,
   className = "",
 }: ArgentinaMapProps) {
+  const highlightGeoName = highlightProvince
+    ? (PROVINCE_NAME_TO_GEO_NAME[highlightProvince] ?? highlightProvince)
+    : null;
+
   return (
     <ComposableMap
       projection="geoMercator"
@@ -156,9 +201,13 @@ export function ArgentinaMap({
               const override = LABEL_OVERRIDES[geo.properties.nombre];
               const labelCoordinates =
                 override?.coordinates ?? (geoCentroid(geo) as [number, number]);
+              const isHighlighted = geo.properties.nombre === highlightGeoName;
               return (
                 <g key={geo.rsmKey}>
-                  <Geography geography={geo} style={geographyStyle} />
+                  <Geography
+                    geography={geo}
+                    style={isHighlighted ? highlightedGeographyStyle : geographyStyle}
+                  />
                   {canFitLabel && (
                     <Marker coordinates={labelCoordinates}>
                       <text
@@ -198,9 +247,22 @@ export function ArgentinaMap({
             marker.machines && marker.machines > 1 ? marker.machines : 1;
           const isCluster = machineCount > 1;
           const dotRadius = isCluster ? CLUSTER_DOT_RADIUS : SINGLE_DOT_RADIUS;
+          // PETAL_BASE_RADIUS/STEP/JITTER are projection units, which
+          // ZoomableGroup's `scale(zoom)` multiplies along with everything
+          // else — undivided, a cluster's fan-out radius (a fixed real-world
+          // distance) grows right along with the zoom, so at FOCUS_ZOOM a
+          // 2-machine cluster's dots could end up several real km apart,
+          // enough for one to visually cross a province border while the
+          // other stays put (reported by the client for San Nicolás: one
+          // dot rendered inside Entre Ríos). Dividing by `zoom` keeps the
+          // fan-out's ON-SCREEN size constant across zoom levels instead of
+          // scaling up with it, so it stays "a few separate spots right
+          // here" — the original design intent — at any zoom.
           const petalRadius =
-            PETAL_BASE_RADIUS +
-            Math.max(0, machineCount - 2) * PETAL_RADIUS_STEP;
+            (PETAL_BASE_RADIUS +
+              Math.max(0, machineCount - 2) * PETAL_RADIUS_STEP) /
+            zoom;
+          const petalJitter = PETAL_RADIUS_JITTER / zoom;
           // Evenly spaced around a circle (starting straight up), each dot's
           // own radius nudged slightly in/out in alternation — the fan-out
           // stays legible at a glance but doesn't read as a stamped-out
@@ -208,9 +270,7 @@ export function ArgentinaMap({
           const dotOffsets = isCluster
             ? Array.from({ length: machineCount }, (_, i) => {
                 const angle = -Math.PI / 2 + (i * 2 * Math.PI) / machineCount;
-                const r =
-                  petalRadius +
-                  (i % 2 === 0 ? PETAL_RADIUS_JITTER : -PETAL_RADIUS_JITTER);
+                const r = petalRadius + (i % 2 === 0 ? petalJitter : -petalJitter);
                 return { dx: Math.cos(angle) * r, dy: Math.sin(angle) * r };
               })
             : [{ dx: 0, dy: 0 }];

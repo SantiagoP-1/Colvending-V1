@@ -543,7 +543,16 @@ export const INSTALACIONES_CONTENT = {
 export const UBICACIONES_EXTRA_MARKERS = [
   {
     id: "san-nicolas",
-    coordinates: [-60.2166, -33.3277] as [number, number],
+    // The original Nominatim geocode ([-60.2166, -33.3277], the city's
+    // general place node) sits only ~4.6km from this topojson's Buenos
+    // Aires/Entre Ríos line — the Paraná's edge is simplified/generalized
+    // here, so that line runs closer to the city than the real river does.
+    // Nudged to the actual "Centro" reference point (Bartolomé Mitre, per
+    // OSM) plus ~3km further inland, which clears it to a comfortable
+    // ~8km margin in every direction — needed so a 2-dot cluster fanned
+    // out at FOCUS_ZOOM can't visually cross into Entre Ríos (reported by
+    // the client 2026-09-03; see ArgentinaMap.tsx's petalRadius comment).
+    coordinates: [-60.2252, -33.3628] as [number, number],
     label: "San Nicolás, Buenos Aires",
     province: "Buenos Aires",
     machines: 2,
@@ -571,7 +580,13 @@ export const UBICACIONES_EXTRA_MARKERS = [
   },
   {
     id: "neuquen-capital",
-    coordinates: [-68.0592, -38.952] as [number, number],
+    // The real city center (confirmed against Wikipedia's coordinate) sits
+    // right at the Limay/Neuquén rivers' confluence — the literal eastern
+    // tip of the province, only ~4-6km from Río Negro in every direction.
+    // Nudged ~4km NW, still well inside the city, to clear enough margin
+    // (~8km) that a 2-dot cluster fanned out at FOCUS_ZOOM can't visually
+    // cross into Río Negro (client asked for this 2026-09-03).
+    coordinates: [-68.1055, -38.916] as [number, number],
     label: "Neuquén Capital, Neuquén",
     province: "Neuquén",
     machines: 2,

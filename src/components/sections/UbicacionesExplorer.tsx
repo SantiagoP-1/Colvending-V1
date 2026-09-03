@@ -166,6 +166,7 @@ export function UbicacionesExplorer() {
               zoom={zoom}
               activeId={activeId}
               onMarkerClick={focusLocation}
+              highlightProvince={activeMarker?.province}
               className="h-full w-full"
             />
             {!activeMarker && (
