@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Inter, Poppins } from "next/font/google";
 import { MotionProvider } from "@/components/providers/MotionProvider";
-import { CustomCursor } from "@/components/ui/CustomCursor";
 import { TapRipple } from "@/components/ui/TapRipple";
 import { BRAND, INSTALACIONES_CONTENT, SOCIAL_LINKS } from "@/lib/content";
 import { SITE_URL } from "@/lib/seo";
@@ -177,7 +176,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <CustomCursor />
         <TapRipple />
         <MotionProvider>{children}</MotionProvider>
       </body>

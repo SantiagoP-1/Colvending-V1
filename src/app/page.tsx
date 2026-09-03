@@ -30,6 +30,10 @@ const Faq = dynamic(() => import("@/components/sections/Faq").then((mod) => mod.
 const Fabrica = dynamic(() =>
   import("@/components/sections/Fabrica").then((mod) => mod.Fabrica),
 );
+// <Controla /> (src/components/sections/Controla.tsx) is built and ready —
+// the client's Controla software isn't finished yet, so this stays off the
+// homepage until he confirms it's ready to promote. Re-add the import above
+// and the JSX below (right after <Fabrica />) when that happens.
 
 export default function Home() {
   return (

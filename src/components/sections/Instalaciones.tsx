@@ -16,6 +16,7 @@ import {
   ALL_MARKERS,
   countProvinces,
   getProvinceMachineCounts,
+  getTotalMachines,
   groupByProvince,
   HEATMAP_TIERS,
 } from "@/lib/locations";
@@ -40,6 +41,7 @@ const ProvinceHeatmap = dynamic(
 
 const TOTAL_PROVINCES = countProvinces(groupByProvince(ALL_MARKERS));
 const PROVINCE_MACHINE_COUNTS = getProvinceMachineCounts(ALL_MARKERS);
+const TOTAL_MACHINES = getTotalMachines(ALL_MARKERS);
 
 export function Instalaciones() {
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -74,7 +76,7 @@ export function Instalaciones() {
         >
           <div>
             <span className="font-display text-3xl font-bold text-paper">
-              <StatCounter value={ALL_MARKERS.length} />
+              <StatCounter value={TOTAL_MACHINES} />
             </span>
             <span className="ml-2 text-sm text-ink-300">
               {UBICACIONES_PAGE_CONTENT.installedLabel}

@@ -5,9 +5,9 @@ import { useEffect, useRef } from "react";
 const INTERACTIVE_SELECTOR = "a, button, [role='button']";
 const RIPPLE_DURATION_MS = 550;
 
-// Touch counterpart to CustomCursor: a brief red glow at the exact touch
-// point when tapping an interactive element. touchstart only (never
-// touchmove), passive, so it can never interfere with native scroll.
+// Touch-only feedback: a brief red glow at the exact touch point when
+// tapping an interactive element. touchstart only (never touchmove),
+// passive, so it can never interfere with native scroll.
 export function TapRipple() {
   const containerRef = useRef<HTMLDivElement>(null);
 

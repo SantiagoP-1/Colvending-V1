@@ -17,6 +17,7 @@ import {
   ALL_MARKERS,
   countProvinces,
   getMachineCount,
+  getTotalMachines,
   groupByProvince,
   normalizeSearchText,
 } from "@/lib/locations";
@@ -45,6 +46,7 @@ const FOCUS_DURATION_MS = 4000;
 
 const PROVINCE_GROUPS = groupByProvince(ALL_MARKERS);
 const TOTAL_PROVINCES = countProvinces(PROVINCE_GROUPS);
+const TOTAL_MACHINES = getTotalMachines(ALL_MARKERS);
 
 export function UbicacionesExplorer() {
   const [center, setCenter] = useState<[number, number]>(DEFAULT_CENTER);
@@ -136,7 +138,7 @@ export function UbicacionesExplorer() {
         >
           <div>
             <span className="font-display text-3xl font-bold text-paper">
-              <StatCounter value={ALL_MARKERS.length} />
+              <StatCounter value={TOTAL_MACHINES} />
             </span>
             <span className="ml-2 text-sm text-ink-300">
               {UBICACIONES_PAGE_CONTENT.installedLabel}

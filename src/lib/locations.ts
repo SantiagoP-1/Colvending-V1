@@ -50,12 +50,19 @@ export function countProvinces(groups: readonly ProvinceGroup[]): number {
   return groups.filter((group) => group.province !== "CABA").length;
 }
 
-// Only markers from the 2026-08-20 client batch carry a known `machines`
-// count — older markers simply omit the field rather than assume 1, so this
-// reads it via a type guard instead of `marker.machines` (which the union
-// type won't allow directly since not every member declares it).
+// Read via a type guard instead of `marker.machines` (which the union type
+// won't allow directly since not every member declares it) — kept for
+// markers that might omit the field in the future rather than assume 1.
 export function getMachineCount(marker: LocationMarker): number | undefined {
   return "machines" in marker ? marker.machines : undefined;
+}
+
+// Total machines installed across Argentina — the number behind the
+// "máquinas instaladas" stat (Instalaciones.tsx, UbicacionesExplorer.tsx).
+// Not the same as `markers.length`: several markers are a single address
+// hosting more than one machine (e.g. Balcarce has 4).
+export function getTotalMachines(markers: readonly LocationMarker[]): number {
+  return markers.reduce((total, marker) => total + (getMachineCount(marker) ?? 1), 0);
 }
 
 // For the province heatmap: total machines per province, keyed by the same

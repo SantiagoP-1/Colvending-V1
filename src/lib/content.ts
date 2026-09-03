@@ -453,42 +453,64 @@ export const INSTALACIONES_CONTENT = {
       coordinates: [-58.2694, -34.7206] as [number, number],
       label: "Quilmes, Buenos Aires",
       province: "Buenos Aires",
+      // Matías Rujlin — Clínica Santa Clara (serie 7680171) + 2 más
+      // (serie "En viaje" en el formulario, confirmadas en Quilmes por el
+      // cliente el 2026-09-03; sin dirección puntual todavía, mismo marker).
+      machines: 3,
     },
     {
       id: "tucuman",
       coordinates: [-65.2176, -26.8083] as [number, number],
       label: "Campus UNSTA, Tucumán",
       province: "Tucumán",
+      // Clemente Mirra — Universidad del Norte Santo Tomás de Aquino
+      // (serie 7680827). His other 3 Tucumán machines are the
+      // "tucuman-capital" marker below.
+      machines: 1,
     },
     {
       id: "lujan",
       coordinates: [-59.1052, -34.5652] as [number, number],
       label: "Luján, Buenos Aires",
       province: "Buenos Aires",
+      // Constanza Perrucci — Colegio Jean Piaget + 2 más (serie 7680829, 2, 3).
+      machines: 3,
     },
     {
       id: "zarate",
       coordinates: [-59.0243, -34.097] as [number, number],
       label: "Zárate, Buenos Aires",
       province: "Buenos Aires",
+      // David Mencia — Arribeños 4 + Loft del Río.
+      machines: 2,
     },
     {
       id: "benavidez",
       coordinates: [-58.697, -34.438] as [number, number],
       label: "Benavídez, Buenos Aires",
       province: "Buenos Aires",
+      // Ignacio Jaeschke — "New Man Tennis" + otra máquina, misma
+      // dirección (Av. de los Constituyentes 7245).
+      machines: 2,
     },
     {
       id: "cordoba",
       coordinates: [-64.1888, -31.4201] as [number, number],
       label: "Córdoba Capital",
       province: "Córdoba",
+      // Jose Cedron — Estación de servicio Petroluxe (serie 7680167).
+      machines: 1,
     },
     {
       id: "trenquelauquen",
       coordinates: [-62.7422, -35.9706] as [number, number],
       label: "Trenque Lauquen, Buenos Aires",
       province: "Buenos Aires",
+      // "Nico" (caso en RENTABILIDAD_CONTENT, cliente previo al formulario)
+      // es Nicolás Tedoldi — sus 4 máquinas del formulario 2026-08-20
+      // (antes "sin especificar", confirmadas en Trenque Lauquen por el
+      // cliente el 2026-09-03) son estas mismas, no una suma aparte.
+      machines: 4,
     },
     {
       id: "balcarce",
@@ -498,6 +520,8 @@ export const INSTALACIONES_CONTENT = {
       coordinates: [-58.2588, -37.8492] as [number, number],
       label: "Balcarce, Buenos Aires",
       province: "Buenos Aires",
+      // Santiago Colella — "PuntoYa", Kelly 785 (4 máquinas, mismo local).
+      machines: 4,
     },
   ],
 } as const;
@@ -508,8 +532,14 @@ export const INSTALACIONES_CONTENT = {
 // the original locations above so it doesn't turn into a long scroll; these
 // only appear on the full /ubicaciones page (UbicacionesExplorer.tsx), which
 // combines both arrays. `machines` is the client-reported machine count at
-// that spot; INSTALACIONES_CONTENT's markers omit it since it isn't known
-// for them, not assumed to be 1.
+// that spot.
+//
+// The form listed 48 machines across 19 people, all now confirmed to a
+// marker (2026-09-03): Matías Rujlin's 2 "en viaje" machines went to
+// Quilmes (folded into that marker above), Nicolás Tedoldi's 4 "sin
+// especificar" machines went to Trenque Lauquen (see that marker's note
+// above), and Simón Puentes' 2nd machine ("sin número aún" / just "Caba",
+// no street address given) was folded into "caba-serrano" below.
 export const UBICACIONES_EXTRA_MARKERS = [
   {
     id: "san-nicolas",
@@ -620,6 +650,20 @@ export const UBICACIONES_EXTRA_MARKERS = [
     coordinates: [-58.4214, -34.5824] as [number, number],
     label: "CABA (Serrano 630)",
     province: "CABA",
+    // Simón Puentes — Serrano 630 (7680168) + su 2ª máquina ("Sin número
+    // aún", cargada en el formulario solo como "Caba" sin dirección
+    // puntual) — el cliente confirmó el 2026-09-03 que va en el mismo
+    // lugar.
+    machines: 2,
+  },
+  {
+    id: "san-pedro",
+    // Genaro Rebossio. Ciudad sin más detalle en el formulario — asumida
+    // San Pedro, Buenos Aires (la más probable dado el resto del dataset),
+    // confirmar con cliente.
+    coordinates: [-59.6669, -33.6792] as [number, number],
+    label: "San Pedro, Buenos Aires",
+    province: "Buenos Aires",
     machines: 1,
   },
 ] as const;
@@ -632,7 +676,7 @@ export const UBICACIONES_PAGE_CONTENT = {
   tag: "Dónde estamos",
   heading: "Todas nuestras ubicaciones en Argentina",
   lead: "Cada punto en el mapa es una máquina ColVending real, instalada y en funcionamiento. Buscá por ciudad o filtrá por provincia para ver el detalle completo.",
-  installedLabel: "ubicaciones instaladas",
+  installedLabel: "máquinas instaladas",
   provincesLabel: "provincias",
   searchPlaceholder: "Buscar por ciudad o provincia...",
   searchAriaLabel: "Buscar ubicación por ciudad o provincia",
@@ -677,6 +721,49 @@ export const FABRICA_CONTENT = {
   logisticaCaption: "Empaquetado, carga y despacho internacional",
   pageCtaQuestion: "¿Querés una máquina así de personalizada para tu negocio?",
   pageCtaLabel: "Quiero mi máquina",
+} as const;
+
+// Requested by the client (2026-09-03): promote Controla (controla.ar), a
+// separate software product he's building for stock/sales/finance
+// management, as a homepage teaser linking out to it. Copy below is sourced
+// from controla.ar itself (fetched 2026-09-03) rather than invented, so it
+// stays accurate to what the tool actually does — update if the client
+// changes the product.
+export const CONTROLA_CONTENT = {
+  sectionId: "controla",
+  ariaLabel: "Controla, software de gestión para tu negocio",
+  tag: "Una extensión de ColVending",
+  heading: "¿Querés controlar tu negocio de punta a punta, no solo tus máquinas?",
+  lead: "Controla es la plataforma para gestionar stock, ventas y finanzas desde un solo lugar, en tiempo real y de forma remota. Si ya tenés tu máquina ColVending, un comercio o un local en Argentina, es la forma de tener todo tu negocio de manera digital — sin hojas de cálculo, sin caos.",
+  features: [
+    {
+      icon: "package",
+      titulo: "Inventario en tiempo real",
+      desc: "Alertas automáticas cuando un producto está por agotarse, con historial de reposición.",
+    },
+    {
+      icon: "cart",
+      titulo: "Ventas simplificadas",
+      desc: "Cargá ventas con varios productos a la vez; el stock se descuenta solo.",
+    },
+    {
+      icon: "chart",
+      titulo: "Finanzas claras",
+      desc: "Ingresos, egresos, márgenes y ganancia neta, con gráficos por período.",
+    },
+    {
+      icon: "sparkles",
+      titulo: "Recomendaciones con IA",
+      desc: "Análisis automático de tu negocio con sugerencias accionables, según tus datos reales.",
+    },
+  ],
+  trustBadges: [
+    "100% gratis para empezar",
+    "Menos de 1 minuto de setup",
+    "Sin límite de ingresos ni ventas",
+  ],
+  ctaLabel: "Empezar gratis en Controla",
+  href: "https://controla.ar",
 } as const;
 
 export const FAQ_CONTENT = {
