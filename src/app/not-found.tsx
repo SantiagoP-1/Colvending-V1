@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
+import { AsesorChatWidget } from "@/components/ui/AsesorChatWidget";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-import { WhatsAppFloat } from "@/components/ui/WhatsAppFloat";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { WHATSAPP_MESSAGES, whatsappHref } from "@/lib/whatsapp";
 
@@ -74,7 +74,7 @@ export default function NotFound() {
         </section>
       </main>
       <SiteFooter />
-      <WhatsAppFloat />
+      <AsesorChatWidget />
     </>
   );
 }
