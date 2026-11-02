@@ -789,6 +789,41 @@ export const CONTROLA_CONTENT = {
   href: "https://controla.ar",
 } as const;
 
+// Requested by the client: same teaser-card-on-home + own-page pattern as
+// FABRICA_CONTENT, for the rentabilidad calculator they sent as a
+// standalone HTML (calculadora-colvending.html). Numbers and formula live
+// in src/lib/calculadora.ts; this is only the copy.
+export const CALCULADORA_CONTENT = {
+  sectionId: "calculadora",
+  ariaLabel: "Calculadora de rentabilidad",
+  tag: "Calculadora de rentabilidad",
+  heading: "¿Cuánto puede ganar tu máquina?",
+  lead: "Elegí cómo pagarla y dónde ponerla, cargá cuánto vendería por día y mirá la ganancia bruta mensual y en cuántos meses recuperás la inversión. Los valores de partida salen de máquinas reales de clientes.",
+  previewLabel: "Ejemplo con un caso real",
+  ctaLabel: "Abrir calculadora",
+  pageHref: "/calculadora",
+  pageHeading: "¿Cuánto puede ganar tu máquina?",
+  pageLead:
+    "Elegí cómo pagarla y dónde ponerla, cargá cuánto vendería por día y mirá la ganancia bruta mensual y en cuántos meses recuperás la inversión. Los valores de partida salen de máquinas reales de clientes de ColVending.",
+  chips: [
+    { strong: "+100", text: "máquinas vendidas" },
+    { strong: "69", text: "vendidas en menos de 2 meses" },
+    { strong: "12 meses", text: "de garantía" },
+  ],
+  equipo:
+    "Máquina inteligente YX-SHJHW-02 · 60 canales · refrigerada · cobro con efectivo y QR · pantalla táctil 21,5″.",
+  luzHint:
+    "La luz es una estimación para un equipo refrigerado de hasta 550 W: ajustala con tu tarifa.",
+  casosHeading: "Casos reales de clientes",
+  casosLead:
+    "Datos de la plataforma de control remoto de máquinas de clientes de ColVending. Tocá \"Usar\" para cargar ese caso en la calculadora.",
+  noImpuestos: "No incluye impuestos",
+  pageCtaHeading: "5 cupos disponibles para el próximo contenedor",
+  pageCtaText: "Escribinos y te ayudamos a elegir la ubicación y los productos para tu máquina.",
+  pageCtaLabel: "Escribir por WhatsApp",
+  fine: "Es una estimación orientativa en pesos argentinos con los valores que cargás. Los resultados son ganancia bruta: no incluyen impuestos. Los casos reales no garantizan el rendimiento futuro: depende de la ubicación, los productos y la gestión de cada equipo. Precios de la propuesta comercial 2026 en dólares + IVA (10,5 %), válidos por 10 días hábiles; el flete nacional se cotiza aparte.",
+} as const;
+
 export const FAQ_CONTENT = {
   tag: "Preguntas frecuentes",
   heading: "Todo lo que necesitás saber",

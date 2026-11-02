@@ -30,6 +30,9 @@ const Faq = dynamic(() => import("@/components/sections/Faq").then((mod) => mod.
 const Fabrica = dynamic(() =>
   import("@/components/sections/Fabrica").then((mod) => mod.Fabrica),
 );
+const Calculadora = dynamic(() =>
+  import("@/components/sections/Calculadora").then((mod) => mod.Calculadora),
+);
 // <Controla /> (src/components/sections/Controla.tsx) is built and ready —
 // the client's Controla software isn't finished yet, so this stays off the
 // homepage until he confirms it's ready to promote. Re-add the import above
@@ -49,6 +52,7 @@ export default function Home() {
         <Fabrica />
         <Franquicias />
         <Rentabilidad />
+        <Calculadora />
         <CasoReal />
         <Instalaciones />
         <Nosotros />
