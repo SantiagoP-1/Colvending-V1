@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { AsesorChatWidget } from "@/components/ui/AsesorChatWidget";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
@@ -74,7 +73,6 @@ export default function NotFound() {
         </section>
       </main>
       <SiteFooter />
-      <AsesorChatWidget />
     </>
   );
 }

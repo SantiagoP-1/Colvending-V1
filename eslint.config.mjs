@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Old untracked copy of the project; not part of this site's build.
+    "web/**",
   ]),
 ]);
 

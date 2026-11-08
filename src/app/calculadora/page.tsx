@@ -1,7 +1,6 @@
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { CalculadoraRentabilidad } from "@/components/sections/CalculadoraRentabilidad";
-import { AsesorChatWidget } from "@/components/ui/AsesorChatWidget";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -19,7 +18,6 @@ export default function CalculadoraPage() {
         <CalculadoraRentabilidad />
       </main>
       <SiteFooter />
-      <AsesorChatWidget />
     </>
   );
 }

@@ -1,6 +1,5 @@
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { AsesorChatWidget } from "@/components/ui/AsesorChatWidget";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { pageMetadata } from "@/lib/seo";
@@ -50,7 +49,6 @@ export default function CatalogoPage() {
         </section>
       </main>
       <SiteFooter />
-      <AsesorChatWidget />
     </>
   );
 }

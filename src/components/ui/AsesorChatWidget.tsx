@@ -1,78 +1,141 @@
 "use client";
 
-import { useState } from "react";
-import { Bot, X } from "lucide-react";
-import { ASESOR_CHAT_URL } from "@/lib/asesor";
-import { cn } from "@/lib/utils";
+import { useEffect } from "react";
+import { Instrument_Sans } from "next/font/google";
+import "./asesor-chat-widget.css";
 
-// Floating launcher + panel for the "Asesor Colvending" chatbot (a separate
-// PHP app the client had built, embedded here as an iframe — see
-// src/lib/asesor.ts for why it can't run on Vercel directly). This is the
-// site's only floating corner button (the WhatsApp float was removed so the
-// bot is the one clear point of contact) — the robot icon signals it's an
-// AI assistant rather than a regular chat/WhatsApp link.
-//
-// The iframe only mounts on first open (not on page load) so a visitor who
-// never opens the chat never pays for that extra request/PHP session.
+// Self-hosted by next/font instead of the embed's Google Fonts <link> (no
+// third-party request, no extra stylesheet). Only this widget uses it, so
+// it isn't preloaded — that would compete with the hero's fonts on every
+// page for a corner button.
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-instrument-sans",
+  display: "swap",
+  preload: false,
+});
+
+// The "Asesor Colvending" chatbot is a separate PHP app hosted on its own
+// Hostinger account (Vercel has no PHP runtime) and embedded as an iframe.
+const CHAT_URL = "https://asesor.colvending.com/asesor/";
+
+// Port of the official widget-embed.html: same IDs, styles and behavior.
+// Mounted once in the root layout, which persists across client-side
+// navigations, so the listeners are registered once; the effect's cleanup
+// removes them on unmount (and on React Strict Mode's dev double-run).
+// The component has no state, so React never re-renders this markup and
+// the classes/iframe src the effect sets on the DOM aren't overwritten.
 export function AsesorChatWidget() {
-  const [open, setOpen] = useState(false);
-  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const launcher = document.getElementById("cv-chat-launcher");
+    const panel = document.getElementById("cv-chat-panel");
+    const iframe = document.getElementById("cv-chat-iframe") as HTMLIFrameElement | null;
+    if (!launcher || !panel || !iframe) return;
 
-  // Renders nothing until Santiago has hosting for the bot and fills in
-  // ASESOR_CHAT_URL — a launcher button that opens an empty/broken panel
-  // would be worse than no button at all.
-  if (!ASESOR_CHAT_URL) return null;
+    const chatOrigin = new URL(CHAT_URL).origin;
+    const mobile = window.matchMedia("(max-width: 480px)");
+    let loaded = false;
+    let isOpen = false;
+
+    function openChat() {
+      if (!launcher || !panel || !iframe) return;
+      // The iframe only loads on first open, so visitors who never open the
+      // chat never pay for the extra request/PHP session.
+      if (!loaded) {
+        iframe.src = CHAT_URL;
+        loaded = true;
+      }
+      // En mobile el chat es pantalla completa: bloquear el scroll de la página de fondo
+      if (mobile.matches) document.documentElement.classList.add("cv-chat-lock");
+      setTimeout(() => {
+        try {
+          iframe.focus();
+        } catch {}
+      }, 200);
+      panel.classList.add("open");
+      requestAnimationFrame(() => panel.classList.add("visible"));
+      launcher.classList.add("is-open");
+      launcher.setAttribute("aria-expanded", "true");
+      launcher.setAttribute("aria-label", "Cerrar chat");
+      isOpen = true;
+    }
+
+    function closeChat() {
+      if (!launcher || !panel) return;
+      panel.classList.remove("visible", "open");
+      document.documentElement.classList.remove("cv-chat-lock");
+      launcher.classList.remove("is-open");
+      launcher.setAttribute("aria-expanded", "false");
+      launcher.setAttribute("aria-label", "Abrir chat con un asesor de Colvending");
+      isOpen = false;
+      launcher.focus();
+    }
+
+    function onLauncherClick() {
+      if (isOpen) closeChat();
+      else openChat();
+    }
+    // La cruz vive dentro del chat (cabecera del iframe) y avisa por postMessage
+    function onMessage(e: MessageEvent) {
+      if (e.origin !== chatOrigin) return;
+      if (e.data && e.data.type === "cv-chat-close" && isOpen) closeChat();
+    }
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape" && isOpen) closeChat();
+    }
+
+    launcher.addEventListener("click", onLauncherClick);
+    window.addEventListener("message", onMessage);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      launcher.removeEventListener("click", onLauncherClick);
+      window.removeEventListener("message", onMessage);
+      document.removeEventListener("keydown", onKeyDown);
+      document.documentElement.classList.remove("cv-chat-lock");
+    };
+  }, []);
 
   return (
     <>
       <button
+        id="cv-chat-launcher"
+        className={instrumentSans.variable}
         type="button"
-        onClick={() => {
-          setLoaded(true);
-          setOpen((v) => !v);
-        }}
-        aria-label={open ? "Cerrar el asesor virtual" : "Hablar con el asesor virtual"}
-        aria-expanded={open}
-        title="Asesor virtual ColVending"
-        className={cn(
-          "fixed right-6 bottom-6 z-70 flex items-center justify-center rounded-full bg-red-500 text-white transition-transform duration-300 ease-out-soft hover:scale-105",
-          open
-            ? // On mobile the panel below goes full-screen and would otherwise
-              // sit on top of this button at its normal bottom-6 spot (same
-              // corner the panel's iframe input bar lives in), so it moves to
-              // the top-right while open there. It also shrinks and drops the
-              // glow — as a close affordance it doesn't need to be as loud as
-              // the launcher, and the bot's own "Asesor Expendedoras" title
-              // sits right behind it. Desktop keeps the launcher's spot and
-              // size since the panel there is a small floating box that never
-              // reaches the button.
-              "h-14 w-14 shadow-red-glow max-sm:top-12 max-sm:right-4 max-sm:bottom-auto max-sm:h-6 max-sm:w-6 max-sm:shadow-none"
-            : "h-14 w-14 shadow-red-glow",
-        )}
+        aria-label="Abrir chat con un asesor de Colvending"
+        aria-expanded="false"
+        aria-controls="cv-chat-panel"
       >
-        {open ? (
-          <X size={24} className="max-sm:size-3" aria-hidden="true" />
-        ) : (
-          <Bot size={24} aria-hidden="true" />
-        )}
+        <span className="cv-icon" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" />
+          </svg>
+        </span>
+        <span className="cv-text" aria-hidden="true">
+          <span className="cv-title">Pedí asesoramiento</span>
+          <span className="cv-sub">En línea · 3 preguntas y listo</span>
+        </span>
+        <svg
+          className="cv-x"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          aria-hidden="true"
+        >
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
       </button>
 
-      <div
-        className={cn(
-          "fixed right-6 bottom-24 z-60 h-[600px] w-[380px] max-h-[calc(100dvh-160px)] overflow-hidden rounded-card border border-white/10 bg-ink-950 shadow-card transition-[opacity,transform] duration-300 ease-out-soft",
-          "max-sm:inset-0 max-sm:h-full max-sm:max-h-full max-sm:w-full max-sm:rounded-none max-sm:border-0",
-          open
-            ? "translate-y-0 opacity-100"
-            : "pointer-events-none translate-y-2 opacity-0",
-        )}
-      >
-        {loaded && (
-          <iframe
-            src={ASESOR_CHAT_URL}
-            title="Asesor virtual ColVending"
-            className="h-full w-full border-0"
-          />
-        )}
+      <div id="cv-chat-panel" role="dialog" aria-label="Asesor Colvending">
+        <iframe id="cv-chat-iframe" src="about:blank" title="Asesor Colvending" />
       </div>
     </>
   );

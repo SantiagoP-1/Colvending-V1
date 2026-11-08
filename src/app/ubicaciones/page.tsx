@@ -1,7 +1,6 @@
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { UbicacionesExplorer } from "@/components/sections/UbicacionesExplorer";
-import { AsesorChatWidget } from "@/components/ui/AsesorChatWidget";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -21,7 +20,6 @@ export default function UbicacionesPage() {
         <UbicacionesExplorer />
       </main>
       <SiteFooter />
-      <AsesorChatWidget />
     </>
   );
 }

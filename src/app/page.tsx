@@ -9,7 +9,6 @@ import { Franquicias } from "@/components/sections/Franquicias";
 import { Rentabilidad } from "@/components/sections/Rentabilidad";
 import { CasoReal } from "@/components/sections/CasoReal";
 import { Nosotros } from "@/components/sections/Nosotros";
-import { AsesorChatWidget } from "@/components/ui/AsesorChatWidget";
 import { ScrollProgressBar } from "@/components/ui/ScrollProgressBar";
 
 // These sections are always several screens below the fold on mobile (the
@@ -59,7 +58,6 @@ export default function Home() {
         <Faq />
       </main>
       <SiteFooter />
-      <AsesorChatWidget />
     </>
   );
 }

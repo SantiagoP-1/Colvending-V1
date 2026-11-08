@@ -1,7 +1,6 @@
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { FabricacionGaleria } from "@/components/sections/FabricacionGaleria";
-import { AsesorChatWidget } from "@/components/ui/AsesorChatWidget";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -22,7 +21,6 @@ export default function FabricacionPage() {
         <FabricacionGaleria />
       </main>
       <SiteFooter />
-      <AsesorChatWidget />
     </>
   );
 }
