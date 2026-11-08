@@ -5,9 +5,9 @@
    - z-index 90/95 (no 99998/99999): por encima del header fijo (z-50) y de
      la barra de progreso (z-[60]), pero por debajo de los modales del sitio
      (z-[100]).
-   - Mobile: el lanzador es solo el ícono, 56x56, para ocupar la esquina del
-     viejo botón redondo y no tapar la barra fija de la calculadora
-     (CalculadoraRentabilidad, que deja libre right-24). */
+   - Hasta 1023px: el lanzador es solo el ícono, 56x56, para ocupar la
+     esquina del viejo botón redondo y no tapar la barra fija de la
+     calculadora (CalculadoraRentabilidad, que deja libre right-24). */
 #cv-chat-launcher{
   position:fixed;
   bottom:24px;
@@ -79,6 +79,14 @@
   border:none;
   display:block;
 }
+/* Mobile y tablet (hasta 1023px, el rango donde se ve la barra fija de la
+   calculadora, que es lg:hidden): lanzador solo ícono, 56x56. Abierto sigue
+   siendo el botón cerrar de 60x60 (#cv-chat-launcher.is-open gana por
+   especificidad). El panel no cambia acá. */
+@media (max-width: 1023px){
+  #cv-chat-launcher{ width:56px; height:56px; padding:0; justify-content:center; }
+  #cv-chat-launcher .cv-text{ display:none; }
+}
 /* Mobile: panel a pantalla completa */
 @media (max-width: 480px){
   #cv-chat-panel{
@@ -93,8 +101,7 @@
     border-radius:0;
     border:0;
   }
-  #cv-chat-launcher{ bottom:16px; right:16px; width:56px; height:56px; padding:0; justify-content:center; }
-  #cv-chat-launcher .cv-text{ display:none; }
+  #cv-chat-launcher{ bottom:16px; right:16px; }
   #cv-chat-launcher.is-open{ display:none; }
 }
 html.cv-chat-lock, html.cv-chat-lock body{ overflow:hidden !important; }
