@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+import Image from "next/image";
 import { Instrument_Sans } from "next/font/google";
+import logoIcon from "@/assets/images/logo-icon.webp";
 import "./asesor-chat-widget.css";
 
 // Self-hosted by next/font instead of the embed's Google Fonts <link> (no
@@ -55,8 +57,9 @@ export function AsesorChatWidget() {
       panel.classList.add("open");
       requestAnimationFrame(() => panel.classList.add("visible"));
       launcher.classList.add("is-open");
+      // Abierto, el lanzador queda oculto (display:none): el chat se cierra
+      // con la cruz de la cabecera del iframe o con Escape.
       launcher.setAttribute("aria-expanded", "true");
-      launcher.setAttribute("aria-label", "Cerrar chat");
       isOpen = true;
     }
 
@@ -66,8 +69,9 @@ export function AsesorChatWidget() {
       document.documentElement.classList.remove("cv-chat-lock");
       launcher.classList.remove("is-open");
       launcher.setAttribute("aria-expanded", "false");
-      launcher.setAttribute("aria-label", "Abrir chat con un asesor de Colvending");
       isOpen = false;
+      // Ya sin .is-open el lanzador vuelve a ser visible, así que puede
+      // recibir el foco (focus() fuerza el recálculo de estilos).
       launcher.focus();
     }
 
@@ -106,32 +110,12 @@ export function AsesorChatWidget() {
         aria-controls="cv-chat-panel"
       >
         <span className="cv-icon" aria-hidden="true">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" />
-          </svg>
+          <Image src={logoIcon} alt="" width={26} height={26} />
         </span>
         <span className="cv-text" aria-hidden="true">
           <span className="cv-title">Pedí asesoramiento</span>
           <span className="cv-sub">En línea · 3 preguntas y listo</span>
         </span>
-        <svg
-          className="cv-x"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          aria-hidden="true"
-        >
-          <path d="M18 6 6 18M6 6l12 12" />
-        </svg>
       </button>
 
       <div id="cv-chat-panel" role="dialog" aria-label="Asesor Colvending">

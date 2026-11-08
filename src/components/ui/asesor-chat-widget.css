@@ -34,32 +34,26 @@
 #cv-chat-launcher .cv-icon{
   width:44px; height:44px; flex:none;
   border-radius:12px;
-  background:#D60D12;
-  color:#fff;
+  background:#0C0C0C;
   display:flex; align-items:center; justify-content:center;
 }
-#cv-chat-launcher svg{ width:22px; height:22px; }
+#cv-chat-launcher .cv-icon img{ width:26px; height:26px; object-fit:contain; }
 #cv-chat-launcher .cv-text{ display:flex; flex-direction:column; gap:2px; }
 #cv-chat-launcher .cv-title{ font-size:15px; font-weight:700; line-height:1.2; }
 #cv-chat-launcher .cv-sub{ font-size:12.5px; font-weight:500; color:#5B6067; display:flex; align-items:center; gap:6px; }
 #cv-chat-launcher .cv-sub::before{ content:""; width:7px; height:7px; border-radius:50%; background:#1E9E5A; }
 
-/* Estado abierto en desktop: el lanzador se vuelve un botón cerrar */
-#cv-chat-launcher.is-open{
-  width:60px; height:60px; padding:0; justify-content:center;
-}
-#cv-chat-launcher.is-open .cv-icon,
-#cv-chat-launcher.is-open .cv-text{ display:none; }
-#cv-chat-launcher .cv-x{ display:none; }
-#cv-chat-launcher.is-open .cv-x{ display:block; }
+/* Con el chat abierto el lanzador se oculta en todos los tamaños: se
+   cierra con la cruz de la cabecera del chat (postMessage) o con Escape. */
+#cv-chat-launcher.is-open{ display:none; }
 
 #cv-chat-panel{
   position:fixed;
-  bottom:100px;
+  bottom:24px;
   right:24px;
   width:380px;
-  height:620px;
-  max-height:calc(100vh - 124px);
+  height:640px;
+  max-height:calc(100vh - 48px);
   background:#0C0C0C;
   border-radius:18px;
   overflow:hidden;
@@ -80,9 +74,8 @@
   display:block;
 }
 /* Mobile y tablet (hasta 1023px, el rango donde se ve la barra fija de la
-   calculadora, que es lg:hidden): lanzador solo ícono, 56x56. Abierto sigue
-   siendo el botón cerrar de 60x60 (#cv-chat-launcher.is-open gana por
-   especificidad). El panel no cambia acá. */
+   calculadora, que es lg:hidden): lanzador solo ícono, 56x56. El panel no
+   cambia acá. */
 @media (max-width: 1023px){
   #cv-chat-launcher{ width:56px; height:56px; padding:0; justify-content:center; }
   #cv-chat-launcher .cv-text{ display:none; }
@@ -102,7 +95,6 @@
     border:0;
   }
   #cv-chat-launcher{ bottom:16px; right:16px; }
-  #cv-chat-launcher.is-open{ display:none; }
 }
 html.cv-chat-lock, html.cv-chat-lock body{ overflow:hidden !important; }
 @media (prefers-reduced-motion: reduce){
